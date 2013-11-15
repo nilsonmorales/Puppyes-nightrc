@@ -4,13 +4,13 @@ Puppyes-nightrc
 Puppyes version Night en estado Rc 
 
 
-Todos los archivos aqui presente se distribuiran con la
-licencia GPL v3.0 sitada en el archivo COPYING, no aquellos
+Todos los archivos aqui presentes se distribuirán con la
+licencia GPL v3.0 citada en el archivo COPYING, no aquellos
 archivos que indiquen licencia GPL compatible diferente.
 
 Puppy-es Nightrc 
 ================
-Esto sera el proximo archivo .pet de update
+Esto será el proximo archivo .pet de update
 o esté posiblemente en un nueva iso.
 
 [Web del Proyecto]
@@ -27,15 +27,15 @@ Puppy linux enteramente en español
 
 Que es puppy-es?. Es un proyecto del canal IRC en español para tener nuestra propia versión de PuppyLinux enteramente al español.
 Todavía falta mucho trabajo pero si estas interesado, sería de nuestro agrado que participaras.
-Puppy-es esta basada en la version de Puppylinux precise y se aprovecharon actualizaciones hechas por desarrolladores y miembros del canal en IRC.
+Puppy-es Night rc esta basada en la version de Puppylinux precise y se aprovecharon actualizaciones hechas por desarrolladores y miembros del canal en IRC.
 Se actualizaron paquetes y programas.
 Algunas características en proceso de traducción total al español
 
 Kernel 3.2.29
-Esta para 3 idiomas ingles francés y español. 
-Se elimino:. librerías obsoletas que vienen de puppy anteriores, se actualizaron librerías y muchas mas se agregaron. 
-Se elimino: didiwiki ,dictonarie, attym y en su reemplazo xchat. 
-Se reemplazo:. mpaintsnapshot , por pupsnap, seamonkey por iron, pwallpaper por 
+Está para 3 idiomas ingles francés y español. 
+Se eliminó:. librerías obsoletas que vienen de puppy anteriores, se actualizaron librerías y muchas mas se agregaron. 
+Se eliminó: didiwiki ,dictonarie, attym y en su reemplazo xchat. 
+Se reemplazó:. mpaintsnapshot , por pupsnap, seamonkey por iron, pwallpaper por 
 wallapers nathan se quiso dejar el original (pwallpaper) pero no es muy 
 compatible con otros escritorios. 
 aqualung por pmusic este esta en su ultima versión con muchas mejoras. 
