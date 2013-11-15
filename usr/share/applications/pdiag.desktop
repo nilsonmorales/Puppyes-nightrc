@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name[es]= pdiag
+Name=pdiag
+Icon=/usr/share/icons/pdiag.png
+Comment=Diagnostic Information Capture
+Comment[es]=Captura de Información para Diagnostico
+Exec=pdiag
+Terminal=false
+Type=Application
+Categories=System
+GenericName=pdiag 

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name[es]=YASSM Samba buscar carpetas compartidas
+Name=YASSM Samba share search
+Icon=/usr/local/yassm/samba-menu.xpm
+Comment=Yet another Samba share mounter
+Comment[es]=Samba compartir carpetas
+Exec=/usr/local/yassm/samba-search
+Terminal=false
+Type=Application
+Categories=Network
+GenericName=samba-search

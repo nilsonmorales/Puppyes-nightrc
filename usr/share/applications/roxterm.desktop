@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name[es]=Terminal Roxterm
+Name=Roxterm-Terminal
+Comment[es]=Terminal Roxterm
+Comment=Roxterm-Terminal
+GenericName=Terminal
+TryExec=roxterm
+Exec=roxterm
+Icon=/usr/local/lib/X11/pixmaps/console48.png
+Type=Application
+Categories=TerminalEmulator

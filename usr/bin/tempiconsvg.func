@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# Records the CPU temp, called from "tempiconsvg" to display in system tray
+# depends: +lm-sensors(optional), +tempiconsvg
+# other unix: +gtkdialog >=0.8.0
+#xmesagge change pink to black (nilsonmorales)
+#21062013 internationalized nilsonmorales.
+
+#get cpu temp
+
+#check a module is loaded if not, try to load one
+
+ver=0.19
+export TEXTDOMAIN=tempiconsvg.func
+export OUTPUT_CHARSET=UTF-8
+
+load_module_func()
+{
+	if [ ! -f /tmp/tempicon/module.state ];then
+	   lsmod|grep -q coretemp
+	   CORETEMP=$?
+	   lsmod|grep -q k*temp
+	   KTEMP=$?
+	   lsmod|grep -q it87
+	   IT87=$?
+	   if [[ "$CORETEMP" = "1" && "$KTEMP" = "1" && "$IT87" = 1 ]];then
+	  	for m in coretemp it87 k8temp k10temp #it87 must be before k8temp
+		 do modprobe $m 2>/dev/null
+			if [ "$?" = "0" ];then echo L=0 >/tmp/tempicon/module.state
+				break 
+			  else echo L=1 >/tmp/tempicon/module.state
+			continue
+			fi
+		 done
+		 . /tmp/tempicon/module.state
+		[ "$L" = "1" ] && sensorshelpfunc && exit
+	   fi
+	fi
+}
+export -f load_module_func
+
+KV=`uname -r`
+[ "${KV:2:1}" -lt 7 ] && HorT=head || HorT=tail
+
+cputempfunc(){
+	load_module_func
+     [ ! -d /tmp/tempicon ] && mkdir /tmp/tempicon
+	 FILE=`find /sys/devices/ -name temp1_input|${HorT} -n1`
+	 OUT1=`cat $FILE`
+	 if [ ! $OUT1 ];then
+	    FILE=`find /sys/bus/acpi/devices/ -name temp|head -n1`
+	    OUT1=`cat $FILE`
+	 fi
+	 if [ ! $OUT1 ];then echo "$(gettext 'not working')" && exit
+	    else OUT=${OUT1%???}
+	 fi
+	 echo -n ${OUT} > /tmp/tempicon/count
+	 sleep 0.2
+}
+export -f cputempfunc
+
+#lm_sensors installed
+lm_func()
+{	
+	
+	PREFIX=`dirname $0`
+	export PREFIX
+	
+	PROG=`basename $0`
+
+	#check sensors installed
+	export SENSORS=`which sensors`
+	
+	
+	if [ $SENSORS ];then
+	 #if existing read config
+	 if [ -f /etc/tempicon.conf ];then
+	  . /etc/tempicon.conf
+	  modprobe $MODULE
+	  [ $? -ne 0 ] && rm /etc/tempicon.conf && echo "$(gettext 'Loading $MODULE failed, removing /etc/tempicon.conf')"
+	 fi
+	fi
+	load_module_func
+	 
+
+	sleep 0.2
+	[ -f /tmp/tempicon/count ]&& VALUE=`cat /tmp/tempicon/count`
+	if [ ! $VALUE ];then 
+	  if [ $SENSORS ];then
+	   xmessage -c -bg black "$(gettext 'TEMPICON ERROR: Your module doesnt work. Run \"sensors-detect\". Removing from Startup')"
+	   #chmod 644 $HOME/Startup/tempicon.sh
+	   rm -f $HOME/Startup/tempiconsvg && exit
+	   
+	    else
+	    xmessage -c -bg black "$(gettext 'TEMPICON ERROR: Your system isnt supported. Try installing lm_sensors. Removing from Startup')"
+	    #chmod 644 $HOME/Startup/tempicon.sh
+	    rm -f $HOME/Startup/tempiconsvg 2>/dev/null && exit
+	  fi
+	fi
+}
+export -f lm_func

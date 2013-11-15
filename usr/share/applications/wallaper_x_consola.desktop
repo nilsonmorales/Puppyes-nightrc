@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name[es]=Cambiador wallaper x consola
+Name=Change wallpaper by commandline
+Comment[es]=Cambiador wallaper x consola
+Comment=Change wallpaper by commandline
+Exec=roxterm -e /usr/local/cambiador_wallapers_x_consola/wallapers
+Type=Application
+Icon=/usr/share/pixmaps/wallpaper.png
+StartupNotify=true
+Categories=DesktopSettings
+

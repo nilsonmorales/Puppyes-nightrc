@@ -1,0 +1,26 @@
+#!/bin/sh
+#passed param: ex: de.po
+#but also handles name with actual name of application, ex: quicksetup.po
+#160613: nilsonmorales i18n
+
+export TEXTDOMAIN=po2mo
+export OUTPUT_CHARSET=UTF-8
+
+[ ! $1 ] && exit
+xLANG="`echo -n $1 | cut -f 1 -d '.'`"
+if [ `echo -n $xLANG | wc --chars` -ne 2 ];then
+ xAPP=$xLANG
+ echo "$(gettext 'passed filename: $1')"
+ echo -n "$(gettext 'Enter 2-letter language (ex: de): ')"
+ read xLANG
+ [ `echo -n $xLANG | wc --chars` -ne 2 ] && exit
+else
+ echo "$(gettext 'passed filename: $1')"
+ echo "$(gettext 'Enter name of application being translated: ')"
+ read xAPP
+fi
+
+mkdir -p /usr/share/locale/${xLANG}/LC_MESSAGES
+msgfmt --check --output-file=/usr/share/locale/${xLANG}/LC_MESSAGES/${xAPP}.mo ${1}
+
+echo "$(gettext 'Created /usr/share/locale/${xLANG}/LC_MESSAGES/${xAPP}.mo')"

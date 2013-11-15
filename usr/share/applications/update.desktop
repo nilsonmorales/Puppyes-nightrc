@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name[es]=update puppy-es night
+Name=update puppy-es night
+Comment[es]=actualiza puppy-es night
+Comment=update puppy-es night
+Icon=/usr/local/lib/X11/pixmaps/refresh48.png
+Exec=update
+Categories=X-SetupEntry

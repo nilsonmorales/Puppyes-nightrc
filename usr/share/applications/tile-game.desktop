@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name[es]=Tile juego deslizante
+Name=Tile slider game
+Icon=mini-modules.xpm
+Comment=Tile slider game
+Comment[es]=Tile juego deslizante
+Exec=tile
+Terminal=false
+Type=Application
+Categories=Game
+GenericName=Tile

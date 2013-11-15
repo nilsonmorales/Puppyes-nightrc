@@ -1,0 +1,30 @@
+#!/bin/sh 
+#Written by smokey01 
+# This is a simple script to unsquash a bunch of sfs files. 
+# Place this script on your desktop then drop all of your sfs files onto it 
+# to make one big sfs file.
+# Escrito por smokey01
+# Este es un simple script para unsquash un montón de archivos sfs.
+# Coloque este script en el escritorio y luego soltar todos los archivos sfs sobre el de una vez
+# para hacer un solo archivo sfs. 
+
+export TEXTDOMAIN=smokeycombine2
+export OUTPUT_CHARSET=UTF-8
+
+mkdir -p /mnt/home/work 
+for i in "$@"; do 
+ case "${i}" in 
+   *.sfs|*.SFS) 
+urxvt -e /usr/sbin/unsquashfs -f -d /mnt/home/work/root-sfs "${i}" 
+   ;; 
+ esac 
+ done 
+ if [ "${1}" = "" ]; then 
+Xdialog --title squasher --infobox "'$(gettext 'You need to drop SFS files on the icon, \nnot click on it.\n\n 
+You require a lot of disk space this is why the\n working directory is at /mnt/home/work')'" 0 0 10000 
+ else 
+urxvt -e /usr/sbin/mksquashfs /mnt/home/work/root-sfs /mnt/home/work/new.sfs 
+rox /mnt/home/work 
+Xdialog --title "'$(gettext '***** WARNING *****')'" --msgbox "'$(gettext 'Rename and move the new.sfs file.\n When you click on OK it will be deleted')'" 0 0 
+rm -rf /mnt/home/work 
+fi

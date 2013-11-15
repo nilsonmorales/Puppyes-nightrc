@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=HardInfo hardware information
+Exec=hardinfo
+Icon=hardinfo.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=System
+GenericName=HardInfo
+Name[es]=HardInfo | información de hardware
+Name[fr]=Informations du matériel HardInfo

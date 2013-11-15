@@ -1,0 +1,20 @@
+ESPAÑOL
+Abra una terminal y ejecute: sensors-detect
+
+Este programa (del proyecto lm-sensors) tratará de identificar el módulo de temperatura requerida por el equipo. Si usted tiene una CPU Intel, puede ser coretemp. Para los procesadores de AMD, probablemente será kxtemp. Estos módulos se gestiona de manera automática por CPUtemp.
+
+Para instalar un módulo diferente, vaya a /usr/local/bin y abra el archivo CPUtemp. Ir a la línea 5, donde dice "cambiar el módulo SI ES NECESARIO". Reemplazar "coretemp" con su módulo.
+
+El procedimiento anterior puede no funcionar en algunas máquinas. Por ejemplo, lm-sensores pueden detectar un sensor, pero no tienen módulo correspondiente.
+
+Para activar OnDemand CPU escalar, correr la herramienta de Escala de frecuencia CPU. Búscalo en Menú> Utilidad o Menú> Sistema> Estado del sistema y de configuración.
+INGLES
+Open a terminal and run: sensors-detect
+
+This program (from the lm-sensors project) will try to identify the temperature module required by your machine. If you have an Intel CPU, it may be coretemp. For AMD processors, it will probably be kxtemp. These modules are automatically handled by CPUtemp.
+
+To install a different module, go to /usr/local/bin and open the file CPUtemp. Go to Line 5 where it says "CHANGE THE MODULE IF NEEDED". Replace "coretemp" with your module. 
+
+The above procedure may not work on some machines. For example, lm-sensors may detect a sensor but have no appropriate module.
+
+To enable OnDemand CPU scaling, run the CPU Frequency Scaling Tool. Look for it in Menu > Utility or Menu > System > System Status and Config.

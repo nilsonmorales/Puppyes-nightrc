@@ -1,0 +1,73 @@
+#!/bin/sh
+#150613 i18n nilsonmorales 
+
+export TEXTDOMAIN=CPUtemp
+export OUTPUT_CHARSET=UTF-8
+
+lsmod | grep -q -e "k.temp"
+if [ $? -ne 0 ]; then
+  modprobe coretemp   # CHANGE THE MODULE IF NEEDED/CAMBIAR MODULO SI ES NECESARIO
+fi
+
+/usr/local/bin/sensors -A -c /etc/sensors3.conf | tr -s " " > /tmp/CPUtemp.txt
+
+THRMFILE="/sys/class/thermal/thermal_zone0/temp"
+if [ -e $THRMFILE ]; then
+  TEMP=`cat $THRMFILE`
+  TEMP=${TEMP%???}
+  echo "THRM Temp: " $TEMP C >> /tmp/CPUtemp.txt
+  echo >> /tmp/CPUtemp.txt
+fi
+
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor | grep -q ondemand
+if [ $? -eq 0 ]; then
+  echo -n "'$(gettext 'OnDemand CPU Scaling: on')'" >> /tmp/CPUtemp.txt
+else
+  echo -n "'$(gettext 'OnDemand CPU Scaling: off')'" >> /tmp/CPUtemp.txt 
+fi
+
+FREQ=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq`
+if [ -n "$FREQ" ]; then
+  echo >> /tmp/CPUtemp.txt
+  echo -n "'$(gettext 'Current CPU Frequency: ')'" >> /tmp/CPUtemp.txt
+  echo -n ${FREQ%???} MHz >> /tmp/CPUtemp.txt
+fi
+
+export DIALOG='
+<window title="'$(gettext ' CPUtemp ')'">
+<vbox>
+  <frame CPUtemp>
+    <text><input file>/tmp/CPUtemp.txt</input></text>
+  </frame>
+  <hbox>
+    <button><label>'$(gettext 'OK')'</label></button>
+    <button><label>'$(gettext 'Help')'</label></button>
+  </hbox>
+</vbox>
+</window>'
+  
+I=$IFS; IFS=""
+for STATEMENTS in  $(gtkdialog3 --program DIALOG); do
+  eval $STATEMENTS
+done
+IFS=$I
+
+[ "$EXIT" = "OK"  -o "$EXIT" = "abort" ] && exit
+
+export DIALOG='
+<window title="'$(gettext ' CPUtemp ')' ">
+<vbox>
+  <frame'$(gettext ' CPUtemp')'>
+    <text><input file>/usr/local/bin/CPUtemp.hlp</input></text>
+  </frame>
+  <hbox>
+    <button><label>'$(gettext 'OK')'</label></button>
+  </hbox>
+</vbox>
+</window>'
+  
+I=$IFS; IFS=""
+for STATEMENTS in  $(gtkdialog3 --program DIALOG); do
+  eval $STATEMENTS
+done
+IFS=$I

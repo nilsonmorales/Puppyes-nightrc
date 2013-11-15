@@ -1,0 +1,46 @@
+#!/bin/sh
+# Xlockmore gui translation file
+# language es
+
+
+##################################
+# Password dialog
+#
+export LOC_PASSWINDOW="Borrar contraseña Xlock"
+export LOC_PASSTEXT="     La primera vez que corra Xlock, le pedirá una clave, es decir una
+contraseña. Para cambiar la contraseña, usted necesita borrar
+archivo $HOME/.xlockrc, que es todo lo que hace este botón..."
+export LOC_CLEARBUTTON="Click para borrar la contraseña"
+
+##################################
+# Configuration window
+#
+export LOC_PRETEXT1="\"Esta ventana es para configurar Xlock como bloqueador de pantalla. Xlock es un sistema de privacidad que usted invoca manualmente y con una contraseña para desbloquear, esto es lo que  Xlock hace, con figuras bonitas adicionales al bloquear.
+
+Despues de previsualizar, haga click en Aceptar para aplicar lo que quiera...\""
+export LOC_PRETEXT2="\"     Esta ventana es para elegir un fondo de escritorio animado. Tenga en cuenta tambien que hay un icono en el escritorio que
+bloqueará la pantalla, vizualizando solo la animacion.
+
+Despues de la vista previa, haga click en Aceptar para lo que usted desea...\""
+export LOC_KILLBOX="MATAR cualquier animación actualmente usada:"
+export LOC_KILLBUTTON="MATAR"
+export LOC_CFGWINDOW="Xlock: modo actual es"
+export LOC_TREE="Modo | Descripción"
+# modes
+export LOC_BALL="muestra pelotas rebotando"
+export LOC_BLANK="una pantalla negra"
+export LOC_DCLOCK="reloj digital flotante"
+export LOC_GLOOP="materia de una lampara de lava"
+export LOC_LYAPUNOV="muestra espacio lyapunov"
+export LOC_MANDELBROT="muestra conjuntos de mandelbrot"
+export LOC_MATRIX="muestra la matrix (la pelicula)"
+export LOC_PENROSE="muestra mosaicos cuasiperiodicos"
+export LOC_SOLITAIRE="muestra un juego de solitario"
+export LOC_SPIRAL="muestra un locus helicoidal de puntos"
+export LOC_SWIRL="muestra patrones de remolinos animados"
+export LOC_BOMB="un temporizador de bomba que se desconecta despues de un retraso"
+export LOC_RANDOM="modo aleatorio"
+# buttons
+export LOC_PREVIEW="Vista previa"
+
+

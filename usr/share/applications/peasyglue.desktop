@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=PeasyGlue image joiner
+Name[es]=PeasyGlue Unir Imágenes
+Icon=glue.xpm
+Comment=Image joiner
+Comment[es]=Herramienta para unir imágenes
+Exec=peasyglue
+Terminal=false
+Type=Application
+Categories=X-GraphicUtility
+GenericName=PeasyGlue
