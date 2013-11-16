@@ -33,7 +33,7 @@
     <monitor>Any</monitor>
   </placement>
   <theme>
-    <name>Turq</name>
+    <name>Syscrash</name>
     <titleLayout>NLIMC</titleLayout>
     <!--
       avaible characters are NDSLIMC, each can occur at most once.
@@ -130,10 +130,10 @@
      Many programs reserve space automatically, but you can use this in other
      cases. -->
   <margins>
-    <top>5</top>
-    <bottom>5</bottom>
-    <left>5</left>
-    <right>5</right>
+    <top>0</top>
+    <bottom>0</bottom>
+    <left>0</left>
+    <right>0</right>
   </margins>
   <dock>
     <position>TopLeft</position>
@@ -253,41 +253,30 @@
     <keybind key="A-S-Tab">
       <action name="PreviousWindow"/>
     </keybind>
-    <keybind key="C-A-Tab">
-      <action name="NextWindow">
-        <panels>yes</panels>
-        <desktop>yes</desktop>
-      </action>
-    </keybind>
-    <!-- Keybindings for running applications -->
-    <keybind key="C-S-s">
-      <action name="Execute">
-        <command>PupSnap run</command>
-      </action>
-    </keybind>
-    <keybind key="C-S-x">
-      <action name="Execute">
-        <command>PupShutdown run</command>
-      </action>
-    </keybind>
-    <keybind key="W-e">
-      <action name="Execute">
-        <startupnotify>
-          <enabled>true</enabled>
-          <name>Konqueror</name>
-        </startupnotify>
-        <command>kfmclient openProfile filemanagement</command>
-      </action>
-    </keybind>
     <keybind key="Super_L">
       <action name="Execute">
         <command>lxpanelctl menu</command>
       </action>
     </keybind>
-    <keybind key="Print">
+    <!-- Keybindings for running applications -->
+    <keybind key="W-e">
       <action name="Execute">
-        <command>screenshot.sh</command>
+        <startupnotify>
+          <enabled>true</enabled>
+          <name>pcmanfm</name>
+        </startupnotify>
+        <command>pcmanfm</command>
       </action>
+    </keybind>
+   <keybind key="Super_L">
+   <action name="Execute">
+   <command>lxpanelctl menu</command>
+    </action>
+  </keybind>
+  <keybind key="Print">
+   <action name="Execute">
+    <command>screenshot.sh</command>
+    </action>
     </keybind>
   </keyboard>
   <mouse>
@@ -618,18 +607,6 @@
       </mousebind>
     </context>
   </mouse>
-  <context name="Titlebar">
-    <mousebind button="A-Up" action="ClickC">
-      <action name="Execute">
-        <execute>transset-df -p .2 --inc</execute>
-      </action>
-    </mousebind>
-    <mousebind button="A-Down" action="Click">
-      <action name="Execute">
-        <execute>transset-df -p .2 --dec</execute>
-      </action>
-    </mousebind>
-  </context>
   <menu>
     <!-- You can specify more than one menu file in here and they are all loaded,
        just don't make menu ids clash or, well, it'll be kind of pointless -->
