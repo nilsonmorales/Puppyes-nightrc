@@ -1,0 +1,7 @@
+Listado de app que iran y/o no iran o se sumaran. 
+
+(mas si estas a favor)
+(menos si estas en contra)
+
+
+Navegador: el que viene se quita ::  Se añade Firefox +
