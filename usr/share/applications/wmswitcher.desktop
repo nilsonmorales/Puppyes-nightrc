@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=WM Switcher Switch windowmanagers
+Name[es]=WM Switcher | cambiar gestor de ventanas
+Name[fr]=WM Switcher Commutateur gestionnaires de fenêtres
+Icon=/usr/share/icons/gnome/scalable/apps/preferences-system-windows.png
+Comment=WM Switcher Switch windowmanagers
+Comment[es]=Cambiador de gestor de ventanas
+Comment[fr]=Changement de gestionnaire de fenêtres
+Exec=wmswitcher
+Terminal=false
+Type=Application
+Categories=DesktopSettings
+
