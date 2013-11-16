@@ -1,0 +1,4 @@
+TESTSERVER="mamalibre.com.ar"
+NEWSERVER="http://mamalibre.no-ip.org/pub/puppylinux/pou/night/"
+INFSERVER="http://mamalibre.no-ip.org/pub/puppylinux/pou/night/infos/"
+OSCOMPATIBILITY="Puppy-es OS"
