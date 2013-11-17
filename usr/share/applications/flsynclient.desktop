@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=FlSynclient configure your touchpad 
+Icon=flsynclient.png
+Comment=Configure your synaptics touchpad
+Comment[es]=FlSynclient | configurar panel táctil
+Exec=flsynclient
+Terminal=false
+Type=Application
+Categories=X-Desktop
+GenericName=flsynclient
+Name[es]=FlSynclient | configurar panel táctil
+Name[fr]=Configurer le pavé tactile FlSynclient

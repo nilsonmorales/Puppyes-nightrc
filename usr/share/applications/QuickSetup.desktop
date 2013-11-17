@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=QuickSetup first-run settings
+Name[ru]=QuickSetup настройки при первом запуске
+Icon=mini-display.xpm
+Comment=First-run screen resolution and country settings 
+Comment[es]=Ajustes del 1er. inicio
+Exec=quicksetup
+Terminal=false
+Type=Application
+Categories=X-SetupEntry
+GenericName=QuickSetup
+Name[es]=QuickSetup | ajustes del 1er. inicio
+Name[es]=QuickSetup | ajustes del 1er. inicio
+Name[fr]=Paramètres de démarrage

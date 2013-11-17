@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=GParted partition manager
+Icon=gparted.xpm
+Comment=GParted partition manager
+Comment[es]=Administrar particiones
+Exec=gparted_shell
+Terminal=false
+Type=Application
+Categories=X-SystemMemory
+GenericName=GParted partition manager
+Name[es]=GParted | administrar particiones
+Name[fr]=Gestion des partitions GParted

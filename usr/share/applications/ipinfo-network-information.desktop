@@ -1,0 +1,16 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=IPInfo network information
+Name[ru]=IPInfo сетевая информация
+Name[hu_HU]=IPinfó hálózati információ
+Name[ja]=IPinfo ネートワーク接続情報
+Icon=mini-telnet.xpm
+Comment=IPInfo network information
+Comment[es]=Información de red
+Exec=ipinfo
+Terminal=false
+Type=Application
+Categories=System
+GenericName=IPInfo
+Name[es]=IPInfo | información de red
+Name[fr]=Informations Réseau
