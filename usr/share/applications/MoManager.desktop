@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=MoManager create non-English Puppy
+Name[fr]=Traduire les fichiers pour une version multi-langues
+Name[es]=momanager-herramienta para Traducir archivos
+Icon=mini-font.xpm
+Comment=MoManager create non-English translations
+Comment[es]=MoManager-herramienta para Traducir archivos
+Exec=momanager
+Terminal=false
+Type=Application
+Categories=Utility
+GenericName=MoManager

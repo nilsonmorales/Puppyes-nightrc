@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ROX-Filer file manager
+Name[es]=ROX-Filer Administrador de archivos
+Icon=/usr/local/lib/X11/pixmaps/home48.png
+Comment=ROX-Filer file manager
+Comment[es]=Administrador de archivos
+Exec=rox-real
+Terminal=false
+Type=Application
+Categories=FileManager
+GenericName=ROX-Filer file manager
+Name[fr]=Gestionnaire des fichiers ROX-Filer

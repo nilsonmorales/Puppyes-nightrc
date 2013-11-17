@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Xconsole monitor console
+Icon=mini-sh1.xpm
+Comment=Xconsole monitor console /dev/console
+Comment[es]=Consola de monitor
+Exec=xconsole -verbose
+Terminal=false
+Type=Application
+Categories=TerminalEmulator
+GenericName=Xconsole
+Name[es]=Xconsole | consola de monitor
+Name[es]=Xconsole | consola de monitor
+Name[fr]=Console Xconsole

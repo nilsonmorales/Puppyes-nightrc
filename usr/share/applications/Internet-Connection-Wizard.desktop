@@ -1,0 +1,16 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Internet Connection Wizard
+Name[ru]=Мастер подключения к Интернет
+Name[hu_HU]=Internet kapcsolat varázsló
+Name[ja]=インターネット接続ウィザード
+Icon=wizard16.xpm
+Comment=Internet Connection Wizard
+Comment[es]=Asistente de Conexión a Internet
+Exec=connectwizard
+Terminal=false
+Type=Application
+Categories=X-SetupWizard
+GenericName=Internet Connection Wizard
+Name[es]=Asistente de Conexión a Internet
+Name[fr]=Assistant de connexion Internet

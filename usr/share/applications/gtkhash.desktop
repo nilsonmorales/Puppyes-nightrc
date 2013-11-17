@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=GtkHash checksum utility
+Icon=gtkhash.xpm
+Comment=GtkHash checksum utility
+Comment[es]=Utilidad de comprobación
+Exec=/usr/bin/gtkhash
+Terminal=false
+Type=Application
+Categories=Utility
+GenericName=GtkHash
+Name[fr]=Intégrité des fichiers GtkHash
+Name[es]=GtkHash utilidad de comprobación

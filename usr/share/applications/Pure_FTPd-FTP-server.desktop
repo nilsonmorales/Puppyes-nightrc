@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=PureFTPd FTP server
+Icon=pc2www.xpm
+Comment=PureFTPd FTP server
+Comment[es]=PureFTPd servidor FTP
+Exec=run-pureftpd
+Terminal=false
+Type=Application
+Categories=Network
+GenericName=PureFTPd FTP server
+Name[es]=PureFTPd | servidor FTP
+Name[es]=PureFTPd | servidor FTP
+Name[fr]=Serveur FTP PureFTPd

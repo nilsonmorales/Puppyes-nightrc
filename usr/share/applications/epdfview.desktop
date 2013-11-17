@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ePDFView PDF viewer
+Icon=mini-pdf.xpm
+Comment=ePDFView PDF viewer
+Comment[es]=Visor de PDF
+Exec=epdfview
+Terminal=false
+Type=Application
+Categories=X-DocumentUtility
+GenericName=ePDFView PDF viewer
+Name[es]=ePDFView | visor de PDF
+Name[fr]=Lecteur de PDF ePDFView

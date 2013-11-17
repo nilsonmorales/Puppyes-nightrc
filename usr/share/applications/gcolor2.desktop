@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Gcolor2 color chooser
+Icon=gcolor2.png
+Comment=color chooser and picker
+Comment[es]=Selección de color
+Exec=gcolor2
+Terminal=false
+Type=Application
+Categories=X-GraphicUtility
+GenericName=Gcolor2
+Name[es]=Gcolor2 | selección de color
+Name[fr]=Choix des couleurs Gcolor2

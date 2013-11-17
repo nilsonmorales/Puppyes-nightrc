@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=GAdmin-Rsync remote backup
+Name[fr]=Sauvegarde à distance GAdmin-Rsync
+Name[es]=GAdmin-Rsync Backup Remoto
+GenericName=GAdmin-Rsync
+Comment=GAdmin-Rsync remote backup
+Comment[es]=GAdmin-Rsync Respaldo Remoto
+Exec=gadmin-rsync
+Icon=gadmin-rsync.png
+Terminal=false
+Type=Application
+Categories=Archiving

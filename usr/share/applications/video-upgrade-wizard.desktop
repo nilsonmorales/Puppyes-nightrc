@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Video Upgrade Wizard
+Name[ru]=Мастер обновления видео
+Icon=x16.xpm
+Comment=Install later X drivers
+Comment[es]=Actualización de Video
+Exec=video_upgrade_wizard
+Terminal=false
+Type=Application
+Categories=X-SetupWizard
+GenericName=Video Upgrade Wizard
+Name[es]=Asistente de Actualización de Video
+Name[es]=Asistente de Actualización de Video
+Name[fr]=Assistant de mise à niveau vidéo

@@ -1,0 +1,21 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=CD/DVD drive Wizard
+Name[fr]=Assistant CD/DVD
+Name[ru]=Мастер настройки CD/DVD 
+Name[de]=CD/DVD Laufwerk Einstellungen
+Name[es]=Gestor de unidades CD/DVD
+Name[hu_HU]=CD/DVD meghajtó varázsló
+Name[ja]=CD/DVDドライブウィザード
+Name[zh_CN]=CD/DVD 驱动器向导
+Name[zh_TW]=CD/DVD 配置精靈
+Icon=wizard16.xpm
+Comment=CD/DVD drive Wizard
+Comment[es]=Asistente de CD/DVD
+Exec=cdburner-wizard
+Terminal=false
+Type=Application
+Categories=X-SetupWizard
+GenericName=CD/DVD drive Wizard
+Name[es]=Asistente de unidad CD/DVD
+Comment[fr]=Assistant du lecteur/graveur de CD/DVD

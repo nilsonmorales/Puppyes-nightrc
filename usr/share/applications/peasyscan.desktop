@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Peasyscan simple image scanner
+Icon=peasyscan.xpm
+Comment=Peasyscan simple image scanner
+Comment[es]=Simple escáner de imágenes
+Exec=/usr/local/peasyscan/peasyscan
+Terminal=false
+Type=Application
+Categories=X-GraphicUtility
+GenericName=Peasyscan
+Name[es]=Peasyscan | simple escáner de imágenes
+Name[es]=Peasyscan | simple escáner de imágenes
+Name[fr]=Scanner d'images simplifié Peasyscan

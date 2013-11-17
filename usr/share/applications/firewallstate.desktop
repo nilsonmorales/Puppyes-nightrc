@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Firewallstate Firewall Tray Icon
+Icon=mini-firewall.xpm
+Comment=Firewallstate Firewall Tray Icon
+Comment[es]=Firewall icono de la bandeja
+Exec=/usr/local/firewallstate
+Terminal=false
+Type=Application
+Categories=Network
+GenericName=Firewallstate Firewall Tray Icon
+Name[fr]=Firewallstate Firewall icône de la barre
+Name[es]=Firewallstate Firewall icono de la bandeja
