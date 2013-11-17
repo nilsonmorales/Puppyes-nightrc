@@ -1,0 +1,64 @@
+ace_penguins-pnigh-1.4|ace_penguins-pnigh|1.4||Fun|968K|pet_packages-5|ace_penguins-pnigh-1.4.pet|Juegos de mesa|puppy|precise||
+ajustar_brillo_monitor-1.1|ajustar_brillo_monitor|1.1||Desktop|116K|pet_packages-5|ajustar_brillo_monitor-1.1.pet||ajustar_brillo_monitor|puppy|precise||
+billargl_1.7|billargl_1.7|||Fun|1188K|pet_packages-5|billargl_1.7.pet||Juego de billar|puppy|lucid||
+bleachbit0.9.5|bleachbit0.9.5|||System|8084K|pet_packages-5|bleachbit0.9.5.pet||Libera espacio y mantiene la privacidad|puppy|precise||
+bmon-2.0.1-3|bmon|2.0.1-3||Network|106K|pet_packages-5|bmon_2.0.1-3_i386.pet||Bandwidth monitor|debian|precise||
+calcurse-2.8|calcurse|2.8||Utility|752K|pet_packages-5|calcurse-2.8.pet||text-based calendar and scheduling|puppy|precise||
+calibre_0.7.23|calibre_0.7.23|||Document|42704K|pet_packages-5|calibre_0.7.23.pet||Organiza,convierte,carga libros|puppy|lucid||
+chromium-27.0.1421.0|chromium|27.0.1421.0||Internet|141552K|pet_packages-5|chromium-27.0.1421.0.pet||Chrome Browser|puppy|precise||
+clamav-0.98|clamav|0.98||Utility|18084K|pet_packages-5|clamav-0.98.pet||anti-virus|puppy|lucid||
+clamvtk-1.2|clamvtk|1.2||Utility|508K|pet_packages-5|clamvtk-1.2.pet|+clamav|Interface para antivirus ClamAV|puppy|precise||
+clonekeen-8.4|clonekeen|8.4||Fun|1132K|pet_packages-5|clonekeen_8.4-puppy-es.pet||A clone of the classic DOS game, Commander Keen: Invasion of the Vorticons|puppy|lucid||
+cmatrix-1.2|cmatrix|1.2||Graphic|52K|pet_packages-5|cmatrix-1.2.pet||Matrix|puppy|precise||
+cmus-2.5.0|cmus|2.5.0||BuildingBlock|1532K|pet_packages-5|cmus-2.5.0.pet|+libiconv|powerful console music player|puppy|precise||
+Conky-puppy-es|conky|puppy-es||System|2408K|pet_packages-5|Conky-puppy-es.pet||graphical system monitor|puppy|lucid||
+dnsutils-9.8.4|dnsutils|9.8.4||Network|82748K|pet_packages-5|dnsutils_9.8.4.pet||Clientes relacionados con DNS: host, dig, nslookup y nsupdate|puppy|precise||
+dropbox_puppy_es-1.0|dropbox_puppy_es|1.0||Internet|16532K|pet_packages-5|dropbox_puppy_es-1.0.pet||Servicio de alojamiento de archivos|puppy|precise||
+eboard-1.1.1-5|eboard|1.1.1-5||Fun|1188K|pet_packages-5|eboard_1.1.1-5_i386.pet|+gnuchess|A graphical chessboard program|debian|wheezy||
+elinks-0.11.7|elinks|0.11.7||Internet|6300K|pet_packages-5|elinks-0.11.7.pet||Navegador web avanzado en modo texto|puppy|lucid||
+Firefox-19.0|Firefox|19.0||Internet|45160K|pet_packages-5|Firefox-19.0-Puppy-es.pet||Firefox web browser|puppy|lucid||
+feedingbottle|feedingbottle|3.2||Network|3924K|pet_packages-5|feedingbottle-3.2.pet||Aircrack-ng's GUI-Averigua claves WEP, WPA, WPA2|puppy|lucid||
+flareget-1.4.9|flareget|1.4.9||Network|3836K|pet_packages-5|flareget-1.4.9.pet|+qt|flareGet is a full featured multi-threaded and multisegment download manager|puppy|precise||
+flashplayer-11.2.202.251|flashplayer|11.2.202.251||Internet|18044K|pet_packages-5|flashplayer-11.2.202.251.pet||Preferences for Adobe Flash Player|puppy|lucid||
+focuswriter_1.3.2|focuswriter_1.3.2|||Document|9520K|pet_packages-5|focuswriter_1.3.2.pet||Entorno de escritura simple, libre de distracciones|puppy|lucid||
+giFT-0.6.2|giFT|0.6.2||Internet|2420K|pet_packages-5|giFT-ares-pack_for_puppylinux.pet||giFT-ares p2p|puppy|precise||
+gimp-2.8.2-pnight|gimp|2.8.2-pnight||Graphic|76524K|pet_packages-5|gimp-2.8.2-pnight.pet||Cree imágenes y edite fotografías|puppy|precise||
+gnuchess-6.0.3|gnuchess|6.0.3||Fun|1380K|pet_packages-5|gnuchess-6.0.3.pet|+eboard|Chess in terminal|puppy|precise||
+gshutdown-0.2.1|gshutdown|0.2.1||Setup|544K|pet_packages-5|gshutdown-0.2.1.pet||An advanced shutdown utility which allows you to schedule the shutdown or the restart of your computer.|puppy|precise||
+clipgrab-3.2.1.0|clipgrab|3.2.1.0||Internet|732K|pet_packages-5|clipgrab-3.2.1.0.pet|+qt4.4.8.2|Convierte vídeos descargados a MPEG4, MP3 u otros formatos en un solo paso.|puppy|precise||
+instantbird-1.3-pnight|instantbird|1.3-pnight||Internet|35068K|pet_packages-5|instantbird-1.3-pnight.pet||cliente chat|ubuntu|precise||
+IRSSI 0.8.15-irssi0.8.15|IRSSI 0.8.15|irssi0.8.15||pet_packages-5|6200K||irssi0.8.15.pet||IRSSI 0.8.15 IRSSI IRC|puppy|lucid||
+jre-1.6.0.22|jre|1.6.0.22||Utility|107656K|pet_packages-5|jre-1.6.0.22.pet||Java Runtime Environment|puppy|lucid||
+libiconv-1.14|libiconv|1.14||BuildingBlock|3200K|pet_packages-5|libiconv-1.14.pet||libiconv libs|puppy|precise||
+libreoffice-4-night|libreoffice|4.0||Document|534300K|pet_packages-5|libreoffice-4-night.pet|+LibreOffice_4.0.1.2_langpack_es,+LibreOffice_4.0.1.2_langpack_fr|office productivity suite|puppy|precise||
+LibreOffice_4.0.1.2_langpack_es|LibreOffice_4.0.1.2_langpack_es|||Document|28104K|pet_packages-5|LibreOffice_4.0.1.2_langpack_es.pet||locales es_ES|puppy|precise||
+LibreOffice_4.0.1.2_langpack_fr|LibreOffice_4.0.1.2_langpack_fr|||Document|34984K|pet_packages-5|LibreOffice_4.0.1.2_langpack_fr.pet||locales fr|puppy|precise||
+lighttpd_1.4.28-1.4.28|lighttpd_1.4.28|1.4.28||Network|1396K|pet_packages-5|lighttpd_1.4.28-puppy-es.pet||Un servidor web rápido con un minimo uso de recursos|puppy|lucid||
+minitube|minitube|2.0||Multimedia|4440K|pet_packages-5|minitube.pet||Watch YouTube videos|puppy|precise||
+monkey-0.12.0|monkey|0.12.0||Network|368K|pet_packages-5|monkey_0.12.0_lupq_511.pet||monkey server web V0.12.0|puppy|lucid||
+nano-2.3.2|nano|2.3.2||Document|2248K|pet_packages-5|nano-2.3.2.pet||Pequeño y amigable editor de texto inspirado en Pico|puppy|lucid||
+nyancat1.0-1.0|nyancat1.0|1.0||Fun|976K|pet_packages-5|nyancat1.0.pet||NyanCat Game|puppy|lucid||
+opera-12.02-es|opera-12.02-es|12.02||Internet|27545K|pet_packages-5|opera-12.02-es.pet|+opera12locale|Navegación más inteligente|puppy|lucid||
+opera-12.02-locale-en|opera12locale|opera-12.02||Internet|476K|pet_packages-5|opera-12.02-locale-en.pet||dependencia de opera-12.02-es|puppy|lucid||
+petget-20120418|petget|20120418||Setup|696K|pet_packages-5|petget-20120418.pet|+wget|Puppy Package Manager||||
+pidgin-2.10.7|pidgin|2.10.7||Internet|51956K|pet_packages-5|pidgin-2.10.7.pet|+pidgin_icon-1.0|Chat over IM.  Supports AIM, Google Talk, Jabber/XMPP, MSN, Yahoo and more|puppy|lucid||
+pidgin_icon-1.0|pidgin_icon|1.0||Internet|16K|pet_packages-5|pidgin_icon-2.10.7.pet||Lanzador de Pidgin en el menu|puppy|lucid||
+POU-0.0.1_20130610_puppyes-night|POU|0.0.1_20130610_puppyes-night||Setup|344K|pet_packages-5|POU-0.0.1_20130610_puppyes-night.pet|yad|POU (Puppy Online Updater) : update the OS||||
+prpltwtr-0.12.0|prpltwtr|0.12.0||pet_packages-5|5356K||prpltwtr-0.12.0.pet|+pidgin-2.10.7|prpltwtr libpurple twitter protocol|puppy|lucid||
+qt4.4.8.2|qt4.4.8.2|4.4.8.2||BuildingBlock|113648K|pet_packages-5|qt4.4.8.2.pet||qt|puppy|precise||
+quickpet_precise-0.7|quickpet_precise|0.7||Setup|508K|pet_packages-5|quickpet_precise-0.7.pet||Puppy Package Manager|puppy|precise||
+screen-4.00.03|screen 4.00.03|screen-4.00.03||pet_packages-5|658801K||screen-4.00.03.pet||screen|puppy|lucid||
+skype-4.2.0.11|skype|4.2.0.11||Internet|38388K|pet_packages-5|skype-4.2.0.11.pet|+qt4.4.4.8.2|Skype Internet Telephony|puppy|precise||
+thunderbird-night|thunderbird|night||Internet|39852K|pet_packages-5|thunderbird-night.pet||cliente de correo|puppy|precise||
+tint2_showdesktop|tint2_showdesktop|||Desktop|60K|pet_packages-5|tint2_showdesktop.pet||Opcion mostrar escritorio en tint2 |puppy|lucid||
+truco-1.0|truco|1.0||Fun|2896K|pet_packages-5|truco.pet|+wine|juego de naipes truco|puppy|5||
+ttytter-2.1|ttytter|2.1||Internet|248K|pet_packages-5|ttytter-2.1.pet||Commandline twitter client|puppy|precise||
+update-22-03-2013-0.2|update-22-03-2013|0.2||System|1108K|pet_packages-5|update-22-03-2013.pet||update-22-03-2013|puppy|precise||
+update-14-05-2013|update-14-05-2013|0.1||System|32K|pet_packages-5|update-14-05-2013.pet||update-14-05-2013|puppy|lucid||
+update_rc-25.05.13|update_rc|25.05.13||System|7844K|pet_packages-5|update_rc-25.05.13.pet||Update Rc 25-05-2013|puppy|precise||
+update_rc-12.06.13|update_rc|12.06.13||System|1812K|pet_packages-5|update_rc-12.06.13.pet||actualización 12 Jun 2013|puppy|precise||
+update_rc_22.06.13-0.2|update_rc_22.06.13|0.2||System|218K|pet_packages-5|update_rc_22.06.13.pet||actualizacion 22 jun 2013|puppy|precise||
+Vsftpd-2.0.5|Vsftpd|2.0.5||Internet|143K|pet_packages-5|Vsftpd.pet|+vsftpd-l10n|vsftp-very secure FTP-Server|puppy|lucid||
+vsftpd-l10n|vsftpd-l10n|0.1||Internet|48K|pet_packages-5|vsftpd-l10n.pet|+Vsftpd|locales para Vsftpd|puppy|precise||
+xdman-3.01|xdman|3.01||Network|916K|pet_packages-5|xdman-3.01.pet|+jre|Powerfull download accelarator and video downloader|puppy|precise||
+wine-1.5.0-|wine|1.5.0-||Document|137596K|pet_packages-5|wine-1.5.0-.pet||Wine |puppy|lucid||

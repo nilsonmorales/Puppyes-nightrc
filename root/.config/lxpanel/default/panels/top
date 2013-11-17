@@ -8,7 +8,7 @@ Global {
     widthtype=percent
     width=100
     height=25
-    transparent=0
+    transparent=1
     tintcolor=#000000
     alpha=255
     autohide=0
@@ -47,7 +47,7 @@ Plugin {
             id=/usr/share/applications/Pmount-mount-unmount-drives.desktop
         }
         Button {
-            id=/usr/share/applications/POU.desktop
+            id=/usr/share/applications/Puppy-package-manager.desktop
         }
         Button {
             id=/usr/share/applications/roxterm.desktop
