@@ -7,7 +7,7 @@ Global {
     margin=0
     widthtype=percent
     width=100
-    height=25
+    height=30
     transparent=1
     tintcolor=#000000
     alpha=255
@@ -21,7 +21,7 @@ Global {
     usefontsize=1
     background=0
     backgroundfile=/usr/share/themes/Murrine Wise Dark/gtk-2.0/Panels/panel-bg-dark.png
-    iconsize=26
+    iconsize=30
 }
 
 Plugin {
