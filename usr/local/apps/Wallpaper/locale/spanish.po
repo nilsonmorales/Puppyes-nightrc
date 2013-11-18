@@ -1,0 +1,65 @@
+#!/bin/sh
+# Wallpaper setter translation file
+# language es
+
+###################################
+# Radio buttons
+#
+export LOC_CENTRE="Centrado"
+export LOC_TILE="Mosaico"
+export LOC_SCALE="Escala"
+export LOC_STRETCH="Estirado"
+
+# Main window title
+export LOC_MAIN="Fondo de escritorio"
+
+####################################
+# Menu items
+#
+export LOC_SLIDESHOW="Iniciar/Detener presentación (este directorio)"
+export LOC_OPTIONS="Opciones"
+export LOC_QUIT="Salir"
+export LOC_FILE="Archivo"
+export LOC_EDIT="Editar"
+export LOC_VIEW="Ver"
+export LOC_HELP="Ayuda"
+
+# Image file frame
+export LOC_FILE_FRAME="Archivo de Imagen"
+# Current image frame #now preview
+export LOC_CURRENT_IMAGE="Vista Previa"
+# Mode frame
+export LOC_MODE="Modo"
+
+#######################################
+# Actions frame
+#
+export LOC_ACTIONS="Acciones"
+# buttons
+export LOC_APPLY="Aplicar"
+export LOC_CLEAR="Limpiar"
+export LOC_FILER="Archivo"
+export LOC_CLOSE="Cerrar"
+
+#######################################
+# About window
+#
+export LOC_ABOUT_WINDOW="Wallpaper: acerca de"
+export LOC_ABOUT_FRAME="Acerca de"
+export LOC_ABOUT_TEXT="     Escrito en Octubre de 2006 por Nathan Fisher especialmente para Grafpup Linux. Wallpaper le permite fácilmente ajustar el fondo de pantalla o usar una serie de imágenes como presentación de diapositivas. Este programa es software libre lanzado bajo la licencia GPL versión 2."
+
+#######################################
+# Preferences
+#
+export LOC_OPTIONS_WINDOW="Wallpaper: opciones"
+export LOC_SLIDESHOW_FRAME="Presentación"
+export LOC_DELAY="Atraso de presentación (segundos)"
+export LOC_CHOOSE="Elegir"
+export LOC_DELAY1="Atraso de presentación"
+export LOC_DIR="Directorio de presentación"
+export LOC_DEFAULTS="Programas predefinidos"
+export LOC_FILEMANAGER="Gestor de Archivos"
+export LOC_EDITOR="Editor de Imágenes"
+export LOC_VIEWER="Visor de Imágenes"
+
+

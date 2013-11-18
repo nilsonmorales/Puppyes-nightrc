@@ -1,0 +1,69 @@
+#!/bin/bash
+#sch_shutdown by josejp2424
+#20130218 internationalized (vicmz)
+
+export TEXTDOMAIN=sch_shutdown
+export OUTPUT_CHARSET=UTF-8
+
+
+MAIN_DIALOG=' 
+<window title="'$(gettext 'Shutdown PC')'"> 
+<vbox> 
+
+<text><label>"'$( gettext 'Shutdown PC')'"</label></text>
+		<pixmap>
+<height>48</height>
+<width>48</width>
+			<input file>/usr/share/pixmaps/system-log-out96.png</input>
+		</pixmap>
+<button> 
+<label>'$(gettext 'Restart X server             ')'</label> 
+<height>24</height>
+<width>24</width>
+<input file>/usr/share/pixmaps/x16.xpm</input>
+<action>"exec restartwm &"</action> 
+</button> 
+<button> 
+<label>'$(gettext 'Exit to prompt            ')'</label>
+<height>24</height>
+<width>24</width> 
+<input file>/usr/share/pixmaps/console35.png</input>
+<action>"exec wmexit &"</action> 
+</button> 
+<button> 
+<label>'$(gettext 'Reboot PC                     ')'</label> 
+<height>24</height>
+<width>24</width>
+<input file>/usr/share/pixmaps/reiniciar_.png</input>
+<action>"exec wmreboot &"</action> 
+</button> 
+<button> 
+<label>'$(gettext 'Shutdown PC                  ')'</label>
+<height>24</height>
+<width>24</width> 
+<input file>/usr/share/pixmaps/shutdown_.png</input>
+<action>"exec wmpoweroff &"</action>
+</button>
+<text><label>""</label></text>
+<text><label>"'$(gettext 'Or do you prefer to schedule the shutdown time?')' "</label></text>
+<text><label>""</label></text>
+<button>
+      <label>'$(gettext 'Schedule shutdown time')'</label>
+      <height>24</height>
+<width>24</width>
+      <input file>/usr/local/lib/X11/mini-icons/mini-clock.xpm</input>
+      <action>exec z_shutdowncountdown &</action>
+      <action type="exit">CLOSE &</action>
+     </button>
+<text><label>""</label></text>
+<button> 
+<label>'$(gettext 'Exit                          ')'</label>
+<height>24</height>
+<width>24</width>
+<input file>/usr/local/lib/X11/mini-icons/mini.exit.xpm</input>
+
+<action type="exit">CLOSE &</action> 
+</button> 
+</vbox> 
+</window> 
+' gtkdialog3 --program=MAIN_DIALOG
