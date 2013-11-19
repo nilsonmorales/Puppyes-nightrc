@@ -34,7 +34,7 @@ Plugin {
 Plugin {
     type = menu
     Config {
-        image=/usr/share/doc/puppylogo96.png
+        image=/root/.config/lxpanel/lxmenu.png
         system {
         }
         item {
@@ -57,6 +57,57 @@ Plugin {
 }
 
 Plugin {
+    type = space
+    Config {
+        Size=2
+    }
+}
+
+Plugin {
+    type = space
+    Config {
+        Size=2
+    }
+}
+
+Plugin {
+    type = pager
+}
+
+Plugin {
+    type = space
+    Config {
+        Size=2
+    }
+}
+
+Plugin {
+    type = launchbar
+    Config {
+        Button {
+            id=/usr/share/applications/ROX-Filer-file-manager.desktop
+        }
+    }
+}
+
+Plugin {
+    type = wincmd
+    Config {
+        image=window-manager
+        Button1=iconify
+        Button2=shade
+        Toggle=0
+    }
+}
+
+Plugin {
+    type = space
+    Config {
+        Size=2
+    }
+}
+
+Plugin {
     type = taskbar
     expand=1
     Config {
@@ -66,7 +117,7 @@ Plugin {
         UseMouseWheel=1
         UseUrgencyHint=1
         FlatButton=0
-        MaxTaskWidth=124
+        MaxTaskWidth=100
         spacing=1
         GroupedTasks=0
     }
@@ -84,10 +135,6 @@ Plugin {
     Config {
         Size=4
     }
-}
-
-Plugin {
-    type = pager
 }
 
 Plugin {

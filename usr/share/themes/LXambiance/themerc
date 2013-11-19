@@ -1,0 +1,159 @@
+# Theme Name: LXAmbiance
+# Author: Izzy (md_rivers@yahoo.com)
+# MIT license (see included text)
+# All colors were taken from the Ambiance theme, not sure if colors can be copyrighted...
+
+
+### Menu Color settings
+menu.border.color: #353531
+
+menu.title.bg: Flat Border Gradient Vertical
+menu.title.bg.color: #464744
+menu.title.bg.colorTo: #555753
+menu.title.bg.border.color: #555753
+menu.title.text.color: #ffffff
+menu.title.text.justify: Center
+
+menu.items.bg: Flat Solid
+menu.items.bg.color: #454441
+menu.items.text.color: #dfdbd4
+menu.items.disable.text.color: #a9a5a2
+
+menu.items.active.bg: Flat Border Gradient SplitVertical
+menu.items.active.bg.color: #F07746
+menu.items.active.bg.color.splitTo: #F98658
+menu.items.active.bg.colorTo: #EE7443
+menu.items.active.bg.colorTo.splitTo: #EC7240
+menu.items.active.bg.border.color: #D66132
+menu.items.active.text.color: #ffffff
+
+
+### The window that is active
+window.active.title.bg: Flat Border Gradient Vertical
+window.active.title.bg.color: #3E3D39
+window.active.title.bg.colorTo: #575651
+window.active.title.bg.border.color: #484741
+window.active.title.separator.color: #353531
+
+window.active.label.bg: Parentrelative
+window.active.label.text.color: #eeeeee
+
+window.active.handle.bg: Flat Border Solid
+window.active.handle.bg.color: #484741
+window.active.handle.bg.border.color: #000000
+
+window.active.grip.bg: parentrelative
+
+window.active.button.unpressed.bg: Flat Border Gradient Vertical
+window.active.button.unpressed.bg.color: #f07746
+window.active.button.unpressed.bg.colorTo: #d06136
+window.active.button.unpressed.bg.border.color: #5B5B56
+window.active.button.unpressed.image.color: #000000
+
+window.active.button.pressed.bg: Flat Border Gradient Vertical
+window.active.button.pressed.bg.color: #f07746
+window.active.button.pressed.bg.colorTo: #d06136
+window.active.button.pressed.bg.border.color: #5B5B56
+window.active.button.pressed.image.color: #000000
+
+window.active.button.disabled.bg: Flat Border Gradient Vertical
+window.active.button.disabled.bg.color: #f07746
+window.active.button.disabled.bg.colorTo: #d06136
+window.active.button.disabled.bg.border.color: #5B5B56
+window.active.button.disabled.image.color: #656565
+
+window.active.button.hover.bg: Flat Border Gradient Vertical
+window.active.button.hover.bg.color: #ff8e62
+window.active.button.hover.bg.colorTo: #ff7f4c
+window.active.button.hover.bg.border.color: #5B5B56
+window.active.button.hover.image.color: #ff8e62
+
+
+window.active.button.toggled.bg: Flat Border Gradient Vertical
+window.active.button.toggled.bg.color: #f07746
+window.active.button.toggled.bg.colorTo: #d06136
+window.active.button.toggled.bg.border.color: #5B5B56
+window.active.button.toggled.image.color: #000000
+
+
+### Window inactive
+window.inactive.border.color: #444444
+
+window.inactive.title.bg: Flat Border Gradient Vertical
+window.inactive.title.bg.color: #63E3D39
+window.inactive.title.bg.colorTo: #403F3C
+window.inactive.title.bg.border.color: #5B5B56
+
+
+window.inactive.label.bg: Parentrelative
+window.inactive.label.text.color: #999999
+
+window.inactive.handle.bg: Flat Solid
+window.inactive.handle.bg.color: #444444
+
+window.inactive.grip.bg: Parentrelative
+
+window.inactive.button.unpressed.bg: Flat Solid
+window.inactive.button.unpressed.bg.color: #5B5B56
+window.inactive.button.unpressed.bg.colorTo: #5B5B56
+window.inactive.button.unpressed.bg.border.color: #5B5B56
+window.inactive.button.unpressed.image.color: #3A3935
+
+window.inactive.button.disabled.bg: Flat Solid
+window.inactive.button.disabled.bg.color: #5B5B56
+window.inactive.button.disabled.bg.colorTo: #5B5B56
+window.inactive.button.disabled.bg.border.color: #5B5B56
+window.inactive.button.disabled.image.color: #3A3935
+
+window.inactive.button.pressed.bg: Flat Solid
+window.inactive.button.pressed.bg.color: #5B5B56
+window.inactive.button.pressed.bg.colorTo: #5B5B56
+window.inactive.button.pressed.bg.border.color: #5B5B56
+window.inactive.button.pressed.image.color: #CACACA
+
+window.inactive.button.toggled.bg: Flat Solid
+window.inactive.button.toggled.bg.color: #5B5B56
+window.inactive.button.toggled.bg.colorTo: #5B5B56
+window.inactive.button.toggled.bg.border.color: #5B5B56
+window.inactive.button.toggled.image.color: #3A3935
+
+
+### Everything else
+border.width: 1
+padding.width: 2
+padding.height: 3
+window.handle.width: 0
+window.client.padding.width: 0
+window.client.padding.height: 0
+border.color: #1f252b
+menu.overlap: 0
+
+### Fonts
+
+window.active.label.text.font:
+window.inactive.label.text.font:
+menu.items.font:
+menu.title.text.font:
+
+### On Screen Display
+
+osd.border.width: 1
+osd.border.color:  #CCCBCA
+
+osd.bg: raised solid
+osd.bg.color: #F2F1F0
+osd.bg.border.color: #CCCBCA
+
+osd.label.bg: parentrelative
+osd.label.bg.color: #efefef
+osd.label.bg.border.color: #9c9e9c
+
+osd.label.text.color: #333333
+!# yeah whatever, this is fine anyhoo?
+osd.hilight.bg: flat solid 
+osd.hilight.bg.color: #D1E1E8
+
+osd.unhilight.bg: flat solid
+osd.unhilight.bg.color: #E3E3E0
+
+

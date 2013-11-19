@@ -1,13 +1,13 @@
 # -- THEME AUTO-WRITTEN DO NOT EDIT
-include "/usr/share/themes/SlicknesS-night/gtk-2.0/gtkrc"
+include "/usr/share/themes/Murrine Human Dark/gtk-2.0/gtkrc"
 
 style "user-font" {
-	font_name = "Zekton 14"
+	font_name = "Ubuntu 15"
 }
 
 widget_class "*" style "user-font"
 
-gtk-font-name="Zekton 14"
+gtk-font-name="Ubuntu 15"
 
 include "/root/.gtkrc.mine"
 
