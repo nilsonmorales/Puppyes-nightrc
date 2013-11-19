@@ -6,7 +6,8 @@ export TEXTDOMAIN=sch_shutdown
 export OUTPUT_CHARSET=UTF-8
 
 
-MAIN_DIALOG=' 
+#MAIN_DIALOG=' 
+export aku='
 <window title="'$(gettext 'Shutdown PC')'"> 
 <vbox> 
 
@@ -65,5 +66,6 @@ MAIN_DIALOG='
 <action type="exit">CLOSE &</action> 
 </button> 
 </vbox> 
-</window> 
-' gtkdialog3 --program=MAIN_DIALOG
+</window>' 
+gtkdialog --program=aku --gtk-module=gtk2desklet
+#' gtkdialog3 --program=MAIN_DIALOG
