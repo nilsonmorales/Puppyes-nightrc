@@ -34,19 +34,11 @@ Plugin {
 Plugin {
     type = menu
     Config {
-        name=Menu
         image=/usr/share/doc/puppylogo96.png
-        name=Menu
-        name=Menu
-        name=Menu
-        name=Menu
-        name=Menu
-        name=Menu
-        name=Menu
-        name=Menu
         system {
         }
-        separator {
+        item {
+            command=run
         }
         separator {
         }
@@ -61,20 +53,6 @@ Plugin {
     type = space
     Config {
         Size=2
-    }
-}
-
-Plugin {
-    type = space
-    Config {
-        Size=2
-    }
-}
-
-Plugin {
-    type = space
-    Config {
-        Size=10
     }
 }
 
@@ -109,17 +87,7 @@ Plugin {
 }
 
 Plugin {
-    type = space
-    Config {
-        Size=4
-    }
-}
-
-Plugin {
-    type = space
-    Config {
-        Size=5
-    }
+    type = pager
 }
 
 Plugin {
@@ -127,16 +95,23 @@ Plugin {
 }
 
 Plugin {
-    type = space
+    type = dclock
     Config {
-        Size=5
+        ClockFmt=%-I:%M
+        TooltipFmt=%A %d %B
+        Action=set-time-for-puppy
+        BoldFont=1
+        IconOnly=0
+        CenterText=0
     }
 }
 
 Plugin {
-    type = space
+    type = launchbar
     Config {
-        Size=5
+        Button {
+            id=/usr/share/applications/scheduled-shutdown.desktop
+        }
     }
 }
 
