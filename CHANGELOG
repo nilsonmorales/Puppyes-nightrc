@@ -1,0 +1,204 @@
+
+
+# Puppyes-os codename night en estado Real candidate
+# Aqui se llevarán los cambios a partir del lanzamiento de la iso en RC 
+
+-------------------------------------------------------------------------
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 15:12:49
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 15:12:49
+
+º Se crea el readme detallando el objetivo del proyecto Puppyes 
+--------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 16:01:12
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 16:01:12
+
+º Primer commit con los updates hasta la fecha que incluyen 
+º traducciones, librerias necesarias y bugfixes menores 
+---------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 16:26:36
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 16:26:36
+
+º Pequeñas modificaciones al Readme.md
+----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 16:53:26
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 16:53:26
+
+º Tecla PrintScreen se habilita para tomar capturas de pantalla y se modifica 
+º archivo rc.xml 
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 22:42:29
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 22:42:29
+
+º Librerias necesarias para que aplicaciones de terminal básicas se agregan
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 20:37:34
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 20:37:34
+
+º Modificaciones al archivo rc.xml 
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 23:00:15
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 23:00:15
+
+º Revisión e inclusión al sistema de POU Puppy Online Updater 
+º interface muy util para actualizar el sistema sin importar que versión sea 
+º capaz de manejar repositorios propios.
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 23:22:53
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 23:22:53
+
+º Se empiezan a traducir archivos .desktop a idioma español.
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 23:39:42
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-15 23:39:42
+
+º Sistema POU es agregado a lxpanel se remueven iconos de redes sociales del panel.
+------------------------------------------------------------------------------
+
+Autor: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-16 07:09:14
+Committer: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-16 07:09:14
+
+º Se agrega un listado de posibles aplicaciones que deben y no deben ir en la 
+º version final , se acordó votar quien obtenga mayor puntuación se incluirá.
+------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 16:52:38
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 16:52:38
+
+º Revisión al listado de aplicaciones.
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 17:25:38
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 17:25:38
+
+º Se agrega copia de la Licencia Pública GNU 
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 18:37:25
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 18:37:25
+
+º Traducción a idioma español de archivos .desktop
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 18:45:18
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 18:45:18
+
+º Se elimina archivo que se envió en commit por equivocación
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 20:24:23
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 20:24:23
+
+º Traducción de archivos .desktop
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 21:51:38
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 21:51:38
+
+º Se agrega un .gitignore en un intento de crear carpeta vacia 
+º /root/my-documents/images
+------------------------------------------------------------------------------
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 22:23:52
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 22:23:52
+
+º Se elimina archivo .gitignore
+-----------------------------------------------------------------------------
+
+Autor: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-16 22:17:22
+Committer: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-16 22:17:22
+
+º Se crea carpeta para alojar capturas de pantalla 
+º /root/my-documents/images/.printscreen
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 22:34:18
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-16 22:34:18
+
+º Merge branch 'master' of https://github.com/nilsonmorales/Puppyes-nightrc
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-17 01:04:37
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-17 01:04:37
+
+º Modificación al ppm para que muestre el repositorio del proyecto al inicio
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-17 22:46:51
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-17 22:46:51
+
+º Se agregan librearias python básicas para muchas aplicaciones escritas en ese
+º lenguaje.
+------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-17 23:26:08
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-17 23:26:08
+
+º Se comienza a trabajar en la apariencia y posible eyecandy de la versión final.
+-----------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 00:32:15
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 00:32:15
+
+º Se agregan modulos gtk necesarios para los temas de ventanas gtk
+º Se incluyen temas gtk 
+------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 00:34:08
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 00:34:08
+
+º Se agrega tema gtk SlicknesS-night un tema con apariencia Puppylinux
+------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 01:44:44
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 01:44:44
+
+º Se cambia la version de Nathan wallpaper por una mas estable 
+º se corrige el hecho de que la aplicación no apuntaba a la carpeta backgrounds
+º al inicio lo que confundía a nuevos usuarios sin conocimiento sobre Puppy.
+------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 02:21:23
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 02:21:23
+
+º Se cambia la apariencia del freememapplet-tray el ícono que indica la 
+º cantidad de espacio disponible en pupsave en una instalación frugal.
+------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 07:59:45
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 07:59:45
+
+º Se agregan librerias necesarias para gitk interface en gtk para el 
+º manejo de control de versiones.
+------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 08:05:53
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 08:05:53
+
+º Se actualiza version de bash 3 pro bash 4.2.0
+-------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
