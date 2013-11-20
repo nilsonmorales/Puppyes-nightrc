@@ -40,3 +40,6 @@ rox --RPC << EOF
 </env:Envelope>
 
 EOF
+
+feh --bg-scale $IMAGE
+cp -f $IMAGE /root/.background
