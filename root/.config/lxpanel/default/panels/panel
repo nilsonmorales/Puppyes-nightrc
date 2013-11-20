@@ -85,7 +85,7 @@ Plugin {
     type = launchbar
     Config {
         Button {
-            id=/usr/share/applications/ROX-Filer-file-manager.desktop
+            id=/usr/share/applications/ROX.desktop
         }
     }
 }

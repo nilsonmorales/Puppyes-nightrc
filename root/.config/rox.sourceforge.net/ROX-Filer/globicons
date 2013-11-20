@@ -36,6 +36,9 @@
   <rule match="/usr/local/bin/defaultcontact">
     <icon>/usr/local/lib/X11/pixmaps/contact48.png</icon>
   </rule>
+  <rule match="/usr/bin/roxterm">
+    <icon>/usr/local/lib/X11/pixmaps/console48.png</icon>
+  </rule>
   <rule match="/usr/sbin/dotpup">
     <icon>/usr/local/lib/X11/pixmaps/pet48.png</icon>
   </rule>
