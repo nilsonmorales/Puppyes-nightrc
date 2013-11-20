@@ -1,0 +1,15 @@
+#!/bin/sh
+# elementos que se ejecutan en el systray
+
+xbatalarm &  freememapplet_tray &    
+pup-volume-monitor &
+internet-tray &
+powerapplet_tray & volumeicon &
+
+
+
+
+
+
+
+
