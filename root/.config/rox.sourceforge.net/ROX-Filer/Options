@@ -78,8 +78,8 @@
   <Option name="display_door_colour">#ff00ff</Option>
   <Option name="icon_theme">ROX</Option>
   <Option name="filer_beep_multi">1</Option>
-  <Option name="pinboard_shadow_labels">0</Option>
-  <Option name="label_font">Zekton 16</Option>
+  <Option name="pinboard_shadow_labels">2</Option>
+  <Option name="label_font">Ubuntu Bold 15</Option>
   <Option name="iconify_dir">0</Option>
   <Option name="pinboard_forward_buttons_13">1</Option>
   <Option name="action_eject_command">eject</Option>

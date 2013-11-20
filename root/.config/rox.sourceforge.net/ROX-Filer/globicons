@@ -7,7 +7,7 @@
     <icon>/usr/local/lib/X11/pixmaps/save48.png</icon>
   </rule>
   <rule match="/root/.pup_event/drive_sda1">
-    <icon>/usr/local/lib/X11/pixmaps/drive_mntd48.png</icon>
+    <icon>/usr/local/lib/X11/pixmaps/drive48.png</icon>
   </rule>
   <rule match="/root/.pup_event/drive_sda2">
     <icon>/usr/local/lib/X11/pixmaps/drive48.png</icon>
