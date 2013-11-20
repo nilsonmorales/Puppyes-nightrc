@@ -1,0 +1,1 @@
+echo "0 0 * * * updatedb" >> /var/spool/cron/crontabs/root; echo "#cada dia a las 0hs indexara mlocate" >> /var/spool/cron/crontabs/root
