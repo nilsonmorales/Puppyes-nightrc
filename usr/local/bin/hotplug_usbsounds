@@ -1,0 +1,28 @@
+#!/bin/sh
+# Scritp para repruducir sonidos en USB al Insertar/Extraer
+# Creado por om3ganet (msn@om3ga.net)
+# --------------------------------------------------
+# This script could probably be cleaned up, and add checking
+# of unrecognised usb sounds (and play fail noise)
+
+# cambia esto si quieres sonidos de otra ruta
+SNDDIR=/usr/share/sounds/;
+# revisar frecuencia (por defecto es 0.25)
+CHECKFREQ=0.25
+
+
+# No edite estas lineas de abajo
+# --------------------------------------------------
+DEVCOUNT=`lsusb | wc -l | awk '{ print $1 }'`
+OLDDEVCOUNT=$DEVCOUNT;
+
+while(true) do
+  sleep $CHECKFREQ;
+  DEVCOUNT=`lsusb | wc -l | awk '{ print $1 }'`
+  if [ $DEVCOUNT -gt $OLDDEVCOUNT ]; then
+    play `echo $SNDDIR`insert.wav;
+  else if [ $DEVCOUNT -lt $OLDDEVCOUNT ]; then
+    play `echo $SNDDIR`remove.wav;
+  fi fi
+  OLDDEVCOUNT=$DEVCOUNT;
+done

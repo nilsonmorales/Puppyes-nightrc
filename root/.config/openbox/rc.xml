@@ -157,6 +157,11 @@
         <menu>root-menu</menu>
       </action>
     </keybind>
+    <keybind key="C-b">
+      <action name="Execute">
+        <command>/usr/local/apps/Xlock</command>
+      </action>
+    </keybind>
     <keybind key="C-i">
       <action name="Execute">
         <command>defaultbrowser</command>
@@ -204,6 +209,11 @@
     </keybind>
     <keybind key="A-F3">
       <action name="Iconify"/>
+    </keybind>
+    <keybind key="A-F2">
+      <action name="Execute">
+        <command>htop</command>
+      </action>
     </keybind>
     <keybind key="C-A-Left">
       <action name="DesktopLeft">
