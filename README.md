@@ -22,10 +22,13 @@ o esté posiblemente en un nueva iso.
 [Descarga via BitTorrent] 
 (http://torrentracker.com.ar/) [recomendada] 
 
+[Galeria de imágenes] 
+(http://postimg.org/gallery/8mkl7iec/)
+
 Puppy linux enteramente en español
 ==================================
 
-Que es puppy-es?. Es un proyecto del canal IRC en español para tener nuestra propia versión de PuppyLinux enteramente al español.
+¿Que es puppy-es?. Es un proyecto del canal IRC en español para tener nuestra propia versión de PuppyLinux enteramente al español.
 Todavía falta mucho trabajo pero si estas interesado, sería de nuestro agrado que participaras.
 Puppy-es Night rc esta basada en la version de Puppylinux precise y se aprovecharon actualizaciones hechas por desarrolladores y miembros del canal en IRC.
 Se actualizaron paquetes y programas.
