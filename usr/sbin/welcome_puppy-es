@@ -1,0 +1,138 @@
+#!/bin/sh
+    #!/bin/bash
+    # choosepanel panel chooser (English version) by José Peralta (josejp2424)
+    #internationalized (nilsonmorales)
+     
+    export TEXTDOMAIN=welcome_puppy-es
+    export OUTPUT_CHARSET=UTF-8
+     
+    MAIN_DIALOG='
+    <window title="'$(gettext 'Welcome Puppy-es')'">
+    <notebook page="0" labels="'$(gettext 'language | Pcmanfm and Rox-filer | Internet |')'">
+    <vbox border-width="20">
+    <text justify="2">
+                                    <label>"'$(gettext 'welcome to puppy-es, navigate through the tabs to load the initial settings,  ')'"</label>
+                            </text>
+                            <text>
+          <label> .</label>
+         </text>
+                           
+       
+    <pixmap>
+    <height>120</height>
+    <width>120</width>
+                            <input file>/usr/share/icons/gnome/scalable/apps/network 2.png</input>
+                           
+                    </pixmap>
+                   
+    <text justify="2">
+                                    <label>"'$(gettext 'extra langpack for spanish and french , if it is your native language, use it.  ')'"</label>
+                            </text>
+     
+    <text>
+          <label> .</label>
+         </text>
+         <button>
+         <height>32</height>
+              <width>32</width>
+              <input file>/usr/local/lib/X11/pixmaps/pet48.png</input>
+          <label>"'$(gettext 'Spanish.')'"</label>
+          <action>petget /usr/local/choosepanel/langpack_es-20130213.pet</action>
+        </button>
+        <text>
+          <label>.                                                                                  .</label>
+         </text>
+         <button>
+         <height>32</height>
+              <width>32</width>
+              <input file>/usr/local/lib/X11/pixmaps/pet48.png</input>
+              <label>"'$(gettext 'French')'"</label>
+              <action>petget /usr/local/choosepanel/langpack_fr-20130322.pet</action>
+         </button>
+     </vbox>
+    <vbox border-width="20">
+    <text justify="2">
+                                    <label>"'$( gettext 'puppy night has by default rox file manager. But if you are not comfortable with this manager. You can choose to install pcmanfm. This is the file manager that comes default LXDE. ')'"</label>
+                            </text>
+                             <text>
+          <label> .</label>
+         </text>
+       
+     <button>
+     <height>30</height>
+    <width>30</width>
+          <input file>/usr/local/choosepanel/pcmanfm2.png</input>
+          <label>"'$( gettext 'install PCmanfm')'"</label>
+          <action>PCmanfm_pnight</action>
+        </button>
+         <text>
+          <label> .</label>
+         </text>
+         <hbox>
+         <button>
+              <label>"'$( gettext 'Display ROX file manager')'"</label>
+              <input file>/usr/local/lib/X11/pixmaps/home24.png</input>
+              <action>defaultimageviewer /usr/local/choosepanel/rox.png</action>
+         </button>
+         <text>
+          <label>.                               .</label>
+         </text>   
+         <button>
+              <label>"'$( gettext 'Display PCmanfm file manager')'"</label>
+              <input file>/usr/local/choosepanel/pcmanfm2.png</input>
+              <action>defaultimageviewer /usr/local/choosepanel/pcmanfm.png</action>
+         </button>
+         </hbox>
+         <text>
+          <label> .</label>
+         </text>   
+    <button>
+          <input file>/usr/local/lib/X11/pixmaps/home48.png</input>
+          <label>"'$( gettext 'return rox file manager')'"</label>
+          <action>volver_a_rox</action>
+        </button>     
+    </vbox>
+    <vbox border-width="20">
+    <text justify="2">
+                                    <label>"'$(gettext 'We are the final stretch, now just need the internet connection. completed once a server restart x ')'"</label>
+                            </text>
+     <text>
+          <label> .</label>
+         </text>
+     
+         <hbox>
+         <button>
+         <height>30</height>
+              <width>30</width>
+          <input file>/usr/local/choosepanel/preferences-system-network.png</input>
+          <label>"'$(gettext 'Connect to internet. ')'"</label>
+          <action>"exec /usr/local/bin/defaultconnect "</action>
+          </button>
+         <text>
+          <label>.                                               .</label>
+         </text>
+           
+         <button>
+         <height>30</height>
+              <width>30</width>
+          <input file>/usr/local/choosepanel/system-log-out.png</input>
+          <label>"'$(gettext 'Restart X server')'"</label>
+          <action>reinicio-y-agradecimiento</action>
+          </button>
+        </hbox>     
+     <text>
+          <label>.</label>
+         </text>
+     <text>
+          <label>.</label>
+         </text>       
+     <pixmap justify="2">
+     <height>180</height>
+                            <width>180</width>
+                            <input file>/usr/share/doc/puppylogo140.png</input>
+                           
+                    </pixmap>         
+    </vbox>
+    </notebook>
+    </window>
+    ' gtkdialog3 --program=MAIN_DIALOG
