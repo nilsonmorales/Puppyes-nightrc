@@ -1,0 +1,18 @@
+pixmap_path "/root/.icons/rox-toolbar/TWG_retina/"
+ style "normal" {
+   stock["gtk-go-back"] = {{"back.png"}} 
+  stock["gtk-go-forward"] = {{"forward.png"}} 
+   stock["gtk-go-up"] = {{"up.png"}} 
+  stock["gtk-home"] = {{"home.png"}} 
+  stock["gtk-zoom-in"] = {{"zoomin.png"}} 
+  stock["gtk-zoom-fit"] = {{"zoomout.png"}} 
+  stock["gtk-jump-to"] = {{"bookmarks.png"}} 
+  stock["gtk-sort-ascending"] = {{"sort.png"}}
+  stock["gtk-help"] = {{"help.png"}} 
+  stock["rox-select"] = {{"select.png"}}
+  stock["rox-show-hidden"] = {{"hidden.png"}} 
+  stock["rox-show-details"] = {{"details.png"}} 
+  stock["gtk-refresh"] = {{"gtk-refresh.png"}}
+  stock["gtk-close"] = {{"close.png"}}
+}
+widget "*" style "normal"

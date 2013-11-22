@@ -13,12 +13,12 @@
   <Option name="pinboard_fg_colour">#de16dbb7dbb7</Option>
   <Option name="action_link">1</Option>
   <Option name="pinboard_clamp_icons">1</Option>
-  <Option name="bind_dclick_resizes">1</Option>
+  <Option name="bind_dclick_resizes">0</Option>
   <Option name="display_pipe_colour">#d3ebd1cb1db0</Option>
   <Option name="panel_style">1</Option>
   <Option name="pinboard_tasklist_per_workspace">0</Option>
   <Option name="panel_on_top">0</Option>
-  <Option name="toolbar_min_width">1</Option>
+  <Option name="toolbar_min_width">0</Option>
   <Option name="panel_avoid">1</Option>
   <Option name="dnd_drag_to_icons">1</Option>
   <Option name="display_cdev_colour">#000000000000</Option>
@@ -53,7 +53,7 @@
   <Option name="display_show_full_type">1</Option>
   <Option name="display_icon_size">0</Option>
   <Option name="vertical_order_small">0</Option>
-  <Option name="display_sort_by">0</Option>
+  <Option name="display_sort_by">1</Option>
   <Option name="action_copy">1</Option>
   <Option name="dnd_uri_handler">xterm -e wget $1</Option>
   <Option name="dnd_spring_delay">400.000000</Option>
