@@ -8,3 +8,4 @@ StartupNotify=true
 Name=Markup Attribute Composition
 GenericName=Markup
 Comment=Markup language
+Comment[es]=Lenguaje de marcado

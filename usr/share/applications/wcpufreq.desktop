@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=CPU Frequency Scaling Tool
+Name[es]=Herramienta Escala de Frecuencia CPU
+#Icon=/usr/local/lib/X11/mini-icons/so.xpm
+Icon=/usr/share/icons/devices/cpu.png
+Comment=CPU Frequency Scaling Tool
+Comment[es]=Herramienta Escala de Frecuencia CPU
+GenericName=CPU Frequency Scaling Tool
+Exec=wcpufreq
+Terminal=false
+Type=Application
+Categories=System
+Name[es]=Herramienta Escala de Frecuencia CPU
+Name[fr]=Ajustement de la fréquence du CPU

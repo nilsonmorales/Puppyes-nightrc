@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=mhWaveEdit audio recorder/editor
+Icon=mhwaveedit.xpm
+Comment=Audio recorder/editor
+Comment[es]=Grabador/editor de audio
+Exec=mhwaveedit
+Terminal=false
+Type=Application
+Categories=AudioVideo
+GenericName=mhWaveEdit
+Name[es]=mhWaveEdit | editor/grabador de sonido
+Name[fr]=Editeur/Enregistreur audio mhWaveEdit

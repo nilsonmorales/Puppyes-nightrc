@@ -5,6 +5,7 @@ StartupNotify=false
 Terminal=false
 Type=Application
 Comment=A minimalistic PDF viewer
+Comment[es]=Visor de PDF minimalista
 Comment[de]=Ein minimalistischer PDF-Betrachter
 Encoding=UTF-8
 Name=Zathura PDF Viewer

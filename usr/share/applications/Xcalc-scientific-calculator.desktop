@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Xcalc scientific calculator
+Icon=mini-calc.xpm
+Comment=Xcalc scientific calculator
+Comment[es]=Calculadora científica
+Exec=xcalc
+Terminal=false
+Type=Application
+Categories=Calculator
+GenericName=Xcalc scientific calculator
+Name[es]=Xcalc | calculadora científica
+Name[es]=Xcalc | calculadora científica
+Name[fr]=Calculette scientifique Xcalc

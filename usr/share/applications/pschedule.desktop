@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Pschedule task on time
+Icon=mini-clock.xpm
+Comment=Pschedule task on time
+Comment[es]=Programar tareas
+Exec=/usr/local/pschedule/pschedule
+Terminal=false
+Type=Application
+Categories=X-SystemSchedule
+GenericName=Pschedule
+Name[es]=Pschedule | tarea a tiempo
+Name[es]=Pschedule | tarea a tiempo
+Name[fr]=Planificateur de tâches Pschedule

@@ -6,6 +6,7 @@ Name[es]=PTM Timer - Minutero
 Name[fr]=PTM Timer - Minuteur
 Icon=mini-clock.xpm
 Comment=pTM Timer
+Comment[es]=Minutero
 Exec=ptmtimer
 Terminal=false
 Type=Application

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Uget download manager
+Comment=Uget download manager
+Comment[es]=Administrador de descargas
+Exec=uget-gtk
+Icon=uget-gtk.png
+Terminal=false
+Type=Application
+Categories=FileTransfer
+Name[fr]=Gestionnaire de téléchargement Uget
+Name[es]=Uget gestor de descargas

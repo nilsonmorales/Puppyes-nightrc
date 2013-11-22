@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Figaros Password Manager 2
+Comment=Figaro password manager
+Comment[es]=Administrar contraseñas
+Exec=fpm2
+Icon=/usr/share/fpm2/pixmaps/logo.xpm
+Terminal=false
+Type=Application
+Categories=X-Personal
+Name[es]=Figaros P.M. 2 | administrar contraseñas
+Name[fr]=Gestion des mots de passe FPM2

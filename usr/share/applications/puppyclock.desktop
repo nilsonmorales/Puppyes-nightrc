@@ -3,6 +3,7 @@ Encoding=UTF-8
 Name=Puppy Clock
 Icon=mini-clock.xpm
 Comment=puppyClock Time tools
+Comment[es]=Herramientas de tiempo puppyClock
 Exec=puppyclock
 Terminal=false
 Type=Application

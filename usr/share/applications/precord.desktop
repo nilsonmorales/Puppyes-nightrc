@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Precord mp3,ogg,wav recorder/player
+Icon=mini-record.xpm
+Comment=Precord mp3,ogg,wav recorder/player
+Comment[es]=Grabador/reproductor mp3,ogg,wav
+Exec=/usr/bin/precord
+Terminal=false
+Type=Application
+Categories=Audio
+GenericName=Precord mp3,ogg,wav recorder/player
+Name[es]=Precord | grabador/reproductor mp3,ogg,wav
+Name[es]=Precord | grabador/reproductor mp3,ogg,wav
+Name[fr]=Magnétophone mp3,ogg,wav Precord

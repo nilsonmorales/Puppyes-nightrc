@@ -3,6 +3,7 @@ Encoding=UTF-8
 Name=Puppy Backup
 Icon=mini-folder.xpm
 Comment=Backup Tool
+Comment[es]=Herramienta de respaldo
 Exec=puppy-backup
 Terminal=false
 Type=Application

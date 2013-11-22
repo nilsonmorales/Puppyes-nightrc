@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Axel download accelerator
+Icon=mini-ftp.xpm
+Comment=Axel download accelerator
+Comment[es]=Acelerador de descargas
+Exec=puppydownload
+Terminal=false
+Type=Application
+Categories=X-Internet
+GenericName=Axel download accelerator
+Name[es]=Axel | acelerador de descarga
+Name[fr]=Accélérateur de téléchargement Axel

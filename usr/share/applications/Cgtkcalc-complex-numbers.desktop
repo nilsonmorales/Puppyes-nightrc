@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Cgtkcalc complex numbers
+Name[fr]=Nombres complexes Cgtkcalc
+Icon=mini-calc.xpm
+Comment=Cgtkcalc complex numbers
+Comment[es]=Números complejos
+Exec=cgtkcalc
+Terminal=false
+Type=Application
+Categories=Calculator
+GenericName=Cgtkcalc complex numbers
+Name[es]=Cgtkcalc | números complejos

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=GTK theme preferences
+GenericName=Configure GTK theme
+Comment=A tool to configure the GTK theme
+Comment=Herramienta para configurar temas GTK
+Exec=gtk-theme-config
+Terminal=false
+Type=Application
+Icon=/usr/share/icons/gnome/scalable/places/gtk-theme-config.png
+Categories=Utility
+Name[fr]=GTK theme préférences
+Name[es]=GTK theme preferencia
