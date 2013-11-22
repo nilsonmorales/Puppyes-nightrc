@@ -1,5 +1,4 @@
-#!/bin/sh
-    #!/bin/bash
+#!/bin/bash
     # choosepanel panel chooser (English version) by José Peralta (josejp2424)
     #internationalized (nilsonmorales)
      
@@ -8,7 +7,7 @@
      
     MAIN_DIALOG='
     <window title="'$(gettext 'Welcome Puppy-es')'">
-    <notebook page="0" labels="'$(gettext 'language | Pcmanfm and Rox-filer | Internet |')'">
+    <notebook page="0" labels="'$(gettext 'Pcmanfm and Rox-filer | Internet |')'">
     <vbox border-width="20">
     <text justify="2">
                                     <label>"'$(gettext 'welcome to puppy-es, navigate through the tabs to load the initial settings,  ')'"</label>
@@ -16,41 +15,6 @@
                             <text>
           <label> .</label>
          </text>
-                           
-       
-    <pixmap>
-    <height>120</height>
-    <width>120</width>
-                            <input file>/usr/share/icons/gnome/scalable/apps/network 2.png</input>
-                           
-                    </pixmap>
-                   
-    <text justify="2">
-                                    <label>"'$(gettext 'extra langpack for spanish and french , if it is your native language, use it.  ')'"</label>
-                            </text>
-     
-    <text>
-          <label> .</label>
-         </text>
-         <button>
-         <height>32</height>
-              <width>32</width>
-              <input file>/usr/local/lib/X11/pixmaps/pet48.png</input>
-          <label>"'$(gettext 'Spanish.')'"</label>
-          <action>petget /usr/local/choosepanel/langpack_es-20130213.pet</action>
-        </button>
-        <text>
-          <label>.                                                                                  .</label>
-         </text>
-         <button>
-         <height>32</height>
-              <width>32</width>
-              <input file>/usr/local/lib/X11/pixmaps/pet48.png</input>
-              <label>"'$(gettext 'French')'"</label>
-              <action>petget /usr/local/choosepanel/langpack_fr-20130322.pet</action>
-         </button>
-     </vbox>
-    <vbox border-width="20">
     <text justify="2">
                                     <label>"'$( gettext 'puppy night has by default rox file manager. But if you are not comfortable with this manager. You can choose to install pcmanfm. This is the file manager that comes default LXDE. ')'"</label>
                             </text>
