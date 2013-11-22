@@ -184,21 +184,124 @@ Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 08:05:53
 º Se actualiza version de bash 3 pro bash 4.2.0
 -------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 20:24:27
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 20:24:27
 
+º Se incorpora este CHANGELOG aqui se puntualizan los cambios y se ofrece una
+º explicación de cada commit
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 22:49:19
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-18 22:49:19
 
+º Se empieza a modificar la configuración básica de los paneles lxde
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 00:30:16
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 00:30:16
 
+º Se agrega mlocate y se sigue modificando la apariencia, se incorporan  
+º iconos al pinboard y se cambia la configuración de openbox
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 04:09:08
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 04:09:08
 
+º Se agregan fuentes libres Ubuntufonts
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 04:24:01
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 04:24:01
 
+º Continua la edición de rc.xml de Openbox
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 22:58:21
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 22:58:21
 
+º Traducción del asistente de conexion a internet 
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 23:06:37
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-19 23:06:37
 
+º Se revisa el script ejecutar-systray se saca la opcion CPUTEMP ya que no todos
+º los equipos cargan el módulo sensors 
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 07:22:26
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 07:22:26
 
+º Intento fallido de configuración del pinboard para guardar una personalizada
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 08:30:18
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 08:30:18
 
+º Se borran los cambios del commit anterior
+-------------------------------------------------------------------------------
 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 08:35:48
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 08:35:48
+
+º Se modifican varias opciones de ROX 
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 08:52:07
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 08:52:07
+
+º Se empiezan a realizar pruebas de la integración de las modificaciones en el 
+º Pinboard
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 09:23:26
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 09:23:26
+
+º Se agrega icono de PPM puppy package manager en el pinbord
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 09:37:29
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 09:37:29
+
+º Se necesita configurar mlocate, necesito un poco de ayuda con eso queda como
+º punto pendiente de discutir en el foro y chat de Puppy-es
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 10:22:49
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 10:22:49
+
+º Usuario mama21mama empieza a dar guias y consejos para configurar mlocate 
+º via cron
+-------------------------------------------------------------------------------
+
+Autor: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-20 10:39:17
+Committer: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-20 10:39:17
+
+º Correcciones y configuracion de mlocate via cron
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 11:32:21
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 11:32:21
+
+º Se agregan 2 fondos de escritorio libres www.gnome-look.org Posibles candidatos
+º a versión final, no es definitivo se esperan comentarios.
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 09:32:24
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 09:32:24
+
+º Se agregan librerias imlib2
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 23:56:42
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-20 23:56:42
+
+º selector de wallpapers necesita una copia de los wallpapers en 
+º /usr/share/backgrounds_original/ caso contrario de problemas, aqui se agregan
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-21 00:26:53
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-21 00:26:53
+
+º Se agregan librerias liblua5.1 
+-------------------------------------------------------------------------------
