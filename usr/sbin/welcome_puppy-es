@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
     # choosepanel panel chooser (English version) by José Peralta (josejp2424)
     #internationalized (nilsonmorales)
      
     export TEXTDOMAIN=welcome_puppy-es
     export OUTPUT_CHARSET=UTF-8
      
-    MAIN_DIALOG='
+    Puppyes='
     <window title="'$(gettext 'Welcome Puppy-es')'">
     <notebook page="0" labels="'$(gettext 'Pcmanfm and Rox-filer | Internet |')'">
     <vbox border-width="20">
@@ -99,4 +99,4 @@
     </vbox>
     </notebook>
     </window>
-    ' gtkdialog3 --program=MAIN_DIALOG
+    ' gtkdialog3 --program=Puppyes
