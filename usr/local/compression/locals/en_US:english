@@ -1,0 +1,58 @@
+#!/bin/bash
+#compression.sh
+#version=1.x
+#language=english
+#translator:don570
+
+set -a
+
+#warning window
+LOC100="Warning"
+LOC101="A folder must be chosen to be compressed"
+LOC102="File must have correct extension"
+LOC103="such as .tar.gz or .txz"
+LOC104="A folder must not be empty."
+
+#button text
+LOC200="Cancel"
+LOC201="COMPRESS"
+LOC202="EXTRACT"
+
+#Radio button text
+LOC300="GZIP compression"
+LOC301="XZ compression"
+LOC302="ZIP compression"
+
+
+#Heading text
+LOC400="Extraction"
+LOC402="Choose an archive"
+LOC403="Choose a folder"
+LOC404="and click COMPRESS"
+LOC405="Select a Directory"
+LOC406="Time for compression"
+LOC407="seconds"
+LOC408="and click EXTRACT"
+LOC409="Extract to HOME folder (not current)"
+
+#Xdialog warning
+LOC410="Please wait for completion..."
+
+#Help
+LOC500="Help"
+LOC501="Extraction is done in the current folder unless the checkbox is ticked."
+LOC502="Extraction is possible for several file extensions."
+LOC503="tgz  tar.gz  txz  tar.xz  tb2  tar.bz2  tbz  zip"
+LOC504="rar archives need unrar or rar to be installed."
+
+#notebook test heading
+LOC600="Compress"
+LOC601="Extract"
+
+#xdialog text
+LOC700="Folder name: "
+LOC701="Storage location: "
+LOC702="A folder must be selected for compression."
+LOC703="Compression"
+LOC704="Archive name: "
+LOC705="Size: "

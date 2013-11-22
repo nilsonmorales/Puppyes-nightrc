@@ -1,0 +1,294 @@
+#!/bin/bash
+# puppy-backup
+#  5 folders can be backed up  by mirroring  
+#  written by Don White (don570) - fork of pmirror by Zigbert
+#  version 1.0 april 15
+#  version 1.1 april 23 changed interface to one vbox
+#  version 1.2 april 24 -  changed folder selector for greater compatibility
+#  version 1.3 april 24 -  finished localisation
+#  version 1.4 april 24 -  bugs fixed and change English
+#  version 1.8 may 7  -  rewrote for 480 pixel height screen
+#  version 1.9 july24  -  yaf-splash message during backup
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+export VERSION="1.9"
+for P in gtkdialog4  gtkdialog; do
+  GTKDIALOG=$(which $P) && break
+done
+export WORKDIR1=$HOME/.config/PUPPY_BACKUP/tmp1
+if [ ! -d $WORKDIR1 ]; then
+	mkdir -p $WORKDIR1
+fi
+export WORKDIR2=$HOME/.config/PUPPY_BACKUP/tmp2
+if [ ! -d $WORKDIR2 ]; then
+	mkdir -p $WORKDIR2
+fi
+export WORKDIR3=$HOME/.config/PUPPY_BACKUP/tmp3
+if [ ! -d $WORKDIR3 ]; then
+	mkdir -p $WORKDIR3
+fi
+export WORKDIR4=$HOME/.config/PUPPY_BACKUP/tmp4
+if [ ! -d $WORKDIR4 ]; then
+	mkdir -p $WORKDIR4
+fi
+export WORKDIR5=$HOME/.config/PUPPY_BACKUP/tmp5
+if [ ! -d $WORKDIR5 ]; then
+	mkdir -p $WORKDIR5
+fi
+# find source folder
+SOURCEDIR1=`grep sourcedir $WORKDIR1/config 2> /dev/null | sed -e s/^.*\=//g`
+SOURCEDIR2=`grep sourcedir $WORKDIR2/config 2> /dev/null | sed -e s/^.*\=//g`
+SOURCEDIR3=`grep sourcedir $WORKDIR3/config 2> /dev/null | sed -e s/^.*\=//g`
+SOURCEDIR4=`grep sourcedir $WORKDIR4/config 2> /dev/null | sed -e s/^.*\=//g`
+SOURCEDIR5=`grep sourcedir $WORKDIR5/config 2> /dev/null | sed -e s/^.*\=//g`
+
+# find mirror folder
+MIRRORDIR1=`grep mirrordir $WORKDIR1/config 2> /dev/null | sed -e s/^.*\=//g`
+MIRRORDIR2=`grep mirrordir $WORKDIR2/config 2> /dev/null | sed -e s/^.*\=//g`
+MIRRORDIR3=`grep mirrordir $WORKDIR3/config 2> /dev/null | sed -e s/^.*\=//g`
+MIRRORDIR4=`grep mirrordir $WORKDIR4/config 2> /dev/null | sed -e s/^.*\=//g`
+MIRRORDIR5=`grep mirrordir $WORKDIR5/config 2> /dev/null | sed -e s/^.*\=//g`
+# for use in text
+export QUOTE="'"
+export spacer=" "
+
+# put text in entry boxes
+if [ ! -e $WORKDIR1/config ] ;then
+TEXT1="$LOC100  "$SOURCEDIR1""
+else
+TEXT1="$LOC101  "$SOURCEDIR1""
+fi
+if [ ! -e $WORKDIR2/config ] ;then
+TEXT2="$LOC100  "$SOURCEDIR2""
+else
+TEXT2="$LOC101  "$SOURCEDIR2""
+fi
+if [ ! -e $WORKDIR3/config ] ;then
+TEXT3="$LOC100  "$SOURCEDIR3""
+else
+TEXT3="$LOC101  "$SOURCEDIR3""
+fi
+if [ ! -e $WORKDIR4/config ] ;then
+TEXT4="$LOC100  "$SOURCEDIR4""
+else
+TEXT4="$LOC101  "$SOURCEDIR4""
+fi
+if [ ! -e $WORKDIR5/config ] ;then
+TEXT5="$LOC100  "$SOURCEDIR5""
+else
+TEXT5="$LOC101  "$SOURCEDIR5""
+fi
+
+
+###############################################
+#                                             #
+#               LAUNCH_FUNCTION               #
+#                                             #
+###############################################
+
+launch_function (){
+if [ $Directory_1 = "true" ];then
+export SOURCEDIR=$SOURCEDIR1
+export MIRRORDIR="$MIRRORDIR1"
+echo "$SOURCEDIR1" > /tmp/pm_input1
+echo "$MIRRORDIR1" > /tmp/pm_input2
+/usr/local/puppy-backup/mirror1 &
+break
+fi	
+if [ $Directory_2 = "true" ];then
+export SOURCEDIR="$SOURCEDIR2"
+export MIRRORDIR="$MIRRORDIR2"
+echo "$SOURCEDIR2" > /tmp/pm_input1
+echo "$MIRRORDIR2" > /tmp/pm_input2
+/usr/local/puppy-backup/mirror2 &
+break
+fi
+if [ $Directory_3 = "true" ];then
+export SOURCEDIR=$SOURCEDIR3
+export MIRRORDIR="$MIRRORDIR3"
+echo "$SOURCEDIR3" > /tmp/pm_input1
+echo "$MIRRORDIR3" > /tmp/pm_input2
+/usr/local/puppy-backup/mirror3 &
+break
+fi
+if [ $Directory_4 = "true" ];then
+export SOURCEDIR=$SOURCEDIR4
+export MIRRORDIR="$MIRRORDIR4"
+echo "$SOURCEDIR4" > /tmp/pm_input1
+echo "$MIRRORDIR4" > /tmp/pm_input2
+/usr/local/puppy-backup/mirror4 &
+break
+fi
+if [ $Directory_5 = "true" ];then
+export SOURCEDIR=$SOURCEDIR5
+export MIRRORDIR="$MIRRORDIR5"
+echo "$SOURCEDIR5" > /tmp/pm_input1
+echo "$MIRRORDIR5" > /tmp/pm_input2
+/usr/local/puppy-backup/mirror5 &
+break
+fi
+exit 0
+}
+export -f launch_function
+
+
+###############################################
+#                                             #
+#                  A B O U T                  #
+#                                             #
+###############################################
+
+export about="
+<window title=\"$LOC200\" window_position=\"1\">
+ <notebook labels=\"$LOC200|$LOC700|$LOC701\">
+  <frame>
+   <text><label>\"$LOC215\"</label></text>   
+  </frame>
+  <frame>
+   <text><label>\"\"</label></text>
+   <progressbar>
+    <input>echo 0; echo \"Puppy Backup $VERSION\"</input>
+   </progressbar>
+    <text use-markup=\"true\"><label>\"<b>Don White, Copyright 2012</b>\"</label></text>
+    <text use-markup=\"true\"><label>\"<b>using code from pmirror and mirdir</b>\"</label></text>
+    <text use-markup=\"true\"><label>\"<b>written April 2012</b>\"</label></text>
+   <text height-request=\"30\"><label>\"\"</label></text>
+   
+  </frame>
+  <frame>
+   <text use-markup=\"true\"><label>\"Puppy Backup is released under the <b>GNU General Public License</b> (GPL). You have the right to use and modify this software in any way you like, so long as any derivative works remain under a GPL license.\"</label></text>
+   <text use-markup=\"true\"><label>\"This program is distributed in the hope that it will be useful, but <b><span color='"'red'"'>WITHOUT ANY WARRANTY</span></b>. See the GNU General Public License homepage for more details.\"</label></text>
+   <hbox>
+    <button>
+     <label>\"http://www.gnu.org/licenses/\"</label>
+     <action>defaulthtmlviewer http:\/\/www.gnu.org\/licenses\/</action>
+    </button>
+   </hbox>
+  </frame>
+ </notebook>
+</window>"
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+
+export CONVERT='
+<window title="Puppy Backup '$VERSION'" resizable="false"> 
+<vbox>
+  
+         <text use-markup="true">
+            <label>"<b><u> '$LOC300'</u>
+            
+ '$LOC301'            
+ '$LOC302'
+ '$LOC303' 
+ '$LOC304' <b><span color='"'blue'"'>'$QUOTE''$LOC305''$QUOTE'</span></b> '$LOC307'</b>"</label>
+         </text> 
+
+<vbox>
+   
+<hbox homogeneous="true"> 
+
+<vbox>
+ 
+<radiobutton width-request="350">
+<label>"'$LOC306' 1"</label>
+<default>true</default>
+<variable>Directory_1</variable>
+</radiobutton>
+<entry editable="false" has_frame="false">
+       <default>"'$TEXT1'" </default>
+</entry>
+<radiobutton>
+<label>"'$LOC306' 2"</label>
+<variable>Directory_2</variable>
+</radiobutton>
+<entry editable="false" has_frame="false">
+       <default>"'$TEXT2'" </default>
+</entry>
+<radiobutton>
+<label>"'$LOC306' 3"</label>
+<variable>Directory_3</variable>
+</radiobutton>
+<entry editable="false" has_frame="false">
+       <default>"'$TEXT3'" </default>
+</entry>
+<radiobutton>
+<label>"'$LOC306' 4"</label>
+<variable>Directory_4</variable>
+</radiobutton>
+<entry editable="false" has_frame="false">
+       <default>"'$TEXT4'" </default>
+</entry>
+<radiobutton>
+<label>"'$LOC306' 5"</label>
+<variable>Directory_5</variable>
+</radiobutton> 
+<entry editable="false" has_frame="false">
+       <default>"'$TEXT5'" </default>
+</entry>
+
+     
+</vbox>  
+  
+  
+
+
+
+
+  
+  
+
+</hbox>
+</vbox>
+
+<text><label>"____________________________________________________"</label></text> 
+  <hbox>
+ 
+  <button help>
+  <label>'$LOC200'</label>
+    <input file stock="gtk-help"></input>    
+    <action>launch:about</action>
+   </button>
+ 
+  <button tooltip-text="'$LOC916'">
+       <input file stock="gtk-properties"></input>
+      <label>'$spacer''$LOC915''$spacer'</label>
+      <action>`cat /root/.config/PUPPY_BACKUP/COMMAND_LIST  | Xdialog --title "$LOC915" --screen-center --no-cancel --tailbox - 32 65 110 &`</action>
+</button>
+ 
+ <button>
+       <input file stock="gtk-cancel"></input>
+      <label>'$spacer''$LOC900''$spacer'</label>
+      <action type="exit">CLOSE</action>
+</button>
+ 
+
+<button tooltip-text="'$LOC504'">
+       <input file stock="gtk-edit"></input>
+       <label>'$spacer''$LOC305''$spacer'</label>       
+      <action>launch_function &</action>
+      <action>exit:EXIT</action>      
+</button>
+</hbox>
+ </vbox>
+</window>
+'
+
+$GTKDIALOG  --program=CONVERT -c
+ 

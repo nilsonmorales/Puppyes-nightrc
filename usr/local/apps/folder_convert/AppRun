@@ -1,0 +1,2 @@
+#!/bin/sh
+exec folder_convert  "$@" 

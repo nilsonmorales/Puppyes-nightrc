@@ -1,0 +1,232 @@
+#!/bin/bash
+#  conversion of folder of wave files to mp3  Aug 2011  
+#  written by Don White (don570) from  wav2mp3 script
+#  idea taken from pawdiocorder
+# localization method by Zigbert
+
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+
+mkdir -p /tmp/convert
+FILE_DIRECTORY=`echo "$1" | sed "s/\/$//"`
+cd "$FILE_DIRECTORY"
+export FILE_DIRECTORY="$FILE_DIRECTORY"
+#export local_dir=`pwd`
+
+
+
+###############################################
+#                                             #
+#                C O N V E R T                #
+#                                             #
+###############################################
+
+convert(){
+	
+rxvt -geometry "85x25-0+0" -e /usr/local/folder_convert/wav2mp3_convert  /dev/null 2>/dev/null &
+
+yaf-splash  -margin 42 -bg orange -fg black -placement center -font "9x15B" -outline 0 -text ".     $LOC202     .
+
+.  '$LOC203'  ."
+
+loop5
+}
+export -f convert
+
+
+###############################################
+#                                             #
+#                E  N  D                      #
+#                                             #
+###############################################
+
+end_function(){
+if [ $CHECKBOX = "true" ] ;then
+FILE_DIRECTORY="/root"
+fi
+export DESTINATION="$FILE_DIRECTORY/$name"
+
+	export view_pref='
+	<window title="'$LOC100'">
+	 <frame>
+         <text use-markup="true">
+            <label>"<b>'$LOC200'.
+'$LOC201'</b>"</label>
+         </text>
+  <text height-request="10"><label>""</label></text>
+         
+     <hbox> 
+<button width-request="99">
+<input file stock="gtk-cancel"></input>
+      <label>'$LOC400'</label>
+      <action type="exit">CLOSE</action>
+</button>
+<button width-request="99">
+<input file stock="gtk-ok"></input>
+     <label>'$LOC401'</label>
+	  <action>rox -d "$DESTINATION"</action>
+	  <action>exit:EXIT</action>
+</button>
+
+ <text><label>                </label></text>    
+    </hbox>
+    
+	 </frame>
+	
+	</window>'
+	gtkdialog3 -p view_pref --center
+}
+export -f end_function
+
+
+
+###############################################
+#                                             #
+#                  L O O P                    #
+#                                             #
+###############################################
+
+
+# loop every 5 seconds to check if wav2mp3_convert script is finished
+loop5 (){
+	
+for (( ; ; ))
+do
+
+ps   >  /tmp/convert/PS
+grep  wav2mp3_convert  /tmp/convert/PS  > /tmp/convert/CHECK	
+cd /tmp/convert
+
+# now check if wav2mp3_convert is in use
+if  [ ! -s "CHECK"  ] ;then
+    break
+fi 
+sleep 5
+done
+if [ $CHECKBOX2 = "true" ] ;then
+if [ $CHECKBOX = "true" ] ;then
+export DESTINATION="/root/$name"
+else
+export DESTINATION="$FILE_DIRECTORY/$name"
+fi
+
+cd "$DESTINATION"
+# list of mp3 is made from destination folder
+list=`ls -1`
+cd "$FILE_DIRECTORY"
+for file in $list
+do
+# extension is removed from recording filename	
+file_STRIPPED="${file%.*}"
+
+rm -f "$file_STRIPPED".wav
+
+done
+ fi
+end_function
+
+exit 0
+
+}
+export -f loop5
+
+
+
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+
+export CONVERT='
+<window title="'$LOC101'"> 
+<vbox>
+  <hbox>
+      <frame>
+         <text use-markup="true">
+            <label>"<b>'$LOC300'
+
+</b>"</label>
+         </text>      
+      </frame>
+  </hbox>
+  <text height-request="10"><label>""</label></text>
+ <hbox> 
+ 
+    <text use-markup="true">
+    <label>"<b>'$LOC301'
+'$LOC302'
+'$LOC303'
+
+'$LOC304' 
+'$LOC305'
+
+'$LOC306'
+'$LOC307'
+'$LOC308'</b>"</label>
+  </text>
+   </hbox>
+<frame '$LOC102'>   
+<entry>
+    <default>wav2mp3</default>
+    <variable>name</variable>
+  </entry>
+</frame>
+   
+ <text height-request="30"><label>""</label></text>
+
+
+   <frame '$LOC103'>
+   
+      <text use-markup="true">
+    <label>"<b>'$LOC309'
+'$LOC310'
+'$LOC311' 
+'$LOC312'</b>"</label>
+  </text>
+  <text height-request="10"><label>""</label></text>
+        
+  <checkbox active="false" tooltip-text="'$LOC500'
+'$LOC501'">   
+      <label>'$LOC600'</label>
+      <variable>CHECKBOX</variable>
+    </checkbox> 
+      <checkbox active="false" tooltip-text="'$LOC502'
+'$LOC503'">   
+      <label>'$LOC601'</label>
+      <variable>CHECKBOX2</variable>
+    </checkbox>   
+
+<text height-request="10"><label>""</label></text>
+  </frame>
+  <hbox>
+  <button cancel></button>
+   
+       
+      <button tooltip-text="'$LOC504'">
+       <label>   '$LOC402'   </label>       
+      <action>convert &</action>
+      <action>exit:EXIT</action>      
+      </button> 
+      
+  </hbox>
+ </vbox>
+</window>
+'
+
+gtkdialog3  --program=CONVERT
+ 

@@ -1,0 +1,70 @@
+#!/bin/sh
+# Right-Click Dependenies Checker
+# 2012-03-09 RSH
+# English localization
+# version=1.x
+
+set -a
+# window heading
+
+APPLICATIONNAME="RSHs DepCheck - Prüfen von Abhängigkeiten"
+CHKDEPTXT="Prüfe Abhängigkeiten von:"
+SNDRESGEANY1="Sende die Ergebnisse der Prüfung von"
+SNDRESGEANY2=" an den Texteditor oder das"
+SNDRESGEANY3="Terminalprogramm. Bitte wählen Sie..."
+
+CHKSENDTO="Um die Resultate im Texteditor zu betrachten, klicken Sie auf 'OK'. "
+
+BACKTITLE='
+Klicken Sie auf OK, um die Ergebnisse an Geany zu senden!
+'
+
+chkdepttl='
+-------------------------------------------------------------------------------
+### ! ! ! Abhängigkeiten prüfen ! ! ! ###
+### Ein Rechtsklick Tool zum Prüfen von Abhängigkeiten - RSH für Puppy Linux - GPL2 ###
+-------------------------------------------------------------------------------'
+
+chkversttl='
+
+-------------------------------------------------------------------------------
+### Version ###
+-------------------------------------------------------------------------------
+'
+
+chkhlpttl='
+
+-------------------------------------------------------------------------------
+### Hilfe ###
+-------------------------------------------------------------------------------
+'
+
+chkfullttl='
+
+-------------------------------------------------------------------------------
+### Vollständige Informationen ###
+-------------------------------------------------------------------------------
+'
+
+chkundepsttl='
+
+-------------------------------------------------------------------------------
+### Abhängigkeiten ###
+-------------------------------------------------------------------------------
+'
+
+endinfttl='
+
+-------------------------------------------------------------------------------
+### ! ! ! Ende der Informationen ! ! ! ###
+-------------------------------------------------------------------------------
+'
+
+lddfile='Informationen zum Programm: '
+
+
+lddfile2='
+Prüfe Abhängigkeiten von: '
+
+lddfile3='
+'

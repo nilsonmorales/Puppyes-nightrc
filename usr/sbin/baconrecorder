@@ -1,0 +1,6 @@
+#!/bin/bash
+cd "/usr/local/baconrecorder"
+"/usr/local/baconrecorder/baconrecorder"
+ 
+
+

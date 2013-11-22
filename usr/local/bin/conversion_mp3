@@ -1,0 +1,5 @@
+#!/bin/sh
+cd "/usr/local/conversion_mp3/"
+exec "/usr/local/conversion_mp3/conversion_mp3" "$@"
+
+exit 0

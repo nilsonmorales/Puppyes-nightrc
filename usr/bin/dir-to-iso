@@ -1,0 +1,118 @@
+#!/bin/bash
+#20120706 shinobar 
+VERSION=1.0
+APPNAME=$(basename $0)
+CREDIT="$APPNAME version $VERSION"
+SPLASH=$(which yaf-splash)
+TIMECOUNT=8
+XPID=""
+usage() {
+  echo "$CREDIT
+  make iso file from a directory
+  usage: $APPNAME DIRECTORY_NAME [VOLUME_ID]"
+}
+case "$1" in
+-*v*) echo "$CREDIT"; exit 0;;
+-*) usage; exit 0;;
+esac
+DIR1="$1"
+VOL1="$2"
+
+wait_splash() {
+  [ "$DISPLAY" ] || return
+  [ "$SPLASH" ] || return
+  [ "$XPID" ] && kill $XPID && XPID=""
+  $SPLASH -bg yellow -text "$APPNAME: Wait..." &
+  XPID=$!
+}
+splash() {
+  [ "$DISPLAY" ] || return
+  [ "$SPLASH" ] || return
+  OPT=""
+  while [ $# -gt 0 ]; do
+    case "$1" in
+    -*) OPT="$OPT $1"; shift; OPT="$OPT $1"; shift ;;
+    *) break;;
+    esac
+  done
+  [ "$XPID" ] && kill $XPID && XPID=""
+  $SPLASH -timeout $TIMECOUNT $OPT -text "$@"
+}
+
+dialog() {
+  # IN/OUT: DIR1, VOL1
+  [ "$DISPLAY" ] || return
+  for P in gtkdialog4 gtkdialog3 gtkdialog; do
+    GTKDIALOG=$(which $P) && break
+  done
+  [ "$GTKDIALOG" ] || return
+  export MAIN_DIALOG='<window title="'$CREDIT'" icon-name="gtk-cdrom"><vbox>
+      <text><label>Type or drag and drop the source directory</label></text>
+      <hbox>
+      <entry editable="true" accept="directory">
+        <variable>DIR1</variable>
+        <default>"'$DIR1'"</default>
+      </entry>
+      <button tooltip-text="'$(gettext 'Browse and select the source directory.')'">
+        <input file stock="gtk-directory"></input>
+        <variable>FILE_BROWSE_DIRECTORY</variable>
+        <action type="fileselect">DIR1</action>
+      </button>
+      </hbox>
+      <text><label>Optionally, type the CD volume name</label></text>
+      <entry editable="true">
+        <variable>VOL1</variable>
+        <default>"'$VOL1'"</default>
+      </entry>
+      <hbox><button ok></button><button cancel></button></hbox>
+      </vbox></window>'
+  RET=$($GTKDIALOG) || echo "$MAIN_DIALOG" >&2
+  eval "$RET"
+  [ "$EXIT" = 'OK' ] || exit 0
+}
+
+if [ -z "$VOL1" ]; then
+  dialog
+fi
+
+t=`echo "$DIR1" | sed "s/\/$//"`
+[ "$VOL1" ] || VOL1=$(basename "$t")
+VOLID=$(echo $VOL1| tr '/ ' '_')
+z=$(dirname "$t")"/$VOLID"
+
+if [ ! -d "$t" ];then
+  MSG="$APPNAME: error: no valid folder specified!"
+  echo "$MSG"
+  splash -bg pink "$MSG"
+  exit 0
+fi
+
+if [ -f "$z.iso" ];then 
+  MSG="$APPNAME: error: $z.iso already exists, refusing to overwrite it!" 
+  echo "$MSG"
+  splash -bg pink "$MSG"
+  exit 0 
+fi
+
+# boot loader
+for B in grldr isolinux.bin; do
+ [ -s $t/$B ] && BOOTLOADER=$B && break
+done
+[ "$BOOTLOADER" ] && BOOTPARM="-b $BOOTLOADER -c boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table"
+
+wait_splash
+mkisofs -J -D -R -V $VOLID -o "$z.iso" $BOOTPARM "$t" 
+md5sum "$z.iso" > "$z.iso-md5.txt" 
+sync 
+
+
+echo 
+echo 
+s=`du -m "$z.iso" | sed "s/\s.*//"` 
+MSG="$APPNAME: created: $z.iso ( $s MB )
+created: $z.iso-md5.txt"
+echo "$MSG"
+splash -bg green "$MSG"
+echo 
+echo "...byebye..." 
+echo

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Puppy Backup
+Icon=mini-folder.xpm
+Comment=Backup Tool
+Exec=puppy-backup
+Terminal=false
+Type=Application
+Categories=Archiving
+GenericName=Puppy Backup

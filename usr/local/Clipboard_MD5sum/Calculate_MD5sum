@@ -1,0 +1,115 @@
+#!/bin/sh
+# written by don White  from code by seaside
+# June 2012
+
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+
+export VERSION=1.5
+if [ -f "$1" ];then
+continue
+else
+Xdialog --title "$LOC501"   --wrap --screen-center --center --no-buttons --msgbox "
+$LOC502"    9 45 100  &
+exit 0
+fi
+
+SIZE=`ls -s "$1" | awk '{ print $1 }'`
+let "TIME = $SIZE * 2 / 79000"
+
+Xdialog --wrap --title "$LOC201"     --yesno "\n  $LOC202 \n
+$1?  \n\n $LOC203 $TIME $LOC204  \n
+$LOC205\n" 0 0
+
+case $? in
+  0)
+    continue;;
+  1)
+    exit 0;;
+  255)
+    exit 0;;
+esac
+
+FILE="$1"
+FILENAME=`echo "${FILE##*/}"`
+yaf-splash -close never -fontsize large -bg orange -fb black -text "$LOC401" & PID=$!
+CHECK=`md5sum "$FILE"   | awk '{ print $1 }' ` 
+kill $PID
+###############################################
+#                                             #
+#                  COMPARE                    #
+#                                             #
+###############################################
+compare(){
+	
+if [ "$ENTRY"  =   "$CHECK" ]; then
+
+Xdialog  --ok-label "$LOC107" --backtitle "\n\n"$LOC105  --msgbox  "$LOC101 \n$FILENAME \n\n$LOC103" 0 0 
+else
+Xdialog  --ok-label "$LOC104"  --backtitle "\n\n$LOC105"  --msgbox "$LOC102 \n$FILENAME \n\n$LOC104\n$LOC106" 0 0
+fi
+}
+export -f compare
+###############################################
+#                                             #
+#                  MD5SUM                     #
+#                                             #
+###############################################
+export MD5SUM='
+<window title="'$LOC206' '$VERSION'"  icon-name="mini-modules"  resizable="false" decorated="true">
+ <vbox>
+ <text height-request="10"><label>""</label></text>
+ <text>
+      <label>"'$LOC300'
+'$LOC301'"</label>
+      </text>
+      
+      
+     <hbox> <entry>
+    
+    <variable>ENTRY</variable>
+  </entry>
+  </hbox>
+  
+  
+  <hbox>    
+      <hbox width-request="270">    
+ <entry editable="true">    
+    <variable>TIME</variable>
+    <input>echo $CHECK</input>
+  </entry>  
+  </hbox>
+       
+     </hbox>
+  <hbox homogeneous="true">
+   
+<button>
+        <input file stock="gtk-cancel"></input>
+        <label>'$LOC400'</label>
+        <action type="exit">CLOSE</action>
+</button>
+   <button>
+      <label>'$LOC105'</label>
+      <input file stock="gtk-yes"></input>
+      <action>compare &</action>
+    </button>
+  </hbox>
+ </vbox>
+ </window>'
+
+gtkdialog3 --geometry=+200+100  --program MD5SUM
+
+exit 0

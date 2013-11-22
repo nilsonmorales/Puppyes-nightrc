@@ -1,0 +1,52 @@
+#!/bin/bash
+#empty-files
+# English localization
+#version=1.x
+#Translator don570
+
+set -a
+
+# Radio button label text
+LOC105="Create File1, File2, File3 etc."
+LOC106="Create File_000, File_001, File_002 etc."
+
+# Xdialog message heading
+LOC201="Warning!"
+
+# Xdialog warning messages 
+LOC220="The number of files created must be greater than zero."
+LOC221="Please do not enter a number beginning with zero."
+
+# Helpful window info
+LOC300="Choose one of the options on the left side,"
+LOC301="then click "
+LOC302="Proceed"
+
+# More helpful window info
+LOC314="Filename does not have to end with an extension."
+LOC315=""  # this gives a blank line
+
+# Radio button popups
+LOC400="Enter the desired filename with or without an extension"
+LOC401="Enter the number of files you want to be created."
+LOC402="Files will be numbered  with 3 digits"
+LOC403="Filename will have a number attached to end but before the extension"
+
+# More Tooltip Popups
+LOC500="Credits and license"
+LOC504="Begin the creation of  files"
+
+# Similar LIST text
+LOC505="This file is used by the program Empty-files"
+LOC506="The following file(s) couldn't be created"
+LOC507="because similar files existed "
+LOC508="and couldn't be over-written."
+
+# Headings
+LOC700="Credits"
+LOC701="License"
+
+# Field text in window
+LOC800="Filename.txt"
+LOC801="Enter number"
+

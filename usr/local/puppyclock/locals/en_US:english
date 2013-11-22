@@ -1,0 +1,80 @@
+#!/bin/bash
+#Pclock
+#version=0.3.x
+#language=english
+#translator:Native
+
+set -a
+
+#Popups
+LOC200="Fullscreen"
+LOC201="Preferences"
+LOC202="About"
+LOC203="Quit"
+LOC204="You can either play an audio file"
+LOC205="or execute a defined action"
+LOC206="World clock"
+
+#Preferences
+LOC300="Set system time"
+LOC301="Fontsize"
+LOC302="Background color"
+LOC303="Clock number color"
+LOC304="Restart Puppy Clock to activate changes"
+LOC305="cancel"
+LOC306="OK"
+LOC307="Puppy Clock - Preferences"
+
+#Alarm
+LOC400="Alarm"
+LOC401="Construct your Alarm"
+LOC402="with definitions"
+LOC403="12 hour clock"
+LOC404="24 hour clock"
+LOC405="Help"
+LOC406="Define Music Alarm"
+LOC407="Select a sound file"
+LOC408="Define Message Alarm"
+LOC409="Enter message here"
+LOC410="Note:"
+
+#Help
+LOC509="Instructions"
+LOC500="Puppy Clock uses the program pSchedule"
+LOC501="to program the alarm.  Click the"
+LOC502="Define button (Music or Message)"
+LOC503="and you will get options to define"
+LOC504="time and action.  Various musical"
+LOC505="formats such a MP3 are"
+LOC506="acceptable for Musical Alarms"
+LOC507="Click on the 24 hour clock or "
+LOC508="the 12 hour clock to reset the display."
+
+#Stopwatch
+LOC600="Stopwatch"
+LOC601="Lap"
+LOC602="Laptime"
+LOC603="Time"
+LOC604="Start"
+LOC605="Count hundredths"
+LOC606="Split"
+LOC607="Lap"
+
+#Countdown
+LOC700="Countdown"
+LOC701="Start"
+LOC702="Seconds to count"
+LOC703="1 min"
+LOC704="1 hour"
+LOC705="1 day"
+LOC706="Sound/Action at zero"
+
+#pclock - about
+LOC800="Puppy Clock - about"
+
+#pSchedule label
+LOC900="Music Alarm"
+LOC901="Message Alarm"
+
+
+

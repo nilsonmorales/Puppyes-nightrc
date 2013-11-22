@@ -1,0 +1,127 @@
+#!/bin/bash -a
+#------------------------------------------------------------------------------
+# Right-Click Dependencies Checker
+# 2012-03-09 RSH
+#------------------------------------------------------------------------------
+# 2012-03-13 Option to send the results to terminal (xterm)
+#------------------------------------------------------------------------------
+
+# language settings
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+#------------------------------------------------------------------------------
+
+CHKDPAPPNAME=`echo "$1" | sed "s/\/$//"` # full path- & filename
+CHKDPAPPPATH="${CHKDPAPPNAME%/*}" # liefert den reinen Pfadnamen
+BNAME=`basename $CHKDPAPPNAME`
+INFFILE="/tmp/ldd-out.txt"
+TEMPFILE="/tmp/lddout_tmp"
+rm "$INFFILE"
+rm "$TEMPFILE"
+
+yaf-splash -deco "$APPLICATIONNAME" -fontsize large -bg lightgreen -text "$CHKDEPTXT $BNAME" &
+X3PID=$!
+
+#------------------------------------------------------------------------------
+
+# view results in simple text editor
+#-----------------------------------
+function XDEdit(){
+	
+	dpath="$INFFILE"
+	while read list; do
+		echo  "$list" >> "$TEMPFILE"
+	done < $dpath
+
+	EdNewList="$(Xdialog --backtitle "$BACKTITLE" --title "$APPLICATIONNAME - Checked: $BNAME" --stdout --editbox $TEMPFILE  24 84)"
+	
+	if [ "$EdNewList" != "" ]; then
+		
+		if [ -f /usr/bin/geany ]; then
+			geany "$TEMPFILE"
+			else
+			if [ -f /usr/bin/leafpad ]; then
+				leafpad "$TEMPFILE"
+			fi
+		fi
+	fi
+
+} # End - XDEdit
+export -f XDEdit
+
+#------------------------------------------------------------------------------
+
+echo "${chkdepttl}" >> "$INFFILE" &
+sleep .3
+echo "$lddfile2 $BNAME" >> "$INFFILE" &
+sleep .2
+echo "${chkversttl}" >> "$INFFILE" &
+sleep .2
+# get version of ldd
+exec ldd --version "$CHKDPAPPNAME" >> "$INFFILE" &
+
+sleep .5
+echo "${chkhlpttl}" >> "$INFFILE" &
+
+# get help of ldd
+exec ldd --help "$CHKDPAPPNAME" >> "$INFFILE" &
+
+sleep .5
+echo "${chkfullttl}" >> "$INFFILE" &
+sleep .3
+echo "$lddfile $BNAME $lddfile3" >> "$INFFILE" &
+sleep .2
+
+# get full info from ldd
+exec ldd -v "$CHKDPAPPNAME" >> "$INFFILE" &
+
+sleep 2
+echo "${chkundepsttl}" >> "$INFFILE" &
+
+# get unused deps from/of ldd
+exec ldd -u "$CHKDPAPPNAME" >> "$INFFILE" &
+
+kill $X3PID # Kill gtkdialog Message
+
+yaf-splash -deco "$APPLICATIONNAME" -fontsize large -bg lightgreen -text "$SNDRESGEANY1 $BNAME$SNDRESGEANY2 $SNDRESGEANY3" &
+X3PID=$!
+
+sleep 1.5
+echo "${endinfttl}" >> "$INFFILE" &
+
+kill $X3PID # Kill gtkdialog Message
+
+#xterm -hold -e  cat "$INFFILE" & # send results to terminal
+#xterm & # stays open while first xterm closes after hit enter
+
+Xdialog --title "$APPLICATIONNAME" --screen-center --yesno "$CHKSENDTO" 0 0
+
+if [ "$?" = "0" ]; then
+	XDEdit & # Simple Texteditor
+	else # send results to xterm --> thanks to seaside
+	echo '#! /bin/bash
+	$@
+	/bin/bash'> /usr/bin/RSHs-DepCheck-Terminal
+	chmod 755  /usr/bin/RSHs-DepCheck-Terminal
+	cd "$CHKDPAPPPATH" # stay in directory of checked app!!!
+	xterm -e /usr/bin/RSHs-DepCheck-Terminal cat "$INFFILE"
+fi
+
+unset XDEdit
+
+exit 0
+
+#------------------------------------------------------------------------------
+### End of Right-Click Dependencies Checker ###
+#------------------------------------------------------------------------------

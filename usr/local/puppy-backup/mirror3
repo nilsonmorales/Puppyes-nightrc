@@ -1,0 +1,327 @@
+#! /bin/bash
+# Puppy Backup by Don White
+# fork of Pmirror - gui for mirdir by Sigmund Berglund
+#
+# April 16 2012 - version 1.0  - removes exception file and allows 5 folders to be backed up
+# April 23 2012 - version 1.2   -  makes compatible for gtkdialog 0.7.21 
+# April 24 2012 - version 1.3   -   completes localisation
+# July 24 2012 - version 1.9  - added yaf-splash
+#------------------------------
+#This software is released under the GNU General Public License (GPL). You have the right to use and modify this software in any way you like, so long as any derivative works remain under a GPL license.
+    
+#This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY.
+#See the GNU General Public License homepage for more details. <http://www.gnu.org/licenses/>.
+#------------------------------
+
+for P in gtkdialog4  gtkdialog; do
+    GTKDIALOG=$(which $P) && break
+  done
+
+
+
+SOURCEDIR=`grep sourcedir $WORKDIR3/config 2> /dev/null | sed -e s/^.*\=//g`
+MIRRORDIR=`grep mirrordir $WORKDIR3/config 2> /dev/null | sed -e s/^.*\=//g`
+EXCEPTION_FILE=`grep exception_file $WORKDIR3/config 2> /dev/null | sed -e s/^.*\=//g`
+
+
+[ ! "$EXCEPTION_FILE" ] && EXCEPTION_FILE=none
+echo "echo " $SOURCEDIR > /tmp/pm_source_dir
+echo "echo " $MIRRORDIR > /tmp/pm_mirror_dir
+echo "echo " $EXCEPTION_FILE > /tmp/pm_exception_dir
+echo -e "\c" > /tmp/pm_mirdir
+chmod 777 /tmp/pm_source_dir
+chmod 777 /tmp/pm_mir*
+chmod 777 /tmp/pm_exc*
+
+
+#-----get nr of days between last mirrorday and today
+MIRRORDATE=`grep mirrordate $WORKDIR3/config 2> /dev/null | sed -e s/^.*\=//g`
+TODAY_SEC=`date +%s`
+TODAY_DAYS=`expr $TODAY_SEC / 60 / 60 / 24`
+TMP=`echo $MIRRORDATE | sed -e "s/\// /g" | awk '{print $2} {print $1} {print $3}'` 
+MIRRORDATE1=`echo $TMP | sed -e "s/ /\//g"`
+MIRRORDATE_SEC=`date -d $MIRRORDATE1 +%s 2> /dev/null`
+MIRRORDATE_DAYS=`expr $MIRRORDATE_SEC / 60 / 60 / 24 2> /dev/null`
+DAYS=`expr $TODAY_DAYS - $MIRRORDATE_DAYS 2> /dev/null`
+#-----
+if test -z $MIRRORDATE; then
+	echo -e " $LOC600\n $LOC601" > /tmp/pm_progress
+else
+	echo -e " $LOC602 "$DAYS" $LOC603" > /tmp/pm_progress
+fi
+###############################################
+#                                             #
+#                  DISK_CHECK                 #
+#                                             #
+###############################################
+disk_check(){
+
+	if [ "${MIRRORDIR: -1}" = "/" ];then
+		LENGTH=${#MIRRORDIR}
+    let "LENGTH=$LENGTH - 1"
+    MIRRORDIR=${MIRRORDIR:0:LENGTH}
+	fi
+
+
+df > "$WORKDIR3"/DF_FILE
+sed  's/\/dev\//\/mnt\//' < "$WORKDIR3"/DF_FILE > "$WORKDIR3"/DF_FILE_MODIFIED
+grep -q "$MIRRORDIR" "$WORKDIR3"/DF_FILE_MODIFIED 
+if  [ "$?" -eq "0" ]; then
+Xdialog --title "$LOC800"   --wrap --screen-center --center --no-buttons --msgbox "$LOC801
+
+$LOC802"    14 65 100  &
+rm -f "$WORKDIR3"/DF_FILE*
+exit 0
+
+fi
+if  [ "$MIRRORDIR" = "/mnt/home" ]; then
+Xdialog --title "$LOC800"   --wrap --screen-center --center --no-buttons --msgbox "$LOC801
+
+$LOC802"    14 65 100  &
+rm -f "$WORKDIR3"/DF_FILE*
+exit 0
+
+fi
+rm -f "$WORKDIR3"/DF_FILE*
+
+}	
+export -f disk_check
+
+###############################################
+#                                             #
+#                DEFINE_BUTTONS               #
+#                                             #
+###############################################
+
+
+function funcbtnCreate() {
+   echo '<button tooltip-text="'$LOC501'">
+         <label>"'"$2"'"</label>
+         <input file icon="gtk-open"></input> 
+         <action>echo "'"$3"' SOURCEDIR'$1'"</action>
+         <action type="'"$4"'">SOURCEDIR'$1'</action>
+      </button>'
+}
+
+function funcbtnCreate2() {
+   echo '<button tooltip-text="'$LOC502'">
+         <label>"'"$2"'"</label>  
+         <input file icon="gtk-open"></input>     
+          <action>echo "'"$3"' MIRRORDIR'$1'"</action>
+         <action type="'"$4"'">MIRRORDIR'$1'</action>
+      </button>'
+}
+
+
+function funcentCreate() {
+   echo '<variable>SOURCEDIR'$1'</variable>
+         <action>echo "SOURCEDIR'$1' action for default signal triggered"</action>
+         <action signal="changed">echo "SOURCEDIR'$1' changed to $SOURCEDIR'$1'"</action>
+         <action signal="activate">echo "SOURCEDIR'$1' Enter key-press detected"</action>
+         <action signal="primary-icon-press">echo "SOURCEDIR'$1' primary icon press detected"</action>
+         <action signal="primary-icon-release">echo "SOURCEDIR'$1' primary icon release detected"</action>
+         <action signal="secondary-icon-press">echo "SOURCEDIR'$1' secondary icon press detected"</action>
+         <action signal="secondary-icon-release">echo "SOURCEDIR'$1' secondary icon release detected"</action>
+      </entry>'
+   if [ $2 = 1 ]; then echo '<vseparator></vseparator>'; fi
+   if [ $3 = 1 ]; then echo '</hbox><hseparator></hseparator><hbox>'; fi
+
+}
+function funcentCreate2() {
+   echo '<variable>MIRRORDIR'$1'</variable>
+         <action>echo "MIRRORDIR'$1' action for default signal triggered"</action>
+         <action signal="changed">echo "MIRRORDIR'$1' changed to $MIRRORDIR'$1'"</action>
+         <action signal="activate">echo "MIRRORDIR'$1' Enter key-press detected"</action>
+         <action signal="primary-icon-press">echo "MIRRORDIR'$1' primary icon press detected"</action>
+         <action signal="primary-icon-release">echo "MIRRORDIR'$1' primary icon release detected"</action>
+         <action signal="secondary-icon-press">echo "MIRRORDIR'$1' secondary icon press detected"</action>
+         <action signal="secondary-icon-release">echo "MIRRORDIR'$1' secondary icon release detected"</action>
+      </entry>'
+   if [ $2 = 1 ]; then echo '<vseparator></vseparator>'; fi
+   if [ $3 = 1 ]; then echo '</hbox><hseparator></hseparator><hbox>'; fi
+   MIRRORDIR=$MIRRORDIR'$1'
+}  
+
+
+# open the folder selector at this folder...
+cd /root
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+export Pmirror='
+<window title="Puppy Backup '$VERSION'"  width-request="400" resizable="false">
+
+<vbox>
+<text><label>"_________________________________________________________________"</label></text> 
+<frame '$LOC102'>
+  <hbox>
+       <text><label>'$LOC103'</label></text>     
+<entry accept="directory" tooltip-text="'$LOC501'">
+               <input file>/tmp/pm_input1</input>               
+               '"$(funcentCreate 20 0 0)"'               
+               '"$(funcbtnCreate 20 "" """Inserting into""" fileselect)"'               
+            </hbox>
+            <hbox>
+       
+       <text><label>'$LOC104'</label></text>     
+<entry accept="directory" tooltip-text="'$LOC502'">
+               <input file>/tmp/pm_input2</input>              
+               '"$(funcentCreate2 20 0 0)"'                          
+               '"$(funcbtnCreate2 20 "" """Inserting into""" fileselect)"'               
+            </hbox>
+ 
+  <text use-markup="true">
+            <label>"<b><span color='"'blue'"'>'$LOC105'</span></b>"</label>
+         </text>           
+ </frame>           
+ <frame '$LOC111'>
+  <checkbox>
+   <label>'$LOC106'</label>
+   <variable>CHECK1</variable>
+   <default>no</default>
+  </checkbox>
+  <checkbox><label>'$LOC107'</label><variable>CHECK2</variable></checkbox>
+  <checkbox>
+   <label>'$LOC108'</label>
+   <variable>CHECK3</variable>
+   <default>yes</default>
+  </checkbox>
+  <checkbox><label>'$LOC109'</label><variable>CHECK4</variable></checkbox>
+  <checkbox><label>'$LOC110'</label><variable>CHECK5</variable></checkbox>
+ </frame>
+ <frame '$LOC112'>
+  <text><input file>/tmp/pm_progress</input></text>
+ </frame>
+   <text><label>"___________________________________________________________"</label></text> 
+
+         
+ <hbox>
+   <button help>
+  <label>'$spacer''$LOC200''$spacer'</label>
+    <input file stock="gtk-help"></input>    
+    <action>launch:about</action>
+   </button>
+  <button>
+<input file stock="gtk-cancel"></input>
+      <label>'$spacer''$LOC900''$spacer'</label>
+      <action type="exit">CLOSE</action>      
+</button>
+
+<button ok></button>
+
+  
+ </hbox>
+</vbox>
+</window>'
+
+I=$IFS; IFS=""
+for STATEMENTS in  $($GTKDIALOG --program Pmirror); do
+	eval $STATEMENTS
+done
+IFS=$I
+EXCEPTION_FILE="none"
+if [ "$EXIT" = "OK" ]; then
+	SOURCEDIR=`echo "$SOURCEDIR20"/ | sed -e "s%//%/%g"`
+	MIRRORDIR=`echo "$MIRRORDIR20"/ | sed -e "s%//%/%g"`
+	
+	disk_check
+	
+	#-----build mirdir command
+	echo -e "mirdir \c" > /tmp/pm_mirdir
+	echo -e "-e "$EXCEPTION_FILE "\c" >> /tmp/pm_mirdir
+	if test $CHECK1 = true; then
+		echo -e "-i \c" >> /tmp/pm_mirdir
+		echo -e "\n $LOC604\n $LOC605\n $LOC606\n\n $LOC607" > /tmp/pm_progress
+	else
+		echo -e "\n\n $LOC608\n\n\n $LOC609 \n $LOC610  $MIRRORDIR\n $LOC611\n\n $LOC612  \n $LOC613  \n\n" > /tmp/pm_progress
+	fi
+	if test $CHECK2 = true; then echo -e "-v \c" >> /tmp/pm_mirdir;fi
+	if test $CHECK3 = false; then echo -e "-s \c" >> /tmp/pm_mirdir;fi
+	if test $CHECK4 = true; then echo -e "-o \c" >> /tmp/pm_mirdir;fi
+	if test $CHECK5 = true; then echo -e "-d \c" >> /tmp/pm_mirdir;fi
+	echo -e '"'"$SOURCEDIR"'"' "\c" >> /tmp/pm_mirdir
+	echo -e '"'"$MIRRORDIR"'"' "\c" >> /tmp/pm_mirdir
+    	
+	
+	Xdialog --title "$LOC914" --screen-center --logbox /tmp/pm_progress 400x370
+	if test "$?" = "0"; then
+# check for  -i    protection of hypen needed	
+      cat "/tmp/pm_mirdir" | grep -q "\-i"         
+if [ "$?" -ne "0" ] ; then  	
+echo -e "\n$( date )"  >> /root/.config/PUPPY_BACKUP/COMMAND_LIST
+	cat /tmp/pm_mirdir  >> /root/.config/PUPPY_BACKUP/COMMAND_LIST
+	
+	fi
+	yaf-splash  -fontsize large  -bg orange -close never -text "$LOC410" & PID=$!
+	
+		#-----Run mirdir		
+		/tmp/pm_mirdir >> /tmp/pm_progress 2>&1	
+		sync
+		kill $PID	
+		cp -f /tmp/pm_progress /tmp/summary_backup
+		FINALCHECK=`cat /tmp/pm_progress | grep -m 1 "compared"`
+		FINAL_LINE=`cat /tmp/summary_backup | grep -m 1 "Mirroring"`
+		if test -n "$FINALCHECK"; then
+			echo -e "\n$FINAL_LINE\n$LOC614\n\n$LOC615 \n/tmp/summary_backup" >> /tmp/pm_progress
+			tail -9 /tmp/pm_progress > /tmp/pm_progress_tail
+			if test $CHECK1 = true; then
+			Xdialog --title "$LOC914" --screen-center --no-cancel --editbox /tmp/pm_progress_tail 21 85 100 
+			else
+			# put up window of completion
+			sed '1,11d' /tmp/pm_progress  | Xdialog --title "$LOC914" --screen-center --no-cancel --tailbox - 31 90 100  
+            rm -f /tmp/pm_* 
+		fi
+		
+		else
+	    echo -e 	"\n\n\n$LOC616\n$LOC617\n$LOC618\n$LOC619\n$LOC620" > /tmp/pm_progress_tail
+		Xdialog --title "$LOC914" --screen-center --no-cancel --editbox /tmp/pm_progress_tail 21 85 100 
+		fi
+		
+		
+		#-----update config-file, if mirror without simulate option
+		if test $CHECK1 = false; then
+			echo "mirrordate=`date +%d/%m/%Y`" > $WORKDIR3/config
+			echo "sourcedir=$SOURCEDIR" >> $WORKDIR3/config
+			echo "mirrordir=$MIRRORDIR" >> $WORKDIR3/config
+			echo "exception_file=$EXCEPTION_FILE\"" >> $WORKDIR3/config			
+			echo -e "$LOC621\n$LOC622" >> /tmp/pm_progress
+		fi
+		
+		if [  $CHECK1 = true ];then
+		# update config file even if simulate is chosen
+		    echo "mirrordate=`date +%d/%m/%Y`" > $WORKDIR3/config
+			echo "sourcedir=$SOURCEDIR" >> $WORKDIR3/config
+			echo "mirrordir=$MIRRORDIR" >> $WORKDIR3/config
+			echo "exception_file=$EXCEPTION_FILE\"" >> $WORKDIR3/config			
+			echo -e "$LOC621\n$LOC622" >> /tmp/pm_progress
+			
+		# Fill in entry fields when simulation mode selected	
+		# find source folder
+        SOURCEDIR=`grep sourcedir $WORKDIR3/config 2> /dev/null | sed -e s/^.*\=//g`
+
+        # find mirror folder
+        MIRRORDIR=`grep mirrordir $WORKDIR3/config 2> /dev/null | sed -e s/^.*\=//g`
+
+        echo "$SOURCEDIR" > /tmp/pm_input1
+        echo "$MIRRORDIR" > /tmp/pm_input2
+
+/usr/local/puppy-backup/mirror3 &
+	fi
+	
+	
+	
+	
+	else	
+	cp -f /tmp/pm_progress /tmp/summary_backup
+		rm -f /tmp/pm_*
+		exit 0
+	fi
+else
+
+cp -f /tmp/pm_progress /tmp/summary_backup
+	rm -f /tmp/pm_*
+	exit 0
+fi

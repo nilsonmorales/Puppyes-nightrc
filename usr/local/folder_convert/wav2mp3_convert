@@ -1,0 +1,27 @@
+#!/bin/sh
+
+
+if [ $CHECKBOX = "true" ] ;then
+OUT_DIR="/root/$name"
+[ ! -d $OUT_DIR ] && mkdir -p $OUT_DIR
+
+else
+
+OUT_DIR="./$name"
+[ ! -d $OUT_DIR ] && mkdir -p $OUT_DIR
+fi
+# Modify Lame preferences
+# http://linux.die.net/man/1/lame
+# lame_opts=" --vbr-old -V 3 -m j --replaygain-fast"
+# Default Values ^ VBR 0, Joint Stereo, Apply ReplayGain Tag
+
+lame_opts=" -V 3 --lowpass 22050 -m j --replaygain-fast"
+
+for x in *.wav
+do MP3=`basename "${x%.wav}.mp3"`
+
+echo "Converting ${x} to MP3 format"
+
+lame $lame_opts "$x" $OUT_DIR/"$MP3"
+
+done

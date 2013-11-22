@@ -1,0 +1,53 @@
+#!/bin/bash
+#folder_convert
+# English localization
+#version=1.x
+
+
+set -a
+# Titles
+LOC100="Convert to MP3"
+LOC101="Convert"
+LOC102="Conversion folder name"
+LOC103="Options"
+
+
+# Messages
+LOC200="The conversion is completed."
+LOC201="Do you want to go to the Destination Folder?"
+LOC202="Conversion is underway."
+LOC203="Click to remove this message."
+
+
+
+# Help info
+LOC300="Conversion of Entire Folder"
+LOC301="Wave files have the extension .wav."
+LOC302="You can convert an entire folder"
+LOC303="of wave files to the mp3 format."
+LOC304="Be careful!!  It is possible to overwrite"
+LOC305="a file with the same name."
+LOC306="A folder named “wav2mp3” is created"
+LOC307="for the converted files, but you can"
+LOC308="change this folder name…"
+LOC309="The conversion folder is located"
+LOC310="inside of the folder containing the"
+LOC311="wave files, but you can change"
+LOC312="this location…"
+
+
+# Button labels
+LOC400="No"
+LOC401="Yes"
+LOC402="Start Conversion"
+# Popups
+LOC500="Conversion will take place in your HOME folder"
+LOC501="rather than inside of the current folder"
+LOC502="Delete wave files after "
+LOC503="they are converted to the mp3 format"
+LOC504="Start conversion of wave files"
+# Checkbox labels
+LOC600="Create conversion folder in HOME folder"
+LOC601="Delete wave files after conversion"
+
+

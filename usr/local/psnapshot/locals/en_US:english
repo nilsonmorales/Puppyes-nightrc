@@ -1,0 +1,23 @@
+#!/bin/bash
+#ptmtimer
+#version=1.x
+#language=english
+#translator:Native
+
+set -a
+
+#Gui
+LOC200="Screen"
+LOC201="Please choose"
+LOC202="Wait 10 sec"
+LOC203="Now"
+LOC204="Quit"
+
+
+#X-dialog
+LOC300="Please wait and prepare your screen"
+
+
+
+
+

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec "/usr/local/empty-files/empty-files" "$@"
+
+exit 0

@@ -1,0 +1,103 @@
+#!/bin/bash
+#rename-files
+# English localization
+#version=1.x
+#Translator don570
+
+set -a
+
+# Radio button label text
+LOC103="Replace whitespace in filenames
+with the underscore character
+(non-recursive)"
+LOC105="Change extension to a new extension"
+LOC106="Change consecutive characters
+in each filename"
+LOC107="Move files with EXTENSION 
+to their own folder"
+LOC108="Add characters to the filename(s)"
+LOC109="Number files in the folder
+from 000 to 999 according to date"
+
+# Button label text
+LOC110="Info"
+
+# Xdialog message heading
+LOC200="Summary of changes"
+LOC201="Warning!"
+
+# Xdialog messages 
+LOC202="The list of files is located in the folder" # folder name is added at end
+LOC203="Less than "
+LOC204="Number of files that were moved :"   
+LOC205="No files were found inside the folder."
+LOC206="An extension must not have whitespace."
+LOC207="The folder has not been changed."
+LOC208="files were renamed. "  # Do not use capital letter
+LOC209="Destination folder :"
+LOC210="No files with that extension were found"
+LOC211="The extension must not begin with a dot."
+LOC212="folder/filenames were modified. "  # Do not use capital letter
+LOC213="One file was modified. " 
+LOC214="One folder/filename was modified."
+LOC215="because"
+LOC216="file(s) had similar names,"
+LOC217="and could not be overwritten."
+# Special Xdialog message 
+LOC219="No"  # it is used in phrase  'No files'
+
+
+# Helpful window info
+LOC300="Choose one of the following options"
+LOC301="on the left side, then click "
+LOC302="Proceed"
+
+# INFO DIALOG window
+LOC303="Information"
+LOC304="Renaming actions are not recursive."
+LOC305="Lists of renamed files"
+LOC306="are stored in /tmp/Rename_List/"
+LOC307="Here's an extension example:"
+LOC308="For 'filename.tar.gz',  enter 'tar.gz'"
+LOC309="Files are numbered from 000 to 999"
+LOC310="000 is added to the oldest file"
+LOC311="Folders are not renamed"
+LOC312="(except when eliminating whitespace)."
+LOC313="Files with similar names are not overwritten."
+
+# More helpful window info
+LOC314="Rename all files in the folder."
+LOC315="(hidden files are ignored)"
+
+# Radio button popups
+LOC400="Example: html can be changed to htm"
+LOC401="Example: txt files can be moved to separate folder"
+LOC402="Characters are added after filename and before extension"
+LOC403="The number depends on the modification date"
+LOC404="Underscore character replaces the whitespace"
+LOC405="Check for substring in each filename and replace"
+
+# Tooltip Popups
+LOC500="Credits and license"
+LOC501="Helpful information and tips"
+LOC504="Begin renaming files"
+
+# End dialog box
+LOC600="Do you want to go to the Destination Folder?"
+LOC601="Yes"
+LOC602="No"
+
+# Headings
+LOC700="Credits"
+LOC701="License"
+
+# Field text in window
+LOC800="Original extension"
+LOC801="New extension"
+LOC802="Enter EXTENSION"
+LOC803="Enter characters"
+LOC804="Original characters"
+LOC805="Replacement characters"
+
+# Cancel Button
+LOC900="Cancel"

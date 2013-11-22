@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if   [ ! -e /usr/bin/unrar ] || [ ! -e /usr/bin/rar ] ;then
+
+DIALOG=Xdialog
+$DIALOG --wrap --title "Warning"   --wrap --screen-center --center --no-buttons --msgbox "
+You must install Rar or Unrar application
+to extract this archive.  Available as
+download from Rar developer. 
+
+"     0 0
+exit 0
+fi
+
+exec Extract-rar  "$@"

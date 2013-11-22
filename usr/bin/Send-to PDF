@@ -1,0 +1,4 @@
+#!/bin/sh
+cp -Lrf "$@" /root/my-documents/PDF/
+exit 0
+

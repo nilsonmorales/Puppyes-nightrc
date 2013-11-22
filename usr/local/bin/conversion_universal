@@ -1,0 +1,5 @@
+#!/bin/sh
+cd "/usr/local/conversion_universal/"
+exec "/usr/local/conversion_universal/conversion_universal" "$@"
+
+exit 0

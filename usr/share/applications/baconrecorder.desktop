@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Bacon Recorder
+Name[ru]=Bacon Recorder - Запись
+Name[de]=Bacon Recorder - Aufnahme
+Name[es]=Bacon Recorder - Grabación
+Name[fr]=Bacon Recorder-Enregistrement
+Icon=mini-clock.xpm
+Comment=Bacon Recorder
+Comment[ru]=Bacon Recorder - Запись
+Comment[de]=Bacon Recorder - Aufnahme
+Comment[es]=Bacon Recorder - Grabación
+Comment[fr]=Bacon Recorder-Enregistrement
+Exec=baconrecorder
+Terminal=false
+Type=Application
+Categories=AudioVideo
+

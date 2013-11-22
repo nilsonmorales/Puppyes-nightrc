@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec /usr/local/Clipboard_MD5sum/Calculate_MD5sum "$1"
+
+exit 0

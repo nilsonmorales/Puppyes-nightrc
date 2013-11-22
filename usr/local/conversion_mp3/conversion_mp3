@@ -1,0 +1,60 @@
+#!/bin/bash
+# written by Don White (don570)  Aug 2011
+# changed feb 2012
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+a=${1%/*}
+# b is alternate method to get path name
+#b=`dirname $1`
+z=`echo "$1" | sed "s/\/$//"`
+
+t="${z%.*}"
+file_name="${z##*/}"
+cd "$a"
+SIZE=`ls -l  |  grep $file_name | awk  '{ print $5 }'`
+
+
+let "TIME=$SIZE*43/100000000"
+if [ $TIME -lt 1 ] ;then
+TIME=1
+fi
+
+if [ -f "$t.mp3" ];then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox "          ${t##*/}.mp3 $LOC100
+
+          $LOC101"    17 65 100 
+exit 0 
+fi 
+
+DIALOG=Xdialog
+
+$DIALOG --wrap --title "$LOC200"   --yesno "$LOC400\n$LOC401\n\n$LOC500 $TIME $LOC501" 0 0
+if [ "$?" -eq "1" ] ;then 
+exit 0
+fi
+rxvt -geometry "85x25-0+0" -e lame -V 3  -m j  "$@"   $t.mp3  
+
+#lame  -V 3 "$1" "$t.mp3" 
+
+sleep 1
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox ".           $LOC300           . 
+
+$LOC202
+
+$LOC500 $TIME $LOC501
+
+"   17 65 100  &
+
+exit 0

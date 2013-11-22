@@ -1,0 +1,76 @@
+#!/bin/bash 
+#Puppy clock 
+#version=0.3.x 
+#language=english 
+#translator:don570/RSH 
+
+set -a 
+
+#Popups 
+LOC200="Vollbild" 
+LOC201="Einstellungen" 
+LOC202="Über Puppy Clock..." 
+LOC203="Beenden" 
+LOC204="Sie können Musik abspielen oder" #edited 
+LOC205="eine Meldung anzeigen lassen" #edited 
+
+#Preferences 
+LOC300="Systemzeit einstellen" 
+LOC301="Textgröße" 
+LOC302="Hintergrundfarbe" 
+LOC303="Farbe der Uhrziffern" 
+LOC304="Puppy Clock neustarten um die Änderungen zu übernehmen" #edited 
+LOC305="Abbruch" 
+LOC306="OK" 
+LOC307="Puppy Clock - Einstellungen" 
+
+#Alarm 
+LOC400="Alarm" 
+LOC401="Einstellen der" #edited 
+LOC402="Alarmtätigkeiten" #edited 
+LOC403="12 Stunden" 
+LOC404="24 Stunden" 
+LOC405="Hilfe" 
+LOC406="Tonalarm einstellen" #edited 
+LOC407="Musik oder Sounddatei abspielen" #edited 
+LOC408="Meldungsalarm einstellen" #edited 
+LOC409="Eine Notiz anzeigen" #edited 
+LOC410="Notiz:" 
+
+#Help 
+LOC509="Anweisungen" 
+LOC500="Puppy Clock verwendet das Programm pSchedule" #edited 
+LOC501="um den Alarm zu definieren. Klicken Sie" #edited 
+LOC502="auf 'Tonalarm einstellen' oder 'Meldungs-" #edited 
+LOC503="alarm einstellen' und Sie können Uhr- und" #edited 
+LOC504="Tageszeiten einstellen. Verschiedene Audio-" #edited 
+LOC505="formate (z.B. mp3) können für den Tonalarm" #edited 
+LOC506="verwendet werden." #edited 
+LOC507="Um die Anzeige der Uhrzeit anzupassen, " #edited 
+LOC508="klicken SIe auf '12' oder '24' Stunden." #edited 
+
+#Stopwatch 
+LOC600="Stoppuhr" 
+LOC601="Runde" 
+LOC602="Rundenzeit" #edited 
+LOC603="Gesamtzeit" #edited 
+LOC604="Starten" 
+LOC605="Hundertstel" 
+LOC606="Spalten" 
+LOC607="Runde" 
+
+#Countdown 
+LOC700="Schaltuhr" 
+LOC701="Starten" 
+LOC702="Sekunden abzählen" 
+LOC703="1 Minute" 
+LOC704="1 Stunde" 
+LOC705="1 Tag" 
+LOC706="Ton/Programme nach Countdown starten" #edited 
+
+#pclock - about 
+LOC800="Über Puppy Clock" 
+
+#pSchedule label 
+LOC900="Musikalarm" 
+LOC901="Infoalarm"

@@ -1,0 +1,1193 @@
+#!/bin/bash
+# rename-files
+#  conversion of the names of files in a folder  
+#  written by Don White (don570) version 1.0  March 15 2012
+#  version 1.3  march19   -  added substring replacement
+#  version 1.4  march22   -  corrected numbering ( touch command fixed)
+# localization method by Zigbert
+#  version 1.6  march31  -  corrected some bugs
+#  version 1.7  april 1  -  corrected mv -n  and added first text to list
+#  version 1.8  april 12  -  corrected for false numeric extension 
+
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+rm -rf /tmp/tmp_rename
+
+FILE_DIRECTORY=`echo "$1" | sed "s/\/$//"`
+cd "$FILE_DIRECTORY"
+export VERSION=1.8
+mkdir  -p  /tmp/tmp_rename
+# make a directory for  storage of lists
+mkdir  -p  /tmp/Rename_List
+WORKDIR=/tmp/tmp_rename
+if [ -e /usr/bin/Thunar ]; then
+FILE_MANAGER="Thunar"
+else
+FILE_MANAGER="rox -d"
+fi
+# for use in text
+quotation="'"
+spacer=" "
+#make heading for list
+TEXT=`echo -e "Rename-files has changed the names \nof the following files: \n \n "`
+
+
+
+###############################################
+#                                             #
+#                END FUNCTION2                #
+#                                             #
+###############################################
+
+end_function2(){
+	
+	export ENDING='
+	<window title="'$LOC200'">
+	 <frame>
+         <text use-markup="true">
+            <label>"<b>'$LOC202'
+/tmp/Rename_List
+
+
+'$LOC204' '$spacer' '$NUM'
+'$LOC209' '$spacer' '$spacer' Folder_'$MOVE_EXTENSION'
+
+
+'$LOC600'
+ </b>"</label>
+         </text>
+  <text height-request="10"><label>""</label></text>
+         
+     <hbox> 
+<button>
+<input file stock="gtk-cancel"></input>
+      <label>'$spacer''$LOC602''$spacer'</label>
+      <action type="exit">CLOSE</action>
+</button>
+<text><label>    </label></text> 
+<button>
+<input file stock="gtk-ok"></input>
+     <label>'$spacer''$LOC601''$spacer'</label>
+	  <action>$FILE_MANAGER  "$FILE_DIRECTORY/Folder_$MOVE_EXTENSION" &</action>
+	  <action>exit:EXIT</action>
+</button>
+
+ <text><label>                          </label></text>    
+    </hbox>
+    
+	 </frame>
+	
+	</window>'
+	gtkdialog3 -p ENDING --center
+}
+export -f end_function2
+
+
+
+###############################################
+#                                             #
+#                END FUNCTION                 #
+#                                             #
+###############################################
+
+end_function(){
+	if [ $NUM2 -eq 0 ] ;then
+	end_function2 &
+	exit 0
+	fi
+
+	export ENDING='
+	<window title="'$LOC200'">
+	 <frame>
+         <text use-markup="true">
+            <label>"<b>'$LOC202'
+/tmp/Rename_List
+
+'$NUM2' '$LOC216'
+'$LOC217'
+
+'$LOC204' '$spacer' '$NUM'
+'$LOC209' '$spacer' '$spacer' Folder_'$MOVE_EXTENSION'
+
+
+'$LOC600'
+ </b>"</label>
+         </text>
+  <text height-request="10"><label>""</label></text>
+         
+     <hbox> 
+<button>
+<input file stock="gtk-cancel"></input>
+      <label>'$spacer''$LOC602''$spacer'</label>
+      <action type="exit">CLOSE</action>
+</button>
+<text><label>    </label></text> 
+<button>
+<input file stock="gtk-ok"></input>
+     <label>'$spacer''$LOC601''$spacer'</label>
+	  <action>$FILE_MANAGER  "$FILE_DIRECTORY/Folder_$MOVE_EXTENSION" &</action>
+	  <action>exit:EXIT</action>
+</button>
+
+ <text><label>                          </label></text>    
+    </hbox>
+    
+	 </frame>
+	
+	</window>'
+	gtkdialog3 -p ENDING --center
+}
+export -f end_function
+
+
+###############################################
+#                                             #
+#               CHECK_EMPTY                   #
+#                                             #
+###############################################
+
+check_empty (){
+ls   "$FILE_DIRECTORY"  > ".LIST_rename"
+#  echo `ls -la | sed -n  '1 p' |  awk '{ print $2 }'`
+
+NUM=`wc -l .LIST_rename  | awk '{ print $1 }'`
+rm -f  .LIST_rename   
+if [ "$NUM" = "0" ]; then
+ Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox "  $LOC205
+ 
+$LOC207
+         
+ "   17 65 100 &
+
+exit 0
+fi
+launch_function  &
+exit 0
+}
+export -f check_empty
+
+
+###############################################
+#                                             #
+#               LAUNCH_FUNCTION               #
+#                                             #
+###############################################
+
+launch_function (){
+if [ $EXTENSION_CHANGE = "true" ];then
+check_change &
+break
+fi	
+if [ $NUMBER = "true" ];then
+number-files &
+break
+fi
+if [ $MOVE = "true" ];then
+check_move &
+break
+fi
+if [ $CHARACTERS = "true" ];then
+suffix-files &
+break
+fi
+if [ $UNDERSCORE = "true" ];then
+underscore &
+break
+fi
+if [ $REPLACE_SUBSTRING = "true" ];then
+replace_substring &
+break
+fi
+
+exit 0
+}
+export -f launch_function
+
+###############################################
+#                                             #
+#               CHECK_CHANGE                  #
+#                                             #
+###############################################
+
+check_change (){
+#Check if extensions contains spaces
+      echo "$EXTENSION1" | grep -q " "         
+if [ $? -eq "0" ] ; then  
+ Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox "  $LOC206
+ 
+$LOC207
+         
+ "   17 65 100    
+ exit 0
+             
+fi
+      echo "$EXTENSION2" | grep -q " "         
+if [ $? -eq "0" ] ; then  
+ Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox "  $LOC206
+ 
+$LOC207
+        
+ "   17 65 100      
+ exit 0
+          
+fi
+[ ${EXTENSION1:0:1} = "."  ]
+ if [ $? -eq "0" ] ; then  
+ Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox "  $LOC211
+ 
+$LOC207
+
+$LOC307
+$LOC308 
+       
+ "   17 65 100   &
+ exit 0
+          
+fi
+[ ${EXTENSION2:0:1} = "."  ]
+ if [ $? -eq "0" ] ; then  
+ Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox "  $LOC211
+ 
+$LOC207
+
+$LOC307
+$LOC308
+        
+ "   17 65 100   &
+ exit 0
+          
+fi
+change_extension &
+ exit 0
+}
+export -f check_change
+
+###############################################
+#                                             #
+#               CHECK_MOVE                    #
+#                                             #
+###############################################
+
+check_move (){
+#Check if extension contains spaces
+      echo "$MOVE_EXTENSION" | grep -q " "         
+if [ $? -eq "0" ] ; then  
+
+ Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox "  $LOC206
+ 
+$LOC207
+       
+ "   17 65 100  &
+
+exit 0  
+
+ fi
+ [ ${MOVE_EXTENSION:0:1} = "."  ]
+ if [ $? -eq "0" ] ; then  
+ Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox "  $LOC211
+ 
+$LOC207
+
+$LOC307
+$LOC308 
+       
+ "   17 65 100 
+ exit 0 
+               
+fi
+move-files
+
+}
+export -f check_move
+
+
+###############################################
+#                                             #
+#           Replace_SUBSTRING                 #
+#                                             #
+###############################################
+replace_substring(){
+
+
+for file in ./*"$FOO"*
+do
+        # create all temp files including folders
+        touch -a  $WORKDIR/"$file"  2>/dev/null
+        #  remove the  folder files
+if [ -d "$file" ]; then
+        rm $WORKDIR/"${file}"
+fi
+done
+         # create  big list
+        ls    > ".LIST_BIG"
+        # create  smaller list
+        ls   $WORKDIR  > ".LIST_rename"
+        # beware that LIST_PATH has whitespace
+        LIST_PATH=/tmp/Rename_List/LIST"_""$( date +%c )" 
+        cp -T .LIST_rename  "$LIST_PATH"
+        NUM=`wc -l .LIST_rename  | awk '{ print $1 }'` 
+ # add extra text to top of list         
+  cat - "$LIST_PATH" <<<"$TEXT" > $WORKDIR/PATH_LIST2
+    cp $WORKDIR/PATH_LIST2 "$LIST_PATH"
+
+      
+        # initialize the loop
+        X=0
+        # initialize MATCH  which checks for similar filenames
+        MATCH=0
+while [ $X -le $((NUM-1)) ]
+do
+        X=$((X+1))
+           
+     read LINE < ".LIST_rename"
+     
+ # check if a file with same name  exists
+       grep "${LINE//"$FOO"/$BAR}" ".LIST_BIG"
+      if [ $? -eq 0 ]; then
+     let "MATCH=$MATCH + 1"
+    fi
+ 
+        #do rename  then make list shorter
+        mv -Ti  "$LINE"  "${LINE//"$FOO"/$BAR}"  2>/dev/null 
+        
+        sed  '1d'  .LIST_rename > .LIST_rename2
+        mv .LIST_rename2 .LIST_rename
+done
+if [ "$NUM" = "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC205 
+
+$LOC207       
+ "   17 65 100   &      
+fi
+if [ "$NUM" = "1" ] && [ "$MATCH" -eq "0" ] ; then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC213 
+
+$LOC202
+ /tmp/Rename_List       
+ "   17 65 100   &  
+fi
+
+
+if [ "$NUM" -gt "1" ] && [ "$MATCH" -eq "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $NUM $LOC208
+
+$LOC202
+ /tmp/Rename_List        
+ "   17 65 100   &
+ fi
+ if [ "$NUM" -eq "1" ] && [ "$MATCH" -eq "1" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " 
+$LOC203 $NUM $LOC208
+$LOC215 $MATCH  $LOC216
+$LOC217
+     
+ "   17 65 100   &
+ fi
+if [ "$NUM" -gt "1" ] && [ "$MATCH" -gt "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " 
+$LOC203 $NUM $LOC208
+$LOC215 $MATCH  $LOC216
+$LOC217
+
+$LOC202
+ /tmp/Rename_List        
+ "   22 65 100   &
+ fi
+        rm -rf $WORKDIR
+        rm -f  .LIST_rename 
+        rm -f  ".LIST_BIG"
+exit 0  
+	
+}
+export -f replace_substring 	
+
+###############################################
+#                                             #
+#           CHANGE_EXTENSION                  #
+#                                             #
+###############################################
+
+change_extension (){
+	
+	
+	
+for filename in *.$EXTENSION1
+# Traverse list of files ending with 1st argument.
+do
+       touch -a $WORKDIR/"${filename}"
+       mv -i "$filename" "${filename%$EXTENSION1}"$EXTENSION2  2>/dev/null 
+
+done
+	   NUM2=0
+	   #check for number of files left in folder  
+for i in $(ls *.$EXTENSION1); do
+       let "NUM2 += 1"   
+done 
+       ls   $WORKDIR  > .LIST_rename
+       NUM=`wc -l .LIST_rename  | awk '{ print $1 }'`
+       cp -T .LIST_rename  /tmp/Rename_List/LIST"_""$( date +%c )"
+       read CHECK < .LIST_rename
+       
+       # problem when there is no files in folder
+if [ "$CHECK" = "*.$EXTENSION1" ]; then
+       NUM="$LOC219"
+  
+ Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $NUM $LOC208
+ 
+$LOC207        
+ "   17 65 100   &
+ rm -rf $WORKDIR
+ rm -f  .LIST_rename
+exit 0       
+fi
+if [ $NUM2 -eq 0 ]; then
+if  [ $NUM = "1" ] ; then
+
+ Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox "$LOC213
+ 
+ $LOC202
+ /tmp/Rename_List        
+ "   21 65 100   &      
+
+ fi
+
+ if [ $NUM  -gt "1" ] ; then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $NUM $LOC208
+
+$LOC202
+ /tmp/Rename_List        
+ "   21 65 100   &
+fi
+ rm -rf $WORKDIR
+ rm -f  .LIST_rename
+exit 0
+else
+if  [ $NUM = "1" ] && [ $NUM2 -ne "1" ] ; then
+
+ Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox "$LOC203 $NUM $LOC208
+
+ 
+ $NUM2 $LOC216
+ $LOC217
+ 
+ $LOC202
+ /tmp/Rename_List        
+ "   20 65 100   &      
+
+ fi
+ if  [ $NUM = "1" ] && [ $NUM2 -eq "1" ] ; then
+
+ Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox "
+ $LOC207
+ 
+ $NUM2 $LOC216
+ $LOC217
+        
+ "   17 65 100   &      
+
+ fi
+
+ if [ $NUM  -gt "1" ] ; then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC203 $NUM $LOC208
+
+$NUM2 $LOC216
+ $LOC217
+
+$LOC202
+ /tmp/Rename_List        
+ "   20 65 100   &
+fi
+ rm -rf $WORKDIR
+ rm -f  .LIST_rename
+exit 0
+fi
+
+}
+export -f change_extension	
+
+###############################################
+#                                             #
+#               MOVE-FILES                    #
+#                                             #
+###############################################
+
+move-files (){
+#Only create subdir if at least 1 file with desired extension exists.
+for i in $(ls *.$MOVE_EXTENSION); do
+   mkdir -p Folder_$MOVE_EXTENSION
+   break
+done
+
+# NUM is count of files with that extension
+NUM=0
+# NUM2 is count of files with that extension left in folder
+NUM2=0
+for i in $(ls *.$MOVE_EXTENSION); do
+    let "NUM += 1"  
+    # check for existence of similar named file in destination folder
+    
+    mv -i *.$MOVE_EXTENSION Folder_$MOVE_EXTENSION  2>/dev/null 
+    ls   ./Folder_$MOVE_EXTENSION  > .LIST_rename
+    cp -T .LIST_rename  /tmp/Rename_List/LIST"_""$( date +%c )"  
+done 
+
+#check for number of files left in folder  
+  for i in $(ls *.$MOVE_EXTENSION); do
+    let "NUM2 += 1"   
+  done 
+if [ $NUM -eq 0 ]; then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC210
+
+
+ "   10 65 100   &
+else
+if [ $NUM -eq 1 ] && [ $NUM2 -eq 1 ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC207
+$NUM2 $LOC216
+$LOC217
+
+ "   17 65 100   &
+else
+#  option to open folder
+end_function &
+fi
+fi
+
+rm -f  .LIST_rename
+exit 0
+}
+export -f move-files
+
+###############################################
+#                                             #
+#                SUFFIX-FILES                  #
+#                                             #
+###############################################
+suffix-files(){
+
+
+for file in *
+do
+        # create all temp files including folders
+        touch -a  $WORKDIR/"$file"  2>/dev/null
+        #  remove the  folder files
+if [ -d "$file" ]; then
+        rm $WORKDIR/"${file}"
+fi
+done
+        # create  big list
+        ls    > ".LIST_BIG"
+        #create subset of big list
+        ls   $WORKDIR  > ".LIST_rename"
+        LIST_PATH=/tmp/Rename_List/LIST"_""$( date +%c )" 
+        cp -T .LIST_rename  "$LIST_PATH"
+        NUM=`wc -l .LIST_rename  | awk '{ print $1 }'`   
+ # add extra text to top of list         
+  cat - "$LIST_PATH" <<<"$TEXT" > $WORKDIR/PATH_LIST2
+    cp $WORKDIR/PATH_LIST2 "$LIST_PATH"
+
+
+        # initialize the loop
+        X=0
+        # initialize MATCH  which checks for similar filenames
+        MATCH=0
+while [ $X -le $((NUM-1)) ]
+do
+        X=$((X+1))
+              
+        read LINE < .LIST_rename        
+        # extension is removed from  filename -  %%  gives longest stripping	
+        file_STRIPPED="${LINE%%.*}" 
+        
+       
+        #check if file has an extension
+        # slash is used to protect .
+        CHECK=`echo "$LINE" |  grep   "\."`
+        if [ -n "$CHECK" ] ;then 
+        #find extension of file -  shortest stripping leaving longest extension
+        EXTENSION=".""${LINE#*.}"
+        else
+        EXTENSION=""
+        fi
+        
+          #check if number in extension
+        CHECK_FILE="${LINE%.*}"
+        echo "$CHECK_FILE" | grep -q "\." 
+        if [ $? -eq 0 ] && [ "${CHECK_FILE:(-1)}" -gt "-1" ]   ;then
+        file_STRIPPED="${LINE%.*}"    #strips shortest match from backend
+         EXTENSION=".""${LINE##*.}"  # strips longest match  from frontend
+        fi
+        
+        #check if phony extension is pure number
+        CHECK_EXTENSION="${LINE##*.}"
+         if [ "${CHECK_EXTENSION}" -gt "-1" ];then
+         file_STRIPPED="${LINE}"
+         EXTENSION=""
+         fi 
+        
+ # check if a file with same name  exists
+   grep "$file_STRIPPED""$SUFFIX""$EXTENSION" ".LIST_BIG"
+      if [ $? -eq 0 ]; then
+     let "MATCH=$MATCH + 1"
+    fi
+    
+    
+        #do rename  then make list shorter
+        mv -Ti "$LINE"  "$file_STRIPPED""$SUFFIX""$EXTENSION"  2>/dev/null 
+        sed  '1d'  .LIST_rename > .LIST_rename2
+        mv .LIST_rename2 .LIST_rename
+done
+
+if [ "$NUM" = "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC205 
+
+$LOC207       
+ "   17 65 100   &      
+fi
+
+if [ "$NUM" = "1" ] && [ "$MATCH" -eq "0" ] ; then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC213 
+
+$LOC202
+ /tmp/Rename_List       
+ "   17 65 100   &  
+fi
+if [ "$NUM" -gt "1" ] && [ "$MATCH" -eq "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $NUM $LOC208
+
+$LOC202
+ /tmp/Rename_List        
+ "   17 65 100   &
+ fi
+if [ "$NUM" -gt "1" ] && [ "$MATCH" -gt "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " 
+$LOC203 $NUM $LOC208
+$LOC215 $MATCH  $LOC216
+$LOC217
+
+$LOC202
+ /tmp/Rename_List        
+ "   22 65 100   &
+ fi
+  if [ "$NUM" -eq "1" ] && [ "$MATCH" -eq "1" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " 
+$LOC203 $NUM $LOC208
+$LOC215 $MATCH  $LOC216
+$LOC217
+     
+ "   17 65 100   &
+ fi
+        rm -rf $WORKDIR
+        rm -f  .LIST_rename 
+        rm -f  ".LIST_BIG"
+exit 0  
+	
+}
+export -f suffix-files
+###############################################
+#                                             #
+#                NUMBER-FILES                 #
+#                                             #
+###############################################
+number-files(){
+
+
+for file in *
+do
+       # create all temp files including folders
+       touch --reference="$file"  $WORKDIR/"$file"  2>/dev/null
+       #  remove the temp folder files
+if [ -d "$file" ]; then
+       rm $WORKDIR/"${file}"
+fi
+done
+          # create  big list
+        ls    > ".LIST_BIG"
+        # create subset list
+       ls -tr  $WORKDIR  > .LIST_rename
+       LIST_PATH=/tmp/Rename_List/LIST"_""$( date +%c )"       
+       cp -T .LIST_rename  "$LIST_PATH"
+       NUM=`wc -l .LIST_rename  | awk '{ print $1 }'`
+      # add extra text to top of list         
+  cat - "$LIST_PATH" <<<"$TEXT" > $WORKDIR/PATH_LIST2
+    cp $WORKDIR/PATH_LIST2 "$LIST_PATH"
+
+
+
+
+       #  ADD is the characters to add to front of number of file
+       ADD=00
+       # initialize the loop
+       X=0
+       # initialize MATCH  which checks for similar filenames
+       MATCH=0
+while [ $X -le $((NUM-1)) ]
+do
+       
+        SUFFIX="$ADD"$X
+        X=$((X+1))
+        # create final 3 characters
+        CORRECT=${SUFFIX:(-3)}        
+        read LINE < .LIST_rename        
+        # extension is removed from  filename -  %%  gives longest stripping	
+        file_STRIPPED="${LINE%%.*}" 
+        
+        #check if file has an extension
+        # slash is used to protect .
+        CHECK=`echo "$LINE" |  grep   "\."`
+        if [ -n "$CHECK" ] ;then 
+        #find extension of file  -  #  shortest stripping
+        EXTENSION=".""${LINE#*.}"
+        else
+        EXTENSION=""        
+       fi
+       
+           #check if number in extension
+        CHECK_FILE="${LINE%.*}"        
+        echo "$CHECK_FILE" | grep -q "\." 
+        if [ $? -eq 0 ] && [ "${CHECK_FILE:(-1)}" -gt "-1" ]   ;then
+        file_STRIPPED="${LINE%.*}"    #strips shortest match from backend
+         EXTENSION=".""${LINE##*.}"  # strips longest match  from frontend         
+        fi
+        #check if extension is pure number
+        CHECK_EXTENSION="${LINE##*.}"
+         if [ "${CHECK_EXTENSION}" -gt "-1" ];then
+         file_STRIPPED="${LINE}"
+         EXTENSION=""
+         fi  
+       
+        # check if a file with same name  exists
+        grep "$file_STRIPPED""_"$CORRECT"$EXTENSION" ".LIST_BIG"
+        if [ $? -eq 0 ]; then
+        let "MATCH=$MATCH + 1"
+        fi
+
+        #do rename  then make list shorter
+        mv -Ti "$LINE"  "$file_STRIPPED""_"$CORRECT"$EXTENSION"  2>/dev/null 
+        sed  '1d'  .LIST_rename > .LIST_rename2
+        mv .LIST_rename2 .LIST_rename
+done
+ if [ "$NUM" -eq "1" ] && [ "$MATCH" -eq "1" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " 
+$LOC207 
+$LOC215 $MATCH  $LOC216
+$LOC217
+
+
+     
+ "   17 65 100   &
+ fi
+if [ "$NUM" = "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC205 
+
+$LOC207       
+ "   17 65 100   &      
+fi
+if [ "$NUM" = "1" ] && [ "$MATCH" -eq "0" ] ; then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC213 
+
+$LOC202
+ /tmp/Rename_List       
+ "   17 65 100   &  
+fi
+
+if [ "$NUM" -gt "1" ] && [ "$MATCH" -eq "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $NUM $LOC208
+
+$LOC202
+ /tmp/Rename_List        
+ "   17 65 100   &
+fi
+if [ "$NUM" -gt 1 ] && [ "$MATCH" -gt "0" ] ;then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox "
+
+$LOC203 $NUM $LOC208
+$LOC215 $MATCH  $LOC216
+$LOC217
+
+$LOC202
+ /tmp/Rename_List        
+ "   22 65 100   &
+fi
+
+ 
+ rm -rf $WORKDIR
+ rm -f  .LIST_rename 
+  rm -f  ".LIST_BIG"
+exit 0
+	
+}
+export -f number-files
+
+###############################################
+#                                             #
+#                INFO DIALOG                  #
+#                                             #
+###############################################
+info_dialog(){
+	
+export info_box=" 
+<window title=\"$LOC303\" icon-name=\"gtk-info\" resizable=\"false\">
+
+<hbox>
+   
+
+<frame>
+   <vbox>
+   
+      <text use-markup=\"true\"><label>\"<b><span size='"'medium'"' color='"blue"'>$LOC304</span></b>\"</label></text>
+      <text height-request=\"20\"><label> </label></text>
+  <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>$LOC305
+$LOC306</span></b>\"</label></text>
+  <text height-request=\"10\"><label> </label></text>
+  <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>$LOC307
+$LOC308</span></b>\"</label></text>
+        <text height-request=\"10\"><label> </label></text>
+
+    <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>$LOC309</span></b>\"</label></text>
+      <text height-request=\"10\"><label> </label></text>
+
+  <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>$LOC310</span></b>\"</label></text>
+      <text height-request=\"10\"><label> </label></text>
+
+  <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>$LOC311
+$LOC312</span></b>\"</label></text>
+      
+        <text height-request=\"10\"><label> </label></text>
+ <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>$LOC313</span></b>\"</label></text>
+      
+        <text height-request=\"10\"><label> </label></text>
+   </vbox>
+</frame>
+  
+    
+
+  
+     
+   <vbox>
+   <text height-request=\"270\"><label> </label></text>
+    <hbox><button ok></button>  
+    </hbox>
+    
+   <text><label>             </label></text>   
+   </vbox>
+
+   
+     
+   
+    
+</hbox>
+
+</window>
+"
+
+gtkdialog3 --program=info_box --center
+
+
+}
+export -f info_dialog
+
+###############################################
+#                                             #
+#               UNDERSCORE                    #
+#                                             #
+###############################################
+
+underscore(){
+
+      #  put in underscore  character 
+      cd "$FILE_DIRECTORY"
+      MATCH=0
+      
+for filename in *
+do
+
+      echo "$filename" | grep -q " "         #  Check whether filename
+if [ $? -eq 0 ] ;then                   #+ contains space(s).
+
+      fname="$filename"               
+      n=`echo $fname | sed -e "s/ /_/g"`   # Substitute underscore for blank.
+  
+# check if n exists on disk      
+ if [ ! -e "$n" ] ;then 
+      echo  "$fname" >> .LIST_rename 
+      mv "$fname" "$n"                     # Do the actual renaming.
+  else 
+# keep track of matching files   
+      let "MATCH=$MATCH + 1"
+    fi
+fi
+done
+
+      cp -T .LIST_rename  /tmp/Rename_List/LIST"_""$( date +%c )"
+      NUM=`wc -l .LIST_rename  | awk '{ print $1 }'`
+      rm -f  .LIST_rename
+if [ $MATCH -eq 0 ] ;then
+if [ -z $NUM ];then
+NUM="$LOC219"
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC219 $LOC208
+
+$LOC207        
+ "   17 65 100 &
+ 
+	
+exit 0
+fi
+if [ "$NUM" = "1" ];then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC214 
+
+$LOC202
+ /tmp/Rename_List         
+ "   17 65 100 &
+ 
+	
+exit 0
+fi
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $NUM $LOC212
+
+$LOC202
+ /tmp/Rename_List        
+ "   17 65 100 &	
+exit 0
+else
+if [ -z $NUM ];then
+NUM="$LOC219"
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC219 $LOC208
+$MATCH $LOC216
+$LOC217
+
+$LOC207        
+ "   21 65 100 &
+ 
+	
+exit 0
+fi
+if [ "$NUM" = "1" ];then
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $LOC214 
+$MATCH $LOC216
+$LOC217
+
+$LOC202
+ /tmp/Rename_List         
+ "   21 65 100 &
+ 
+	
+exit 0
+fi
+Xdialog --title "$LOC200"   --wrap --screen-center --center --no-buttons --msgbox " $NUM $LOC212
+$MATCH $LOC216
+$LOC217
+
+$LOC202
+ /tmp/Rename_List        
+ "   21 65 100 &	
+exit 0
+fi
+}
+export -f underscore
+###############################################
+#                                             #
+#                  A B O U T                  #
+#                                             #
+###############################################
+
+export about="
+<window title=\"$LOC700\" window_position=\"1\">
+ <notebook labels=\"$LOC700|$LOC701\">
+  <frame>
+   <text><label>\"\"</label></text>
+   <progressbar>
+    <input>echo 0; echo \"Rename-files $VERSION\"</input>
+   </progressbar>
+    <text use-markup=\"true\"><label>\"<b>Don White, Copyright 2012</b>\"</label></text>
+    <text use-markup=\"true\"><label>\"<b>written March 2012</b>\"</label></text>
+   <text height-request=\"30\"><label>\"\"</label></text>
+   
+  </frame>
+  <frame>
+   <text use-markup=\"true\"><label>\"Rename-files is released under the <b>GNU General Public License</b> (GPL). You have the right to use and modify this software in any way you like, so long as any derivative works remain under a GPL license.\"</label></text>
+   <text use-markup=\"true\"><label>\"This program is distributed in the hope that it will be useful, but <b><span color='"'red'"'>WITHOUT ANY WARRANTY</span></b>. See the GNU General Public License homepage for more details.\"</label></text>
+   <hbox>
+    <button>
+     <label>\"http://www.gnu.org/licenses/\"</label>
+     <action>defaulthtmlviewer http:\/\/www.gnu.org\/licenses\/</action>
+    </button>
+   </hbox>
+  </frame>
+ </notebook>
+</window>"
+
+
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+
+export CONVERT='
+<window title="Rename-files '$VERSION'" resizable="false"> 
+<vbox>
+
+      
+<vbox>  
+    <hbox> <button tooltip-text=" '$LOC500' ">
+    <input file stock="gtk-about"></input>
+    <label>'$LOC700''$spacer'</label>
+    <action>launch:about</action>
+   </button><button tooltip-text=" '$LOC501' ">
+    <input file stock="gtk-info"></input>
+    <label>'$LOC110''$spacer'</label>
+    <action>info_dialog &</action>
+   </button>
+   </hbox>
+</vbox>
+  
+         <text use-markup="true">
+            <label>"<b>'$LOC314'
+'$LOC315'
+'$LOC300'
+'$LOC301' <b><span color='"'blue'"'>'$quotation''$LOC302''$quotation'</span></b>
+</b>"</label>
+         </text> 
+  
+ 
+
+
+
+
+
+
+<vbox>
+   
+<hbox> 
+
+<vbox>
+ <text height-request="10"><label>""</label></text> 
+<radiobutton tooltip-text="'$LOC400'">
+<label>"'$LOC105''$spacer'"</label>
+<default>true</default>
+<variable>EXTENSION_CHANGE</variable>
+</radiobutton>
+
+<text height-request="30"><label>""</label></text>
+<radiobutton tooltip-text="'$LOC401'">
+<label>"'$LOC107'"</label>
+<variable>MOVE</variable>
+</radiobutton>
+<text height-request="20"><label>""</label></text>
+<radiobutton tooltip-text="'$LOC402'">
+<label>"'$LOC108'"</label>
+<variable>CHARACTERS</variable>
+</radiobutton>
+<text height-request="30"><label>""</label></text>
+<radiobutton tooltip-text="'$LOC403'">
+<label>"'$LOC109'"</label>
+<variable>NUMBER</variable>
+</radiobutton>
+<text height-request="20"><label>""</label></text>
+<radiobutton tooltip-text="'$LOC404'">
+<label>"'$LOC103'"</label>
+<variable>UNDERSCORE</variable>
+</radiobutton> 
+<text height-request="20"><label>""</label></text>
+ <radiobutton tooltip-text="'$LOC405'">
+<label>"'$LOC106''$spacer'"</label>
+<variable>REPLACE_SUBSTRING</variable>
+</radiobutton>
+     
+</vbox>  
+  
+  
+
+
+
+
+  
+  
+  
+  
+<vbox>
+
+    <entry  tooltip-text="'$LOC400'">
+    <default>"'$LOC800'" </default>
+    <variable>EXTENSION1</variable>
+  </entry>
+  
+  <entry  tooltip-text="'$LOC400'">
+    <default>"'$LOC801'" </default>
+    <variable>EXTENSION2</variable>
+  </entry>
+<text height-request="20"><label>""</label></text>       
+      
+  <entry  tooltip-text="'$LOC401'">
+    <default>"'$LOC802'" </default>
+    <variable>MOVE_EXTENSION</variable>
+  </entry>
+
+<text height-request="30"><label>""</label></text>
+  <entry  tooltip-text="'$LOC402'">
+    <default>"'$LOC803'" </default>
+    <variable>SUFFIX</variable>
+  </entry>
+<text height-request="150"><label>""</label></text>  
+    <entry  tooltip-text="'$LOC405'">
+    <default>"'$LOC804'" </default>
+    <variable>FOO</variable>
+  </entry>
+  
+  <entry width-request="170" tooltip-text="'$LOC405'">
+    <default>"'$LOC805'" </default>
+    <variable>BAR</variable>
+  </entry>
+</vbox>
+</hbox>
+</vbox>
+
+
+
+
+
+
+
+
+
+
+
+<text><label>"___________________________________________________________"</label></text> 
+ <hbox>
+ 
+ <button>
+       <input file stock="gtk-cancel"></input>
+      <label>'$spacer''$LOC900''$spacer'</label>
+      <action type="exit">CLOSE</action>
+</button>
+ 
+<text>  <label> "          " </label></text> 
+<button tooltip-text="'$LOC504'">
+       <input file stock="gtk-edit"></input>
+       <label>'$spacer''$LOC302''$spacer'</label>       
+      <action>check_empty &</action>
+      <action>exit:EXIT</action>      
+</button> 
+      <text height-request="10"><label>"                        "</label></text>
+</hbox>
+ </vbox>
+</window>
+'
+
+gtkdialog3  --program=CONVERT --center
+ 

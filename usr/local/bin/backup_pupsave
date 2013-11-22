@@ -1,0 +1,30 @@
+#!/bin/sh
+#Make a dated backup of any file or folder with same extension - jrb 22sep11
+#Note - .pets will not work if you change their file name
+
+FILE=$@
+FNAME=`basename $FILE`
+DIR=`dirname $FILE`
+EXT1=${FILE##*.}
+#if file has no extension must use the following:
+if [ $FILE = $EXT1 ]
+	then
+		EXT2=""
+	else		
+		EXT2=.$EXT1
+fi
+
+OLDFILE=`basename $FILE .$EXT1`
+NEWFILE="$OLDFILE"-`date +%y-%m-%d_%H.%M`$EXT2
+
+cd $DIR
+cp -r $DIR/$OLDFILE$EXT2 $DIR/$NEWFILE
+# old version of yaf-splash
+yaf-splash  -margin 42 -bg orange -fg black -placement center -font "9x15B" -outline 0 -text " Backup  finished           
+
+       DATE:  `date +%y-%m-%d`  
+
+      TIME:  `date +%H.%M`
+                        
+
+"

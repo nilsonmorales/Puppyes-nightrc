@@ -1,0 +1,79 @@
+#!/bin/bash
+#mo2poGUI-Script by RSH (11-2011)
+#v0.3  -  changed name to build_gettext  by don570
+# combined build_po and build_mo
+
+export TEXTDOMAIN=build_gettext
+export OUTPUT_CHARSET=UTF-8
+for P in gtkdialog4 gtkdialog3 gtkdialog; do
+  GTKDIALOG=$(which $P) && break
+done
+
+warning-function(){
+export MYWINDOW="
+<window title=\"$(gettext 'Question?')\">
+<frame>
+<vbox border-width=\"20\">
+			<text>
+				<label>$(gettext 'Do you  want to launch a texteditor?')</label>				
+			</text>
+</vbox>
+<hseparator></hseparator>
+<hbox homogeneous=\"true\">
+     <hbox>
+         <button>
+         <input file stock=\"gtk-yes\"></input>
+         <label>$(gettext 'Yes')</label>
+         <action>defaulttexteditor $ORDNER.po &</action>
+         <action>exit:EXIT</action>                
+         </button> 
+     </hbox>
+     <hbox>
+         <button>
+         <input file stock=\"gtk-no\"></input>
+         <label>$(gettext 'No')</label>
+          <action>exit:EXIT</action>
+         </button>    
+     </hbox>
+</hbox>    
+</frame>
+	
+</window>"
+$GTKDIALOG --program MYWINDOW --center
+}
+
+
+
+
+
+
+#define working directorys
+
+#set some variables
+ORDNER="$1"
+moname=""
+EXTENSION="${ORDNER##*[.]}"  # remove longest match
+if [ "$EXTENSION" = "pot"  ]; then  # convert .po to .mo
+Xdialog --title "Sorry"  --ok-label "$(gettext 'OK')" --backtitle "Sorry"  --msgbox  "\nPlease install regular \nversion of build_gettext\n" 0 0 &
+exit 0
+fi
+
+if [ "$EXTENSION" = "po"  ]; then  # convert .po to .mo
+nlen="`echo ${#ORDNER}`" # liefert die Länge vom vollständigen .mo Namen
+moname="$ORDNER"
+moname2="${moname:0:nlen-3}"
+exec msgfmt "$ORDNER" -o "$moname2" &
+sleep 2
+sync
+Xdialog --title "$(gettext 'Success!')"  --ok-label "$(gettext 'OK')" --backtitle "$(gettext 'Success!')"  --msgbox  "$(gettext 'Rebuilding .mo file: done')" 0 0  &
+else  #  convert .mo to .po
+
+exec msgunfmt "$ORDNER" > "$ORDNER".po &
+sync
+
+warning-function  &
+fi
+
+exit 0
+
+# End

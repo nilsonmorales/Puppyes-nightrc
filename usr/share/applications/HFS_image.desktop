@@ -1,0 +1,16 @@
+
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Name=Create HFS image
+
+GenericName=HFS image maker
+
+Exec=/usr/bin/HFS_image
+Icon=mini-folder.xpm
+Terminal=false
+Type=Application
+
+Categories=GTK;Archiving;
+StartupNotify=true
+MimeType=inode/directory;

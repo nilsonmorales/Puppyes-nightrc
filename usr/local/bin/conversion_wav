@@ -1,0 +1,5 @@
+#!/bin/sh
+cd "/usr/local/conversion_wav/"
+exec "/usr/local/conversion_wav/conversion_wav" "$@"
+
+exit 0

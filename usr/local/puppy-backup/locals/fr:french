@@ -1,0 +1,100 @@
+#!/bin/bash
+# puppy-backup
+# French localization
+#version=1.x
+#Translator don570
+
+set -a
+
+# Helpful text in first window
+LOC100="Pas de Paramètres"
+LOC101="Défini"
+
+# Helpful text in second window
+LOC102="Choisir des dossiers (source et miroir)"
+
+# Labels in second window
+LOC103="Source dir"
+LOC104="Miroir dir"
+
+# Blue warning
+LOC105="Avertissement: Miroir initial doit être vide!"
+
+# Checkbox labels
+LOC106="Seulement simuler un miroir"
+LOC107="Plus de remarques"
+LOC108="Comparaison rapide de fichiers"
+LOC109="Ne pas comparer la propriété"
+LOC110="Ne pas comparer date/heure"
+
+#Frame title
+LOC111="Paramètres"
+LOC112="Remarques additionelles"
+
+# Xdialog help
+LOC200="Aide"
+LOC215="Puppy Backup est un simple système de sauvegarde pour créer un dossier identique à un autre. Il est une interface graphique à mirdir package (19k). Lors du premier lancement, il copiera entièrement le répertoire source vers le répertoire miroir.  L'application effacera les fichiers dans le répertoire miroir si ils ne sont plus dans la source.  Le dossier miroir ne doit pas se trouver sur le même disque dur où vous stockez vos données.  Ne pensez PAS que vos données sont en sécurité quand vous avez sauvegardé vos fichiers en miroir dans une autre partition dans un même disque dur.  Cela reste toujours le même disque dur, et si il vous laisse tomber, ce sera tout le disque qui sera perdu.  Il serait prudent d'acheter un disque dur externe.  Pschedule peut être utilisé avec Puppy backup. Employer les lignes de commandes situées dans /root/.config/PUPPY_BACKUP/COMMAND_LIST ou cliquer le bouton nommé 'Log'. Chaque source a besoin un miroir unique.  Les paramètres sont situés dans le fichier: $HOME/.config/PUPPY_BACKUP/tmp1/config. Le fichier est créé pendant la première action."   
+
+
+# Xdialog  Disk Warning
+LOC800="Avertissement"
+LOC801="Le miroir ne doit pas être une partition."
+LOC802="Choisir un dossier pour le miroir."
+
+
+# Helpful window info
+LOC300="Utilitaire pour miroir/sauvegarde"
+LOC301="Cinq dossiers sont possibles (maximum)."
+LOC302="Choisir une source,"
+LOC303="quoi qu'elle soit paramétrée."
+LOC304="Cliquer"
+LOC305="Lancer"
+LOC307="pour sauvegarder la source."
+
+# Radio button label
+LOC306="Source"
+
+# Tooltip Popups
+LOC500="Crédits et license"
+LOC501="Choisir une source"
+LOC502="Choisir un miroir"
+LOC504="Commencer l'action"
+
+# Helpful text in second window
+LOC600="C'est la première fois que vous lancez Puppy Backup."
+LOC601="Lisez l'AIDE pour information."
+LOC602="Dernier Miroir des dossiers listés il y a"
+LOC603="jours."
+LOC604="L'application va simuler le processus de sauvegarde."
+LOC605="Si tout va bien, annulez l'option de simulation,"
+LOC606="et faites vraiment un miroir ..."
+LOC607="Choisissez OK pour continuer, et ANNULER pour quitter."
+LOC608="ATTENTION!!!"
+LOC609="Il peut arriver que Puppy Backup efface des fichiers"
+LOC610="dans le miroir"
+LOC611="s'ils n'existent pas dans la source."
+LOC612="Il y a une option pour comparer la date"
+LOC613="des fichiers avec un nom semblable"
+LOC614="Il semble que tout se soit bien passé."
+LOC615="Le sommaire ist disponible dans"
+LOC616="Il y a eu un problème lors de la sauvegarde."
+LOC617="- Le paquet 'mirdir' est-il installé?"
+LOC618="- Est-ce que la source- et le répertoire-miroir existent?"
+LOC619="- La partition est-elle active?"
+LOC620="- Lisez les messages au-dessus et l'Aide."
+LOC621="Le fichier de configuration a été mis à jour."
+LOC622="Situé dans le dossier $HOME/.config/"
+
+
+# Headings
+LOC700="Crédits"
+LOC701="License"
+
+# Cancel Button
+LOC900="Annuler"
+# Xdialog title
+LOC914="Miroir/sauvegarde"
+
+# Log button
+LOC915="Log"
+LOC916="Liste de commandes utilisée par mirdir"

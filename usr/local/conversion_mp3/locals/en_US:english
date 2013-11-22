@@ -1,0 +1,26 @@
+#!/bin/sh
+#conversion_mp3
+# English localization
+#version=1.x
+
+
+set -a
+# yaf-splash first
+LOC100="exists already."
+LOC101="Refusing to overwrite it!"
+
+# window heading
+LOC200="Conversion is underway."
+LOC202="Click to remove this message."
+
+
+# yaf-splash final
+LOC300="Conversion is completed."
+
+# Xdialog yes-no
+LOC400="The conversion might take some time."
+LOC401="Do you want to convert the file to mp3?"
+
+# duration message
+LOC500="Time of conversion: "
+LOC501="seconds."

@@ -1,0 +1,1352 @@
+#!/bin/bash
+#puppy clock
+#Copyright 2009,2010,2011
+#Sigmund Berglund with changes by Don White (don570)
+
+#------------------------------
+#This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation version 2.
+
+#This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. <http://www.gnu.org/licenses/>.
+#------------------------------
+
+
+
+VERSION=0.5.2
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+for P in gtkdialog4 gtkdialog3 gtkdialog; do
+GTKDIALOG=$(which $P) && break
+done
+
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+export WORKDIR=$HOME/.puppyclock/tmp
+if [ ! -d $WORKDIR ]; then
+	mkdir -p $WORKDIR
+	echo true > $WORKDIR/HUNDREDTHS
+	echo 60 > $WORKDIR/COUNTDOWN
+	echo '/usr/share/audio/beep_high.wav' > $WORKDIR/COUNTDOWN_ACTION
+	echo '/usr/share/audio/2barks.wav' > $WORKDIR/ALARM
+fi
+
+#configs
+TMP=`grep VERSION $HOME/.puppyclock/pclockrc 2> /dev/null` #check current version
+if [ ! -f $HOME/.puppyclock/pclockrc ] ; then
+	#guess correct fontsize
+	TMP=`xrdb -query | grep dpi | awk '{print $2}'` #check global fontsize
+	FONTSIZE=$((4100/$TMP))
+	#---
+
+# fontsize correction for dpup	
+uname -a | grep -q "dpup"
+if [ "$?" = "0" ];then 
+FONTSIZE=$((3800/$TMP))
+fi
+	echo 'export VERSION=0.5.2
+export FONTSIZE='$FONTSIZE'
+export COLOR1="black"
+export COLOR2="gold"' > $HOME/.puppyclock/pclockrc
+	chmod 722 $HOME/.puppyclock/pclockrc
+fi
+
+. $HOME/.puppyclock/pclockrc
+
+#initials
+rm -f $WORKDIR/COUNTDOWN_DUMMY
+rm -f $WORKDIR/end_while #start progessbar loop
+date +%s%N > $WORKDIR/seconds_start #save the time in nanoseconds (from 1970) to tempfile
+echo -n > $WORKDIR/resultlist
+echo clock24 > $WORKDIR/clock_mode
+
+#gtk-theme
+echo 'gtk-icon-sizes="gtk-button=32,32"
+style "monoBig" { font_name="Mono bold '$FONTSIZE'" base[NORMAL]="'$COLOR1'" text[NORMAL]="'$COLOR2'" }
+widget "*timer" style "monoBig"' > $WORKDIR/gtkrc
+export GTK2_RC_FILES=$WORKDIR/gtkrc:/root/.gtkrc-2.0 #include theme stuff with system themes
+
+
+func_time(){ #called as input for the entry
+	export GTK2_RC_FILES=/root/.gtkrc-2.0 #reset gtk
+	case "`cat $WORKDIR/clock_mode`" in
+	clock12)
+		NANOSEC=`date +%N | head -c 2`
+		echo $NANOSEC > $WORKDIR/NANOSEC #for fullscreen
+		if [ $NANOSEC -lt 25 ]; then
+			date +%I:%M:%S > $WORKDIR/timer
+			echo; echo 100 #update clock
+			sleep 0.6 #no use in looping until we are closer to whole second
+		fi
+		;;
+	clock24)
+		NANOSEC=`date +%N | head -c 2`
+		echo $NANOSEC > $WORKDIR/NANOSEC #for fullscreen
+		if [ $NANOSEC -lt 25 ]; then
+			date +%H:%M:%S > $WORKDIR/timer
+			echo; echo 100 #update clock
+			sleep 0.6 #no use in looping until we are closer to whole second
+		fi
+		;;
+	stopwatch)
+		date +%s%N > $WORKDIR/seconds_now
+		SEC_START=$(<$WORKDIR/seconds_start)
+		echo "$(($(<$WORKDIR/seconds_now)-$SEC_START))" | tail -c 10 | head -c 2 > $WORKDIR/NANOSEC #this file is used by fullscreen
+		NANOSEC=($(<$WORKDIR/NANOSEC))
+		if [ $NANOSEC -lt 25 ]; then
+			TIME_SEC=`echo "($(<$WORKDIR/seconds_now) - $SEC_START) / 1000000000" | bc 2> /dev/null`
+			printf "%02d:%02d:%02d" $((TIME_SEC/3600)) $((TIME_SEC%3600/60)) $((TIME_SEC%60)) > $WORKDIR/timer
+			echo; echo 100 #update clock
+			sleep 0.6 #no use in looping until we are closer to whole second
+		fi
+		;;
+	countdown)
+		date +%s%N > $WORKDIR/seconds_now
+		SEC_NOW=$(($(<$WORKDIR/seconds_now)-1000000000))
+		SEC_START=$(<$WORKDIR/seconds_start)
+		NANOSEC=`echo "$(($SEC_START-$SEC_NOW))" | tail -c 10 | head -c 2`
+		if [ $NANOSEC -gt 75 ]; then
+			TIME_SEC=`echo "($SEC_NOW - $SEC_START) / 1000000000" | bc 2> /dev/null`
+			COUNTDOWN_SEC="$((($SEC_START-$SEC_NOW)/1000000000))"
+			printf "%02d:%02d:%02d" $((COUNTDOWN_SEC/3600)) $((COUNTDOWN_SEC%3600/60)) $((COUNTDOWN_SEC%60)) > $WORKDIR/timer
+			echo; echo 100 #update clock
+			if [ $COUNTDOWN_SEC = 0 ]; then
+				TMP="$(<$WORKDIR/COUNTDOWN_ACTION)"
+				if [ -f "$TMP" ]; then #file is defined --> try to play it 
+					if [ "`echo "$TMP" | grep -E "\.wav$|\.au$"`" ]; then
+						aplay "$TMP" &
+					else
+						ffmpeg -i "$TMP" -f au - | aplay &
+					fi
+				else
+					chmod 722 $WORKDIR/COUNTDOWN_ACTION
+					$WORKDIR/COUNTDOWN_ACTION &
+				fi
+				TMP="$(<$WORKDIR/COUNTDOWN)"
+				echo $(($(date +%s)+$TMP))$(date +%N) > $WORKDIR/seconds_start
+
+			fi
+			sleep 0.6 #no use in looping until we are closer to whole second
+		fi
+		
+		;;
+	esac
+}
+
+timestamp(){
+	date +%s%N > $WORKDIR/seconds_now
+	SEC_SINCE_START="$((($(<$WORKDIR/seconds_now)-$(<$WORKDIR/seconds_start))/1000000000))"
+	NANOSEC=`echo "$(($(<$WORKDIR/seconds_now)-$(<$WORKDIR/seconds_start)))" | tail -c 10 | head -c 2`
+	TIME=`printf "%02d:%02d:%02d" $((SEC_SINCE_START/3600)) $((SEC_SINCE_START%3600/60)) $((SEC_SINCE_START%60))`
+	[ -f $WORKDIR/HUNDREDTHS ] && TIME=${TIME}.$NANOSEC
+	#laptime
+	TIME_PREV=`tail -n1 $WORKDIR/resultlist | cut -d'|' -f3` #previous timestamp
+	if [ $TIME_PREV = 00:00:00 ]; then
+		LAPTIME=$TIME
+	else
+		HOUR=`echo $TIME_PREV | cut -d: -f1`
+		MIN=`echo $TIME_PREV | cut -d: -f2`
+		SEC=`echo $TIME_PREV | cut -d: -f3 | cut -d. -f1`
+		NSEC=`echo $TIME_PREV | cut -d. -f2`
+		if [ ! -f $WORKDIR/HUNDREDTHS ]; then NSEC=0; NANOSEC=0; fi
+		LAPTIME_PREV_SEC=`echo "($HOUR*3600)+($MIN*60)+($SEC)" | bc`
+		LAPTIME_SEC=`echo ${SEC_SINCE_START}.${NANOSEC} - ${LAPTIME_PREV_SEC}.${NSEC} | bc | cut -d. -f1`
+		LAPTIME_NSEC=`echo ${SEC_SINCE_START}.${NANOSEC} - ${LAPTIME_PREV_SEC}.${NSEC} | bc | cut -d. -f2`
+		LAPTIME=`printf "%02d:%02d:%02d" $((LAPTIME_SEC/3600)) $((LAPTIME_SEC%3600/60)) $((LAPTIME_SEC%60))`
+		[ -f $WORKDIR/HUNDREDTHS ] && LAPTIME=${LAPTIME}.$LAPTIME_NSEC
+	fi
+	#---
+	TMP=`tail -n1 $WORKDIR/resultlist | cut -d'|' -f1`
+	if [ ! "$TMP" ]; then LAPNR=1; else LAPNR=$((($TMP)+1)); fi
+	echo "$LAPNR|$LAPTIME|$TIME" >> $WORKDIR/resultlist
+}
+
+fullscreen (){
+	rm -f $WORKDIR/end_while_fullscreen #activate loop
+	#geometry
+	HEIGHT=`xwininfo -root | grep -m 1 '\geometry' | cut -f4 -d ' ' | cut -f2 -d 'x' | cut -f1 -d '+'`
+	WIDTH=`xwininfo -root | grep -m 1 '\geometry' | cut -f4 -d ' ' | cut -f1 -d 'x'`
+	#gtk-theme
+	echo 'style "monohuge" { font_name="Mono bold '`echo "( $WIDTH * $FONTSIZE ) / 290" | bc`'" bg[NORMAL]="'$COLOR1'" base[NORMAL]="'$COLOR1'" fg[NORMAL]="'$COLOR2'" text[NORMAL]="'$COLOR2'" }
+	widget "*" style "monohuge"' > $WORKDIR/gtkrc2
+	export GTK2_RC_FILES=$WORKDIR/gtkrc2:/root/.gtkrc-2.0 #include theme stuff with system themes
+	#gui  	
+	export curtain='<window title="pTiming fullscreen" width-request="'$WIDTH'" height-request="'$HEIGHT'" decorated="false">
+	<vbox>
+	 <hbox width-request="1">
+	 <progressbar width-request="1" height-request="1" >
+	  <input>while [ ! -f '$WORKDIR'/end_while_fullscreen ]; do if [ `cat '$WORKDIR'/NANOSEC` -lt 25 ]; then echo; echo 100; sleep 0.4; fi; sleep 0.05; done</input>
+	  <action>refresh:TIMER</action>
+	 </progressbar>
+	  <button width-request="1" height-request="1"></button>
+	 </hbox>
+	 <entry width-request="'$WIDTH'" height-request="'$((HEIGHT/3))'">
+	  <variable>TIMER</variable>
+	  <input>cat '$WORKDIR'/timer</input>
+	  <action signal="button-press-event">exit:EXIT</action>
+	 </entry>
+	</vbox>
+	<action signal="hide">exit:EXIT</action>
+	</window>'
+	$GTKDIALOG -p curtain --center
+	echo end > $WORKDIR/end_while_fullscreen
+	export GTK2_RC_FILES=$WORKDIR/gtkrc:/root/.gtkrc-2.0 #reset gtk-theme
+}
+
+preferences(){
+	export GTK2_RC_FILES=/root/.gtkrc-2.0 #reset gtk
+	export pClock_pref='
+	<window title="'$LOC307'">
+	 <vbox>
+
+    
+	  <hbox>
+	   <text><label>'$LOC301'</label></text>
+	   <entry><variable>FONTSIZE</variable><default>'$FONTSIZE'</default></entry>
+	  </hbox>
+	  <hbox>
+	   <text><label>'$LOC302'</label></text>
+	   <entry><variable>COLOR1</variable><default>'$COLOR1'</default></entry>
+	  </hbox>
+	  <hbox>
+	   <text><label>'$LOC303'</label></text>
+	   <entry><variable>COLOR2</variable><default>'$COLOR2'</default></entry>
+	  </hbox>
+	  
+	   <hbox>
+	 <button>
+     <label>'$LOC300'</label>
+     <action>system_time</action>
+    </button>
+    </hbox>
+	  
+	  <hbox>
+	   <text use-markup="true"><label>"<b>'$LOC304'</b>    "</label></text>
+	   <button cancel></button>
+	   <button ok>
+	    <action>echo -e "export VERSION=$VERSION\nexport FONTSIZE=$FONTSIZE\nexport COLOR1=\"$COLOR1\"\nexport COLOR2=\"$COLOR2\"" > '$HOME'/.puppyclock/pclockrc</action>
+	    <action>EXIT:exit</action>
+	    </button>
+	  </hbox>
+	 </vbox>
+	</window>'
+	$GTKDIALOG -p pClock_pref
+}
+
+system_time (){
+	export GTK2_RC_FILES=/root/.gtkrc-2.0 #reset gtk
+	set-time-for-puppy &
+}
+
+
+if [[ ! -e /usr/local/pmusic/pmusic ]];then 
+alarm1(){
+	export GTK2_RC_FILES=/root/.gtkrc-2.0 #reset gtk
+	pschedule -s -e "defaultaudioplayer '$ALARM'" "Puppy Clock $LOC900" &
+}
+
+else
+alarm1(){
+	export GTK2_RC_FILES=/root/.gtkrc-2.0 #reset gtk
+	pschedule -s -e "pmusic -b '$ALARM'" "Puppy Clock $LOC900" &
+}
+fi
+
+alarm2(){
+	export GTK2_RC_FILES=/root/.gtkrc-2.0 #reset gtk
+	pschedule -s -e  "Xdialog --title 'Puppy Clock $LOC901' --rc-file /root/.config/puppyclock/orangebox.rc  --beep --wrap --screen-center --center --no-buttons --msgbox '$MESSAGE' 10 50 " " Puppy Clock $LOC901 " &   
+}
+
+export -f func_time timestamp fullscreen preferences system_time alarm1 alarm2
+
+
+checkdown_countdown (){
+CHECK_VERSION=`funcGTKDVGet | awk  '{ print $3 }'`
+if [ ${CHECK_VERSION:2:1} -gt 7 ] ; then	
+	
+if [ -e $WORKDIR/COUNTDOWN_DUMMY ] ; then
+yaf-splash -bg_gradient false -fontsize large -bg orange -close box -deco Puppy Clock -text "
+
+You have used the Countdown feature.
+You must restart Puppy Clock
+to use the World Clock feature.
+" &
+
+else 
+find_GMT &
+PROCESS=`ps | grep "gtkdialog" | grep "\-p pClock"`
+kill ${PROCESS:0:5}
+fi
+else
+
+yaf-splash -bg_gradient false -fontsize large -bg orange -close box -deco Puppy Clock -text "
+
+You must update your version of GTKDIALOG
+to use the World Clock feature.
+" &
+fi	
+}
+export -f checkdown_countdown
+
+
+
+function funcGTKDVGet() {
+   GTKDV=( $($GTKDIALOG -v) )
+   GTKDV=${GTKDV[2]}
+   echo "Gtkdialog version: $GTKDV"
+   GTKDV=( ${GTKDV//./ } )
+   if [ ${GTKDV[1]} -lt 10 ]; then GTKDV[1]=${GTKDV[1]}0; fi
+   if [ ${GTKDV[2]} -lt 10 ]; then GTKDV[2]=0${GTKDV[2]}; fi
+}
+
+
+find_GMT (){
+	MYGMT="`readlink /etc/localtime | cut -d/ -f6 | sed -e 's,^GMT-,GMTx,' -e 's,^GMT+,GMT-,' -e 's,^GMTx,GMT+,'`"
+
+case ${MYGMT:0:5} in
+GMT**) echo "found GMT zone"
+   /usr/sbin/pclock_modified &   
+;;
+New_Y) echo "found New York"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &   
+;;
+Los_A) echo "found a city"
+echo "GMT-7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;; 
+Denve) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Easte) echo "found toronto"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;; 
+Mount) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;; 
+Pacif) echo "found a city"
+echo "GMT-7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;; 
+Centr) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;; 
+Auckl) echo "found a city"
+echo "GMT+12" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Cairo) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Johan) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Tripo) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Nairo) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Ancho) echo "found a city"
+echo "GMT-8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Angui) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Antig) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Aruba) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Asunc) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Bahia) echo "found a city"
+echo "GMT-3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Barba) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Beliz) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Boise) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Bueno) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Cancu) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Carac) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Chica) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Chihu) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Costa) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Curac) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Detro) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Domin) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Edmon) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+El_Sa) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Fort_) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Glace) echo "found a city"
+echo "GMT-3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Goose) echo "found a city"
+echo "GMT-3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Grand) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Grena) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Guate) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Guade) echo "found a city"
+echo "GMT-3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Guyan) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Halif) echo "found a city"
+echo "GMT-3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Havan) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+India) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Iqalu) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Jamai) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Junea) echo "found a city"
+echo "GMT-8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+La_Pa) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Louis) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Lima ) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Manag) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Marti) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Monts) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Mexic) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Monte) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Montr) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Nassa) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Nome ) echo "found a city"
+echo "GMT-8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Panam) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Phoen) echo "found a city"
+echo "GMT-7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Puert) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Regin) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Sao_P) echo "found a city"
+echo "GMT-3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Santi) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Santo) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Swift) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Tijua) echo "found toronto"
+echo "GMT-7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Toron) echo "found toronto"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Vanco) echo "found a city"
+echo "GMT-7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Virgi) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+White) echo "found a city"
+echo "GMT-7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Winni) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Yello) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Aden ) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Almat) echo "found a city"
+echo "GMT+6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Amman) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Baghd) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Bahra) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Baku ) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Bangk) echo "found a city"
+echo "GMT+7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Beiru) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Brune) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Chung) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Dacca) echo "found a city"
+echo "GMT+6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Damas) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Dhaka) echo "found a city"
+echo "GMT+6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Dubai) echo "found a city"
+echo "GMT+4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Gaza ) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Harbi) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Hong_) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Istan) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Jakar) echo "found a city"
+echo "GMT+7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Jerus) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Kabul) echo "found a city"
+echo "GMT+5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Kamch) echo "found a city"
+echo "GMT-12" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Karac) echo "found a city"
+echo "GMT+5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Katma) echo "found a city"
+echo "GMT+6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Kuala) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Kuwai) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Macao) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Macau) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Manil) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Musca) echo "found a city"
+echo "GMT+4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Omsk ) echo "found a city"
+echo "GMT+7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Oral ) echo "found a city"
+echo "GMT+5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Phnom) echo "found a city"
+echo "GMT+7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Pyong) echo "found a city"
+echo "GMT+9" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Qatar) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Rango) echo "found a city"
+echo "GMT+7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Riyad) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Saigo) echo "found a city"
+echo "GMT+7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Seoul) echo "found a city"
+echo "GMT+9" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Shang) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Singa) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Taipe) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Tashk) echo "found a city"
+echo "GMT+5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Tbili) echo "found a city"
+echo "GMT+4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Tel_A) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Tokyo) echo "found a city"
+echo "GMT+9" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Ulan_) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Ulaan) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Ujung) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Vient) echo "found a city"
+echo "GMT+7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Vladi) echo "found a city"
+echo "GMT+11" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Brisb) echo "found a city"
+echo "GMT+10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Queen) echo "found a city"
+echo "GMT+10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Melbo) echo "found a city"
+echo "GMT+10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Sydne) echo "found a city"
+echo "GMT+10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Tasma) echo "found a city"
+echo "GMT+10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Perth) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+West ) echo "found a city"
+echo "GMT+8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Acre ) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+DeNor) echo "found a city"
+echo "GMT-2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+East ) echo "found a city"
+echo "GMT-3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Easte) echo "found a city"
+echo "GMT-6" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Conti) echo "found a city"
+echo "GMT-4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Amste) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Athen) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Belfa) echo "found a city"
+echo "GMT+1" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Belgr) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Berli) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Bruss) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Bucha) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Budap) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Copen) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Gibra) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Dubli) echo "found a city"
+echo "GMT+1" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Helsi) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Kiev ) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Kalin) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Lisbo) echo "found a city"
+echo "GMT+1" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Londo) echo "found a city"
+echo "GMT+1" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Ljubl) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Luxem) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Madri) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Malta) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Minsk) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Mosco) echo "found a city"
+echo "GMT+4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Nicos) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Oslo ) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Paris) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Pragu) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Riga ) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Rome ) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Saraj) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Sofia) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Stock) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Talli) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Vatic) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Vienn) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Vilni) echo "found a city"
+echo "GMT+3" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Volgo) echo "found a city"
+echo "GMT+4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Warsa) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Zagre) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Zuric) echo "found a city"
+echo "GMT+2" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Chris) echo "found a city"
+echo "GMT+7" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Maldi) echo "found a city"
+echo "GMT+5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Mauri) echo "found a city"
+echo "GMT+4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Reuni) echo "found a city"
+echo "GMT+4" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Gener) echo "found a city"
+echo "GMT-5" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Fiji ) echo "found a city"
+echo "GMT+12" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Guam ) echo "found a city"
+echo "GMT+10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Honol) echo "found a city"
+echo "GMT-10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Midwa) echo "found a city"
+echo "GMT-11" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Pago_) echo "found a city"
+echo "GMT-11" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Port_) echo "found a city"
+echo "GMT+10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Samoa) echo "found a city"
+echo "GMT-11" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Tahit) echo "found a city"
+echo "GMT-10" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Alask) echo "found a city"
+echo "GMT-8" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+Aleut) echo "found a city"
+echo "GMT-9" > "$WORKDIR"/CORRECTION 
+   /usr/sbin/pclock_modified &      
+;;
+*) echo "Reached end of list"
+#echo "GMT-4" > "$WORKDIR"/CORRECTION
+#echo end > $WORKDIR/end_while
+/usr/sbin/pclock_modified2 & 
+
+   ;;
+esac
+
+}
+export -f find_GMT
+
+
+
+###############################################
+#                                             #
+#                  A B O U T                  #
+#                                             #
+###############################################
+
+export about="
+<window title=\"$LOC800\">
+ <notebook labels=\"$LOC202|License\">
+  <frame>
+   <text><label>\"\"</label></text>
+   <progressbar>
+    <input>echo 0; echo \"Puppy Clock $VERSION\"</input>
+   </progressbar>
+   <text use-markup=\"true\"><label>\"<b>Sigmund Berglund, Copyright 2011</b>\"</label></text>
+   <text height-request=\"30\"><label>\"\"</label></text>
+   <button>
+    <label>\"http://www.murga-linux.com/puppy/viewtopic.php?p=493137\"</label>
+    <action>defaulthtmlviewer http://www.murga-linux.com/puppy/viewtopic.php?p=493137#493137 &</action>
+   </button>
+  </frame>
+  <frame>
+   <text use-markup=\"true\"><label>\"Puppy Clock is released under the <b>GNU General Public License</b> (GPL). You have the right to use and modify this software in any way you like, so long as any derivative works remain under a GPL license.\"</label></text>
+   <text use-markup=\"true\"><label>\"This program is distributed in the hope that it will be useful, but <b><span color='"'red'"'>WITHOUT ANY WARRANTY</span></b>. See the GNU General Public License homepage for more details.\"</label></text>
+   <hbox>
+    <button>
+     <label>\"http://www.gnu.org/licenses/\"</label>
+     <action>defaulthtmlviewer http:\/\/www.gnu.org\/licenses\/</action>
+    </button>
+   </hbox>
+  </frame>
+ </notebook>
+</window>"
+
+
+
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+export pClock='
+<window title="Puppy Clock '$VERSION'" icon-name="mini-modules" resizable="false" decorated="true">
+<vbox>
+  <hbox homogeneous="true">
+  <hbox>
+   <button relief="2" height-request="48" width-request="48" tooltip-text="'$LOC200'">
+    <input file stock="gtk-fullscreen"></input>
+    <action>fullscreen &</action>
+   </button>
+   
+   <button relief="2" height-request="48" width-request="48" tooltip-text="'$LOC206'">
+    <input file>/usr/local/lib/X11/mini-icons/mini-clock.xpm</input>     
+    <action>checkdown_countdown &</action>    
+   </button>
+   
+   <button relief="2" height-request="48" width-request="48" tooltip-text="'$LOC201'">
+    <input file stock="gtk-preferences"></input>
+    <action>preferences</action>
+   </button>
+   <button relief="2" height-request="48" width-request="48" tooltip-text="'$LOC202'">
+    <input file stock="gtk-about"></input>
+    <action>launch:about</action>
+   </button>
+   <button relief="2" height-request="48" width-request="48" tooltip-text="'$LOC203'">
+    <input file stock="gtk-quit"></input>
+    <action>touch '$WORKDIR'/end_while</action>
+    <action>exit:EXIT</action>
+   </button>
+   </hbox>
+  </hbox>
+
+<hbox width-request="1">
+<progressbar width-request="1" height-request="1" >
+ <input>while [ ! -f '$WORKDIR'/end_while ]; do func_time; sleep 0.05; done</input>
+ <action>refresh:TIMER</action>
+</progressbar>
+</hbox>
+
+ <hbox homogeneous="true">
+  <hbox>
+   <entry name="timer" width-request="290" height-request="55" editable="false" xalign="0">
+    <variable>TIMER</variable>
+    <input>cat '$WORKDIR'/timer</input>
+   </entry>
+ </hbox>
+ </hbox>
+
+
+
+  <notebook labels="'$LOC400'|'$LOC600'|'$LOC700'">
+  
+   <frame>
+      <text use-markup="true">
+    <label>"<b>'$LOC401'
+'$LOC402'</b>"</label>
+  </text>
+ 
+
+<hbox homogeneous="true">
+ <hbox>
+     <button>
+      <label>'$LOC403'</label>
+      <action>echo clock12 > $WORKDIR/clock_mode</action>
+     </button>
+     <button>
+      <label>'$LOC404'</label>
+      <action>echo clock24 > $WORKDIR/clock_mode</action>
+     </button>
+        <button  tooltip-text="'$LOC509'">
+    <label>'$LOC405'</label>
+      <action> Xdialog --title '$LOC509' --rc-file /root/.config/puppyclock/orangebox.rc  --wrap --screen-center --center --no-buttons --msgbox "'$LOC500'\n'$LOC501'\n'$LOC502'\n'$LOC503'\n'$LOC504'\n'$LOC505'\n '$LOC506'\n'$LOC507'\n'$LOC508' "   20 60   &  </action>
+    </button>
+    </hbox>
+    </hbox>
+    
+<hbox homogeneous="true">
+ <hbox> 
+    <button height-request="50"  tooltip-text="'$LOC401'">
+     <label>'$LOC406'</label>
+     <action>alarm1</action>
+     <action>echo $ALARM > '$WORKDIR'/ALARM</action>
+    </button>
+  </hbox>  
+    
+     </hbox>        
+<hbox>  
+  <entry accept="file" tooltip-text="'$LOC407'">
+      <variable>ALARM</variable>
+      <input>cat '$WORKDIR'/ALARM</input>
+     </entry>
+     <button tooltip-text="'$LOC407'">
+      <input file icon="gtk-open"></input>
+      <action type="fileselect">ALARM</action>
+      <action>refresh:ALARM</action>
+     </button>
+</hbox>
+ 
+<hbox homogeneous="true">
+ <hbox>  
+   <button height-request="50" tooltip-text="'$LOC401'">
+     <label>'$LOC408'</label>
+     <action>alarm2</action>
+    </button>
+ </hbox>  
+    
+     </hbox> 
+ 
+     
+<hbox>  
+  <entry  tooltip-text="'$LOC409'">
+    <default>"'$LOC410' "</default>
+    <variable>MESSAGE</variable>
+  </entry>
+</hbox>
+ 
+  
+
+    
+   </frame>
+   <vbox>
+    <hbox>
+     <button>
+      <label>'$LOC604'</label>
+      <action>date +%s%N > '$WORKDIR'/seconds_start</action>
+      <action>echo "||00:00:00" > $WORKDIR/resultlist</action>
+      <action>echo stopwatch > $WORKDIR/clock_mode</action>
+      <action>echo 00:00:00 > '$WORKDIR'/timer</action>
+      <action>refresh:TIMER</action>
+      <action>refresh:RESULTLIST</action>
+      <action>enable:BUTTON_LAP</action>
+      <action>enable:BUTTON_SPLIT</action>
+     </button>
+     <checkbox>
+      <label>'$LOC605'</label>
+      <default>true</default>
+      <action>if true echo true > '$WORKDIR'/HUNDREDTHS</action>
+      <action>if false rm '$WORKDIR'/HUNDREDTHS</action>
+     </checkbox>
+     <button>
+      <variable>BUTTON_SPLIT</variable>
+      <label>'$LOC606'</label>
+      <visible>disabled</visible>
+      <action>timestamp</action>
+      <action>date +%s%N > '$WORKDIR'/seconds_start</action>
+      <action>echo "||00:00:00" >> $WORKDIR/resultlist</action>
+      <action>echo 00:00:00 > '$WORKDIR'/timer</action>
+      <action>refresh:RESULTLIST</action>
+      <action>refresh:TIMER</action>
+     </button>
+     <button>
+      <variable>BUTTON_LAP</variable>
+      <label>'$LOC607'</label>
+      <visible>disabled</visible>
+      <action>timestamp</action>
+      <action>refresh:RESULTLIST</action>
+     </button>
+    </hbox>
+    <tree>
+     <variable>RESULTLIST</variable>
+     <height>250</height><width>100</width>
+     <label>"'$LOC601'|'$LOC602'     |'$LOC603'"</label>
+     <input>tac '$WORKDIR'/resultlist</input>
+    </tree>
+   </vbox>
+   
+   <frame>
+   <hbox homogeneous="true">
+ <hbox>
+    <button height-request="50" width-request="150">
+     <label>'$LOC701'</label>
+     <variable>BUTTON_RESET</variable>
+     <action>echo countdown > $WORKDIR/clock_mode</action>
+     <action>echo end > '$WORKDIR'/COUNTDOWN_DUMMY</action>
+     <action>echo $(($(date +%s)+$COUNTDOWN))$(date +%N) > '$WORKDIR'/seconds_start</action>
+     <action>echo $COUNTDOWN > /'$WORKDIR'/COUNTDOWN</action>
+     <action>echo $COUNTDOWN_ACTION > /'$WORKDIR'/COUNTDOWN_ACTION</action>
+    </button>
+    
+     </hbox>  
+    
+     </hbox> 
+    <text height-request="30"><label>""</label></text>
+    <hbox>
+     <text><label>'$LOC702'</label></text>
+     <vbox width-request="60">
+      <entry width-request="60" xalign="1">
+       <variable>COUNTDOWN</variable>
+       <input>cat '$WORKDIR'/COUNTDOWN</input>
+      </entry>
+     </vbox>
+    </hbox>
+    <hbox>
+     <button><label>'$LOC703'</label><action>echo 60 > '$WORKDIR'/COUNTDOWN</action><action>refresh:COUNTDOWN</action></button>
+     <button><label>'$LOC704'</label><action>echo 3600 > '$WORKDIR'/COUNTDOWN</action><action>refresh:COUNTDOWN</action></button>
+     <button><label>'$LOC705'</label><action>echo 86400 > '$WORKDIR'/COUNTDOWN</action><action>refresh:COUNTDOWN</action></button>
+    </hbox>
+    <text height-request="30"><label>""</label></text>    
+    <vbox tooltip-text="'$LOC204'
+'$LOC205'">
+     <text><label>'$LOC706'</label></text>
+     <hbox>
+      <entry accept="file">
+       <variable>COUNTDOWN_ACTION</variable>
+       <input>cat '$WORKDIR'/COUNTDOWN_ACTION</input>
+      </entry>
+      <button>
+       <input file icon="gtk-open"></input>       
+       <action type="fileselect">COUNTDOWN_ACTION</action>
+       <action>refresh:COUNTDOWN_ACTION</action>
+      </button>
+     </hbox>
+    </vbox>
+   </frame>
+  </notebook>
+ </vbox>
+ <action signal="hide">echo end > '$WORKDIR'/end_while</action>
+ <action signal="hide">exit:EXIT</action>
+</window>'
+
+
+$GTKDIALOG -p pClock -c
+
+

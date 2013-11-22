@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec "/usr/local/puppy-backup/puppy-backup" "$@"
+
+exit 0

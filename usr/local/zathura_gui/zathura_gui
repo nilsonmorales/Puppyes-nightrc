@@ -1,0 +1,205 @@
+#! /bin/bash
+# 
+# Zathura version 1.9   July 2011
+# written by Don White  (don570)
+#
+# localized using Zigbert's method
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+
+export WORKDIR=$HOME/.zathura/tmp
+if [ ! -d $WORKDIR ]; then
+	mkdir -p $WORKDIR
+
+
+	echo 1.9 > $WORKDIR/VERSION
+fi
+touch  $WORKDIR/PATH_LIST
+
+export GTK2_RC_FILES=$WORKDIR/gtkrc2:/root/.gtkrc-2.0 #include theme stuff with system themes
+
+
+if [ ! -f $HOME/.zathura/zathurarc ] ; then
+echo 'export PDFPATH=/root/puppy-reference/ps-pdf/Acrobat.pdf
+
+export VERSION=1.9' > $HOME/.zathura/zathurarc
+	chmod 722 $HOME/.zathura/zathurarc
+	
+fi
+. $HOME/.zathura/zathurarc
+
+
+#gtk-theme
+echo 'gtk-icon-sizes="gtk-button=32,32"
+' > $WORKDIR/gtkrc
+export GTK2_RC_FILES=$WORKDIR/gtkrc:/root/.gtkrc-2.0 #include theme stuff with system themes
+
+
+
+
+
+###############################################
+#                                             #
+#         L A U N C H  R E C E N T            #
+#                                             #
+###############################################
+
+launch_recent (){
+if [ ! -f  "$CHOOSER2"  ]  ;then
+Xdialog --title "$LOC300"   --wrap --screen-center --center --no-buttons --msgbox "$LOC402"    17 65 100  
+cd  /root/my-documents/PDF
+exec zathura_gui
+else 
+exec zathura  "$CHOOSER2"   &
+fi
+
+exit 0
+}
+
+
+###############################################
+#                                             #
+#                   ADD  TO                   #
+#                                             #
+###############################################
+ADD_TO (){
+	
+cd "$WORKDIR"
+grep "$CHOOSER"  PATH_LIST  > HIT
+if  [ ! -s "HIT"  ] ;then
+    cat - /root/.zathura/tmp/PATH_LIST <<<"$CHOOSER" > PATH_LIST2
+    cp PATH_LIST2 PATH_LIST
+
+fi 
+
+exit 0
+}
+
+###############################################
+#                                             #
+#                  C H E C K            #
+#                                             #
+###############################################
+
+check_file (){
+if [ ! -f  "$CHOOSER"  ]  ;then
+Xdialog --title "$LOC300"   --wrap --screen-center --center --no-buttons --msgbox "$LOC400\n$LOC401\n$LOC402"    17 65 100  
+cd  /root/my-documents/PDF
+exec zathura_gui
+else 
+exec zathura  "$CHOOSER"   &
+fi
+}
+
+ export -f launch_recent ADD_TO check_file
+
+###############################################
+#                                             #
+#                 R E C E N T                 #
+#                                             #
+###############################################
+
+
+export recent="<window title=\"$LOC300\">
+ 
+  
+  <frame>
+  <vbox>
+  
+<tree>
+       <label>$LOC104</label>
+       <input>cat "$WORKDIR/PATH_LIST"</input>
+       <height>300</height><width>480</width>
+       <variable>CHOOSER2</variable>
+</tree>
+
+<hbox>
+
+
+ <button>    
+     <label>$LOC100</label>             
+	  <action>launch_recent &</action>
+	   <action>exit:EXIT</action> 	 
+   </button>
+   
+</hbox>
+
+
+</vbox>    
+  </frame>
+ 
+</window>"
+
+
+
+
+
+####################
+#                                                 #
+#               M A I N   G U I             #
+#                                                 #
+####################
+
+
+export ZATHURA_DIALOG='
+<window title="'$LOC300' 1.9 "window_position="1">
+<vbox>
+  <chooser>
+    <height>500</height><width>600</width>
+    <variable>CHOOSER</variable>
+    <default>/root/my-documents/PDF</default>
+  </chooser>
+  
+<hbox>
+
+  
+   <button>
+   <label>' ''$LOC103'' '</label>
+    <input file stock="gtk-cancel"></input>
+    <action>exit:EXIT</action>
+   </button>
+   <button>    
+     <label>' ''$LOC104'' '</label>              
+	  <action>launch:recent</action> 	    	  
+   </button>
+  
+  <button>    
+     <label>' ''$LOC100'' '</label>               
+	  <action>check_file</action> 
+	    <action>echo "$CHOOSER"  > "$WORKDIR/PDF_PATH"</action>
+	    <action>ADD_TO</action>
+	 <action type="exit">Exit by button</action>	  
+   </button>
+   
+   
+   <button>
+    <input file stock="gtk-help"></input>
+    <label>"'$LOC101'' '
+'$LOC102'' '"</label>
+    <action>Xdialog --title "$LOC301"   --wrap    --msgbox "$LOC200\n $LOC201\n $LOC202\n $LOC203\n $LOC204\n $LOC205\n\n $LOC206\n $LOC207\n $LOC208\n $LOC209\n $LOC210\n $LOC211\n $LOC212\n $LOC213\n $LOC214\n $LOC215\n $LOC216\n $LOC217\n\n$LOC218\n $LOC219\n $LOC220\n  $LOC221\n $LOC222\n\n $LOC223\n $LOC224\n $LOC225\n\n$LOC226\n $LOC227\n\n $LOC228\n$LOC229\n\n $LOC230\n $LOC231\n\n $LOC232\n $LOC233\n $LOC234" 0x0+1+2   &</action>
+   </button>
+    
+</hbox>
+
+ 
+</vbox>
+
+
+</window>'
+gtkdialog3 -p ZATHURA_DIALOG --center
+
+   
+exit 0

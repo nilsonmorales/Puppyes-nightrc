@@ -1,0 +1,134 @@
+#!/bin/bash
+#Bacon recorder
+#version=2.6.1
+#language=french
+#translator:Béém,modified by don570 and jjm 24 février 2012
+
+set -a
+# miscellaneous buttons
+LOC101="Fermer"
+LOC102="Lecture"
+
+# Completion message 
+LOC200="L'enregistrement a commencé à " 
+LOC201="L'enregistrement a fini à " 
+LOC202="est conservé" 
+LOC203="dans le dossier" 
+LOC204="L'enregistrement mono a commencé à " 
+LOC205="Le bouton 'Arrêt' a été cliqué " # mod jjm
+
+#Default Preferences 
+LOC300="Paramètres par défaut"
+LOC301="Durée d'enregistrement par défaut"
+LOC302="Chemin du fichier de sortie" # mod jjm
+LOC303="Redémarrer Bacon Recorder pour activer les changements" # mod jjm
+LOC304=" Définir "
+LOC305="Dossier de destination par défaut" # mod jjm
+LOC306="Nom par défaut (l'extension est en option)" # mod jjm 
+
+#Warning messages 
+LOC400="Enregistrement" 
+LOC401="L'enregistrement a commencé maintenant." 
+LOC402="Il finira dans " 
+LOC403=" minutes." 
+LOC404="A l'avenir, ré-essayez en fixant l'heure de début."  # mod jjm 
+LOC405="Entrer une heure plus avancée."
+LOC406="Le compte à rebours doit être entré."
+LOC407="Entrez une valeur SVP."   # mod jjm 
+LOC408="Vérifiez si la partition de l'enregistrement est monté" # mod jjm
+LOC409="Vous avez arrêté l'enregistrement en cours." # mod jjm
+LOC410="Prêt à enregistrer à nouveau." # mod jjm
+LOC411="Entrer les nouveaux paramètres." # mod jjm
+LOC412="Aucun enregistrement n'a été trouvé." # mod jjm
+LOC413="L'enregistrement commencera dans "
+LOC414="L'enregistrement commencera à "
+LOC415="Erreur. Vous êtes en train d'enregistrer un fichier."
+LOC416="L'enregistrement doit être arrêté"
+LOC417="avant de cliquer sur le bouton de Lecture." # mod jjm
+LOC418="Vous devez terminer un chemin avec le caractère '/ '." # mod jjm
+LOC419="Faire la correction et essayer à nouveau."
+LOC420="Avertissement. Le temps d'enregistrement ne peut pas être zéro." # mod jjm
+LOC421="Avertissement. Le temps d'enregistrement doit être entré." # mod jjm
+
+#Popups 
+LOC500="Mixeur audio"  # mod jjm
+LOC501="Restauration des paramètres précédents" # mod jjm 
+LOC502="Quitter" 
+LOC503="Aide" 
+LOC505="L'enregistrement commencera immédiatement"
+LOC506="L'enregistrement commencera à l'Heure du Début" # mod jjm
+LOC507="Vérifier les quatorze dernières lignes de texte" # mod jjm
+LOC508="Supprimer un enregistrement programmé "
+LOC509="ou un enregistrement en cours"
+LOC510="Cocher pour prévenir l'ecrasement" # mod jjm
+LOC511="d'un enregistrement précédent" # mod jjm
+LOC512="Lire l'enregistrement précédent"
+LOC513="Vérifier le niveau de son avant l'enregistrement" # mod jjm
+LOC514="Cliquez ici."
+LOC515="Définir le délai avant le début de l'enregistrement." # mod jjm
+LOC516="Sélection du dossier"
+LOC517="Dossier de destination de l'enregistrement" # mod jjm
+
+#Preferences and help 
+LOC600="Préférences" 
+LOC601="Instructions" 
+LOC602="Aide" 
+LOC603="Paramètres par défaut" 
+LOC604="Quitter" 
+LOC605="Il y a deux types possibles d'enregistrements, Compte à rebours et Programmé." 
+LOC606="Utiliser l'enregistrement programmé si vous connaissez l'heure de début "
+LOC607="Il y aura un message d'achèvement de fin" # mod jjm
+LOC608="v l'enregistrement sera terminé." # mod jjm
+LOC609="L'emplacement par défaut de votre enregistrement" # mod jjm
+LOC610="peut être défini dans 'Préférences'." # mod jjm
+LOC611="L'ajout de l'horodatage  permettra d'éviter le possible " # mod jjm
+LOC612="écrasement d'un enregistrement précédent." # mod jjm
+LOC613="Wave et MP3 Stéréo sont de bonne qualité"
+LOC614="alors que MP3 Mono est de moins bonne qualité," # mod jjm
+LOC615="mais la taille du fichier est moindre!!" # mod jjm
+LOC616="Un décompte à 'zéro' commencera l'enregistrement immédiatement." # mod jjm
+LOC617="L'absence de chiffre sera signalée" # mod jjm
+LOC618="Pour mettre fin àprématurément l'enregistrement, taper 'killall arecord' dans la console." # mod jjm
+LOC619="Journal " # mod jjm
+LOC620="Mixage"
+LOC621="Le bouton 'Arrêter' arrêtera un enregistrement programmé" # mod jjm
+LOC622="ou un enregistrement en cours." # mod jjm
+LOC623="Arrêter"
+LOC624="Recommandation: Installer DeaDBeef comme lecteur audio" # mod jjm
+
+
+#Countdown Recording 
+LOC800="Entrer le décompte (min)" 
+LOC802="Commencer le décompte"  # mod jjm
+LOC803="pour enregistrer" # mod jjm 
+
+#Timer-recording 
+LOC900="        Choisir le format d'enregistrement" # mod jjm  
+LOC901="Wave" 
+LOC902="MP3 Stéréo" 
+LOC903="MP3 Mono" 
+LOC904="Fichier de sortie" 
+LOC905="Ajouter la date et l'heure"  # mod jjm 
+LOC906="Durée de l'enregistrement (min)"  # mod jjm 
+LOC908="Heure du Début (24 heures)"   # mod jjm 
+LOC909="Enregistrer maintenant" 
+LOC910="Paramétrer et lancer" 
+LOC911="Enregistrement programmé"
+
+# Chemin exemples-pop up
+LOC950="Exemples de chemin"  # mod jjm 
+
+#Exemples de chemins  - texte d'aide
+LOC951="Exemples de chemin de dossier"
+LOC952="Le nom du chemin doit se terminer par un '/ '"  # mod jjm
+LOC953="Sauvegarder l'enregistrement dans le dossier '/root/'"  # mod jjm 
+LOC954="Sauvegarder dans la partition de l'installation frugale"  # mod jjm 
+LOC955="Sauvegarder dans une partition nommée 'sda5'"  # mod jjm 
+LOC956="Sauvegarder dans une partition nommée 'SONY_DISK'"  # mod jjm 
+
+# Chemin du dossier de sauvegarde - le texte
+LOC957="Dossier de destination (chemin)"
+
+#Titre de la fenêtre 
+LOC958="Choisissez le répertoire où sauvegarder l'enregistrement." # mod jjm 
+LOC959="Erreur"

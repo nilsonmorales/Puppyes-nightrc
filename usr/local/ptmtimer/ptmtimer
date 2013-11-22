@@ -1,0 +1,126 @@
+#!/bin/bash
+#ptmtimer
+#Feb.14,2011
+#written by Don White  with code from jpeps
+
+#------------------------------
+#Demonstration of yaf-splash and Zigbert's localisation method
+#------------------------------
+
+VERSION=1.3
+
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+
+
+
+
+export DIALOG='
+ <vbox>
+ 
+
+ <frame '$LOC200'>
+<hbox>  
+  <entry>
+    <default>'$LOC201' </default>
+    <variable>MESSAGE</variable>
+  </entry>
+</hbox>
+</frame>
+ 
+ 
+ 
+ <hbox>
+     <text>  <label>    \n
+ 
+             </label>
+     </text>
+ </hbox>
+                 
+<frame '$LOC202'>
+<hbox>
+   <text>
+     <label>   /root/puppy-reference/audio/</label>
+     </text>
+       <entry>
+    <default>2barks.wav</default>
+    <variable>SND</variable>
+  </entry>
+</hbox>
+</frame>
+
+ <hbox> <text>  <label>    \n
+
+                </label></text></hbox>
+ 
+ <hbox> <text>  <label>\n
+
+          </label></text></hbox>                 
+    
+      
+ <hbox>
+      <text>  
+     <label>  \n
+       </label>
+     </text>
+      <text>  
+     <label>  '$LOC203'</label>
+     </text>
+       <entry>
+         <variable>ENTRY</variable>
+       </entry>
+ </hbox>
+        
+         <hbox> 
+                 <text>  
+                 <label>    \n
+                </label>
+                </text>       
+         </hbox>
+
+
+<hbox> <text>  <label>    \n
+                </label></text></hbox>
+
+
+     <hbox>
+      <button>
+        <label> '$LOC204' </label>
+        <input file>/usr/share/images/document-open-recent.png</input>
+        
+        <action type="exit">Exit by button</action>
+      </button>
+     <text>  <label> "                         " </label></text>     
+    </hbox>
+
+ <hbox> <text>  <label>    \n
+ 
+                </label></text></hbox>
+      
+
+ </vbox>
+'
+     I=$IFS; IFS=""
+     for STATEMENTS in  $(gtkdialog3 --geometry=+200+100 --program DIALOG); do
+       eval $STATEMENTS        
+     done
+ 
+
+/usr/local/ptmtimer/tm ${ENTRY} ${SND}  ${MESSAGE}
+ 
+exit
+
+
+
+
+
+

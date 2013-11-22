@@ -1,0 +1,9 @@
+#!/bin/sh
+echo "#!/bin/sh
+cd \"\$(dirname \"$@\")\"
+\"$@\"
+echo \"Script completed hit RETURN to close window.\"
+read a
+rm /tmp/runinterminal-$$">/tmp/runinterminal-$$
+chmod 700 /tmp/runinterminal-$$
+exec rxvt -title "$@" -e /tmp/runinterminal-$$ &

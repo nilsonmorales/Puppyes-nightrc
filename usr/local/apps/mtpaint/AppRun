@@ -1,0 +1,18 @@
+#!/bin/sh
+ # Check to see if they clicked on the application or sent stuff to mtpaint.
+ test -sd "$@"
+ if [ "$?" = "0" ]
+ then
+
+ # If they just clicked on the icon.
+exec mtpaint
+
+else
+# if they sent things to mtpaint
+
+for i in "$@"
+do
+exec mtpaint "$i" &
+done
+
+fi

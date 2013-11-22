@@ -1,0 +1,105 @@
+#!/bin/bash
+# puppy-backup
+# English localization
+#version=1.x
+#Translator don570
+
+set -a
+
+# Helpful text in first window
+LOC100="Unconfigured"
+LOC101="Configured"
+
+# Helpful text in second window
+LOC102="Choose a source and mirror directory"
+
+# Labels in second window
+LOC103="Source dir"
+LOC104="Mirror dir"
+
+# Blue warning
+LOC105="Tip: Mirror directory should be initially empty!"
+
+# Checkbox labels
+LOC106="Only simulate mirror"
+LOC107="View information"
+LOC108="Quick file compare"
+LOC109="Do not compare ownership"
+LOC110="Do not compare date/time"
+
+#Frame title
+LOC111="Options"
+LOC112="Backup Info"
+
+# Xdialog help
+LOC200="Help"
+LOC215="This app is a GUI for the mirdir package (19k). This backup program is a simple way to make one directory like another i.e. mirroring. First run it will copy the entire source-directory to the mirror-directory. The mirror function will then just update the mirror-directory. It will delete files on the mirror-directory if they don't exist on source-directory. Be careful, think twice and check settings again. The mirror directory must not be a partition! Choose a directory that is empty initially. The source directory can also be an entire partition or USB stick, but be careful that you have enough empty space to do mirroring. Pschedule can be used as well with Puppy backup using the commands found in /root/.config/PUPPY_BACKUP/COMMAND_LIST or click 'Log' button. Note that each source folder must have its own separate mirror folder. The mirror-directory should not be on the same harddisk that stores your main data. Do NOT think your data is safe when saving mirror-files on another partition. It is still the same disk, and when it crashes, it all does. Here's a tip: Buy an external USB harddrive. See also mirdir documentation. Config file location: $HOME/.config/PUPPY_BACKUP/tmp1/config. Created after first mirror."   
+
+
+# Xdialog  Disk Warning
+LOC800="Warning"
+LOC801="The mirror directory must not be a partition."
+LOC802="Choose a folder to mirror your data."
+
+
+# Helpful window info
+LOC300="Mirror a folder (or a partition) to a folder"
+LOC301="A maximum of 5 source folders are possible."
+LOC302="Choose a source folder (or partition),"
+LOC303="whether previously configured or not."
+LOC304="Click"
+LOC305="Proceed"
+LOC307="to backup the source folder."
+
+# Radio button label
+LOC306="Source Folder"
+
+# Yaf-splash
+LOC410="Please wait for completion..."
+
+# Tooltip Popups
+LOC500="Credits and license"
+LOC501="Choose a source folder"
+LOC502="Choose a mirror folder"
+LOC504="Begin backup process"
+
+# Helpful text in second window
+LOC600="It seems to be your first backup attempt."
+LOC601="Please read HELP for information."
+LOC602="Last backup of listed directory was"
+LOC603="days ago."
+
+# warning messages
+LOC604="The program will now simulate the backup process."
+LOC605="If it all goes right, turn off the simulate option,"
+LOC606="and make a real mirror ...."
+LOC607="Choose OK to continue, and CANCEL to quit."
+LOC608="WARNING!!!"
+LOC609="The use of this application will possibly delete files"
+LOC610="in the mirror folder"
+LOC611="if they do not exist in the source."
+LOC612="There is also an option to compare the date"
+LOC613="of files with the same name."
+LOC614="It seems that all went well."
+LOC615="A complete summary is available at"
+LOC616="Something went wrong during backup."
+LOC617="- Is the 'mirdir' package installed?"
+LOC618="- Does the source- and mirror-directory exist?"
+LOC619="- Is the partition mounted?"
+LOC620="- Read messages above and Help."
+LOC621="Configuration file is updated."
+LOC622="Located in $HOME/.config/"
+
+
+# Headings
+LOC700="Credits"
+LOC701="License"
+
+# Cancel Button
+LOC900="Cancel"
+# Xdialog title
+LOC914="Backup"
+
+# Log button
+LOC915="Log"
+LOC916="List of commands used by mirdir"

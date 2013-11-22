@@ -1,0 +1,164 @@
+#!/bin/bash
+
+#=================================================================#
+# Large Files Finder v1.1 by SFR (@ murga-linux.com/puppy) '2012  #
+# Localisation: don570 (@ murga-linux.com/puppy) '2012            #
+# Released under GNU GPL (http://www.gnu.org/licenses/)           #
+#=================================================================#
+
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+export VERSION="1.1"
+
+export TEMPDIR=/tmp/LFF_temp_$$
+
+trap deltemp EXIT
+
+deltemp () {
+rm -rf $TEMPDIR
+}
+export -f deltemp
+
+deltemp
+mkdir $TEMPDIR
+
+export SETTINGS='
+<window title="LFF '$VERSION'" resizable="false">
+  <vbox>
+    <text><label>'$LOC101'</label></text>
+    <hbox>
+      <entry width-request="10">
+        <variable>MINSIZE_VAR</variable>
+        <default>1</default>
+      </entry>
+      <radiobutton><variable>UNITk</variable><label>'$LOC201'</label></radiobutton>
+      <radiobutton><variable>UNITM</variable><label>'$LOC202'</label></radiobutton>
+      <radiobutton><variable>UNITG</variable><label>'$LOC203'</label></radiobutton>
+    </hbox>
+    <hbox homogeneous="true">
+    <checkbox>
+      <variable>RECURSIVE_VAR</variable>
+      <default>true</default>
+      <label>'$LOC113'</label>
+    </checkbox>
+    </hbox>
+    <hbox>
+      <button width-request="100">
+        <variable>OK</variable>
+        <label>'$LOC102'</label>
+        <input file icon="gtk-ok"></input>
+        <action type="exit">PROCEED</action>
+      </button>
+      <button width-request="100">
+        <variable>CANCEL</variable>
+        <label>'$LOC103'</label>
+        <input file icon="gtk-cancel"></input>
+        <action>exit:EXIT</action>
+      </button>
+    </hbox>
+  </vbox>
+</window>
+'
+I=$IFS; IFS=""
+for STATEMENTS in  $(gtkdialog -c -p SETTINGS); do
+  eval $STATEMENTS
+done
+IFS=$I
+
+[ "$EXIT" = "EXIT" ] && exit 0
+
+RECURSIVE=
+[ "$RECURSIVE_VAR" == "false" ] && RECURSIVE="-maxdepth 1"
+
+MINSIZE=`echo $MINSIZE_VAR | tr -cd '[[:digit:]]'`
+if [ "$MINSIZE" = "" ]; then
+  MINSIZE=
+else
+  [ "$UNITk" = "true" ] && MINSIZE=$MINSIZE"k"
+  [ "$UNITM" = "true" ] && MINSIZE=$MINSIZE"M"
+  [ "$UNITG" = "true" ] && MINSIZE=$MINSIZE"G"
+  MINSIZE="-size +"$MINSIZE
+fi
+
+yaf-splash -close never -fontsize large -bg orange -fb black -text "$LOC104" & PID=$!
+
+FPATH="$1"
+TEST=`stat -c %F "$FPATH"`
+if [ "$TEST" = "symbolic link" ]; then
+  FPATH=`stat -c %N "$FPATH" | cut -f3 -d '\`'`
+  FPATH=${FPATH%?}
+fi
+
+find "$FPATH" $RECURSIVE ! -type d $MINSIZE > $TEMPDIR/list.txt
+
+TOTALFILES=0
+TOTALSIZE=0
+while read -r FILENAME; do
+  SIZEREAL=`du -bs "$FILENAME" | cut -f1`
+  SIZE=`du -bsh "$FILENAME" | cut -f1`
+  echo -n "$SIZEREAL""|""$SIZE""|"`basename "$FILENAME"`"|" >> $TEMPDIR/list_temp.txt
+  echo "$FILENAME" >> $TEMPDIR/list_temp.txt
+  TOTALFILES=$(($TOTALFILES+1))
+  TOTALSIZE=$(($TOTALSIZE+$SIZEREAL))
+done < $TEMPDIR/list.txt
+
+for i in `seq -w 1 $TOTALFILES`; do   # `seq -w 1 $TOTALFILE`
+  echo "$i" >> $TEMPDIR/count.txt
+done
+
+TOTALKB=$( echo "scale=1; ($TOTALSIZE/1024)" | bc)
+TOTALMB=$( echo "scale=1; ($TOTALKB/1024)" | bc)
+TOTALGB=$( echo "scale=1; ($TOTALMB/1024)" | bc)
+TOTALTB=$( echo "scale=1; ($TOTALGB/1024)" | bc)
+[ "${TOTALKB:0:1}" = "." ] && TOTALKB="0"$TOTALKB
+[ "${TOTALMB:0:1}" = "." ] && TOTALMB="0"$TOTALMB
+[ "${TOTALGB:0:1}" = "." ] && TOTALGB="0"$TOTALGB
+[ "${TOTALTB:0:1}" = "." ] && TOTALTB="0"$TOTALTB
+
+cat $TEMPDIR/list_temp.txt | sort -nr > $TEMPDIR/sorted1.txt
+
+while read -r LINE; do
+  echo "$LINE" | cut -f2- -d '|' >> /$TEMPDIR/sorted2.txt
+done < $TEMPDIR/sorted1.txt
+
+paste -d '|' $TEMPDIR/count.txt $TEMPDIR/sorted2.txt > $TEMPDIR/results.txt
+
+kill $PID
+
+OpenRox () {
+ROXPATH=`head -"$TREE" $TEMPDIR/results.txt | tail -1 | cut -f4 -d "|"`
+rox -s "$ROXPATH"
+}
+export -f OpenRox
+
+export MAIN='
+  <window title="Large Files Finder '$VERSION'" default-width="640" default-height="480">
+    <vbox>
+      <text xalign="2" wrap="false"><label>'$LOC105'</label></text>
+      <tree exported_column="0"  headers-clickable="true" selection-mode="single">
+        <variable>TREE</variable>
+        <label>'$LOC106'	| '$LOC107' | '$LOC108' | '$LOC109'</label>
+        <input>cat $TEMPDIR/results.txt</input>
+        <action>OpenRox</action>
+      </tree>
+      <text xalign="0" wrap="false"><label>'$LOC110' '$1'</label></text>
+      <text xalign="0" wrap="false"><label>'$LOC111' '$TOTALFILES'	'$LOC112' '$TOTALSIZE' '$LOC200' | '$TOTALKB' '$LOC201' | '$TOTALMB' '$LOC202' | '$TOTALGB' '$LOC203' | '$TOTALTB' '$LOC204'</label></text>
+    </vbox>
+  </window>
+'
+
+gtkdialog -c -p MAIN
+exit 0

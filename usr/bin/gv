@@ -1,0 +1,11 @@
+#!/bin/sh
+
+#Panzerkopf: Using a temporary file instead of pipe.
+
+[ ! $1 ] && exit
+
+ps2pdf -sPAPERSIZE=a4 "$@" /tmp/$$.pdf
+epdfview /tmp/$$.pdf
+rm -f /tmp/$$.pdf 
+
+

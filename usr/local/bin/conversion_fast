@@ -1,0 +1,5 @@
+#!/bin/sh
+cd "/usr/local/conversion_fast/"
+exec "/usr/local/conversion_fast/conversion_fast" "$@"
+
+exit 0

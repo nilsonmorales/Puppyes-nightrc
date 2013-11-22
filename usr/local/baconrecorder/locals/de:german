@@ -1,0 +1,134 @@
+#!/bin/bash
+#Bacon recorder
+#version=1.x
+#language=German
+#translator:Wei  modified by don570 and RSH
+
+set -a
+
+# miscellaneous buttons
+LOC101="Schließen"
+LOC102="Abspielen"
+
+# Completion message
+LOC200="Die Aufnahme startete "
+LOC201="Die Aufnahme wurde beendet um "
+LOC202="wurde gespeichert"
+LOC203="im Ordner"
+LOC204="Monoaufnahme startete um "
+LOC205="Die Stopschaltfläche wurde geklickt"
+
+#Default Preferences
+LOC300="Standard Eingaben"
+LOC301="Standard-Aufnahmelänge"
+LOC302="Pfad zur Ausgabedatei"
+LOC303="Starten Sie Bacon Recorder neu, um die Änderungen zu aktivieren"
+LOC304="  Einstellen  "
+LOC305="Voreingestellter Zielordner"
+LOC306="Voreingestellter Name (Extension ist optional)" 
+
+#Warning messages
+LOC400="Aufnahme"
+LOC401="Die Aufnahme hat begonnen."
+LOC402="Sie endet in "
+LOC403=" Minuten."
+LOC404="Die Startzeit wurde nicht korrekt eingestellt."
+LOC405="Versuchen Sie es erneut mit einer Startzeit in der Zukunft."
+LOC406="Der Countdown wurde nicht eingestellt."
+LOC407="Bitte setzen Sie einen Wert ein."
+LOC408="Prüfen Sie, ob die Partition für Ihre Aufnahme eingehängt wurde"
+LOC409="Sie haben die laufende Aufnahme gestoppt."
+LOC410="Sie können jetzt eine neue Aufnahme machen."
+LOC411="Geben Sie die neuen Einstellungen ein."
+LOC412="Keine vorherige Aufnahme war gefunden."
+LOC413="Die Aufnahme beginnt in "
+LOC414="Die Aufnahme startet um "
+LOC415="Fehler! Es läuft bereits eine Aufnahme!"
+LOC416="Die Aufnahme muss gestoppt werden, "
+LOC417="bevor eine Aufnahme abgespielt werden kann."
+LOC418="Der Dateipfad muss mit einem '/ ' enden."
+LOC419="Korrigieren Sie und versuchen Sie es erneut."
+LOC420="Warnung. Die Aufnahmedauer kann nicht 0 betragen."
+LOC421="Warnung. Die Länge muss angegeben werden." 
+#Popups
+LOC500="Audio Mixer"
+LOC501="Wiederherstellung vorheriger Einstellungen"
+LOC502="Beenden"
+LOC503="Hilfe"
+LOC505="Die Aufnahme beginnt jetzt"
+LOC506="Die Aufnahme beginnt zur START ZEIT"
+LOC507="Überprüfen Sie die letzten 14 Zeilen der Logdatei"
+LOC508="Stoppen einer geplanten Aufnahme"
+LOC509="oder einer laufenden Aufnahme."
+LOC510="Wählen zur Vermeidung der Vernichtung"
+LOC511="einer vorherigen Aufnahme."
+LOC512="Spielen Sie eine vorherige Aufnahme"
+LOC513="Prüfen Sie die Lautstärke"
+LOC514="Klicken Sie hier. "
+LOC515="Geben Sie eine Zeitdauer an, nach der die Aufnahme beginnen soll."
+LOC516="Ordnerauswahl"
+LOC517="Zielordner für die Aufnahme:"
+
+#Preferences and help
+LOC600="Einstellungen"
+LOC601="Anleitungen"
+LOC602="Hilfe"
+LOC603="Standard Einstellungen"
+LOC604="Beenden"
+LOC605="Es gibt zwei Arten von Aufnahmen; Countdown und zeitgesteuert."
+LOC606="Benutzen Sie die zeitgesteuerte Aufnahme, wenn Sie die Startzeit kennen."
+LOC607="Es gibt eine Beendungsnachricht wenn"
+LOC608="die Aufnahme beendet ist."
+LOC609="Der Standardpfad Ihrer Aufnahme"
+LOC610="kann in “Einstellungen” festgelegt werden."
+LOC611="Das Hinzufügen eines Zeitstempels verhindert das mögliche"
+LOC612="Überschreiben einer vorherigen Aufnahme."
+LOC613="Wave und MP3 Stereo sind Hohe Qualität"
+LOC614="während MP3 Mono niedrigere Qualität bedeutet,"
+LOC615="aber die Dateigröße ist geringer!"
+LOC616="Ein Countdown von “0“ beginnt die Aufnahme sofort."
+LOC617="'Kein Eintrag' wird angezeigt."
+LOC618="Um eine Aufnahme frühzeitig anzuhalten, tippen Sie “killall arecord” in der Konsole."
+LOC619="Aufzeichnung"
+LOC620="Retrovol"
+LOC621="Die Stopschaltfläche stoppt eine geplante Aufnahme,"
+LOC622="oder eine laufende Aufnahme."
+LOC623="Stop"
+LOC624="Empfehlung: DeaDBeef als Musikspieler installieren."
+
+#Countdown Recording
+LOC800="Eingabe Countdown (Minuten)"
+LOC802="Beginne Countdown"
+LOC803="bis zur Aufnahme"
+
+#Timer-recording
+LOC900="           Wählen Sie das Aufnahmeformat"
+LOC901="Wave"
+LOC902="MP3 Stereo"
+LOC903="MP3 Mono"
+LOC904="Ausgabedatei"
+LOC905="Füge Zeitstempel hinzu"
+LOC906="Aufnahmedauer (Minuten)"
+LOC908="Startzeit (24 h)"
+LOC909="Beginne die Aufnahme jetzt"
+LOC910="Einstellen der zeitgesteuerten Aufnahme"
+LOC911="Zeitgesteuerte Aufnahme"
+
+# Path Examples -pop up
+LOC950="Pfadbeispiele"
+
+# Path Examples - help text
+LOC951="Beispiel eines Ordnerpfades"
+LOC952="Der Ordnername muss mit einem '/ ' enden"
+LOC953="Aufnahme in Puppy's 'Home' Ordner speichern."
+LOC954="Aufnahme in Puppy's 'Frugal' Installation speichern."
+LOC955="
+Aufnahme in Partition 'sda5' speichern."
+LOC956="Aufnahme in Partition 'SONY_DISK' speichern."
+
+# Path of save folder - text
+LOC957="Zielordner (Pfad mit '/ ' am Ende)"
+
+# Window title
+LOC958="Wählen Sie einen Ordner zum Speichern der Aufnahme."
+LOC959="Fehler"

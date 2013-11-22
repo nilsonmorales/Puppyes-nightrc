@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec "/usr/local/LargeFilesFinder/lff" "$1"
+
+exit 0

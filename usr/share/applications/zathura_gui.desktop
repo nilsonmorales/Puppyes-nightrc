@@ -1,0 +1,16 @@
+[Desktop Entry]
+GenericName=Document Viewer
+Exec=/usr/sbin/zathura_gui  "$@"
+StartupNotify=false
+Terminal=false
+Type=Application
+Comment=A minimalistic PDF viewer
+Comment[de]=Ein minimalistischer PDF-Betrachter
+Encoding=UTF-8
+Name=Zathura PDF Viewer
+Name[fr]=Zathura PDF Visionneur
+Name[de]=Zathura PDF-Betrachter
+Icon=/usr/share/epdfview/pixmaps/icon_epdfview-24.png
+MimeType=application/pdf;
+Type=Application
+Categories=X-DocumentUtility

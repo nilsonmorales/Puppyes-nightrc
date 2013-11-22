@@ -1,0 +1,121 @@
+#!/bin/bash
+#------------------------------------------------------------------------------
+# rightclick_split_file-1.0, using gtkdialog
+# 2011-10-31 by RSH (CeeLab)
+# thanks to: big_bass, don570, emil, L18L, PANZERKOPF, rhadon for help & hints
+# created to split .iso files, but works also on all other files
+# predefined to split .iso, .sfs, .mpg (video), .avi (msvideo)
+#------------------------------------------------------------------------------
+# the following section is written by don570 (taken from conversion_mp3)
+#------------------------------------------------------------------------------
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+#------------------------------------------------------------------------------
+# the following section sets some parameters, like pathname, filename, length of
+# both of them, size of splitted files etc.
+# all that happens after the right-click
+#------------------------------------------------------------------------------
+isopname=`echo "$1" | sed "s/\/$//"` # liefert den kompltten Pfad- & Dateinamen
+									 # full path- & filename
+#isopnwoext="${isopname%.*}" # liefert den kompletten Namen ohne extension (.iso)
+							 # full path- & filename without extension (.iso)
+isopath="${isopname%/*}" # liefert den reinen Pfadnamen
+						 # only the pathname (no .iso filename)
+						 
+#	take a look at the difference of isopnwoext and isopath	(%.*) & (%/*)	!
+
+nlen="`echo ${#isopname}`" # liefert die Länge vom vollständigen .iso Namen
+						   # length of full path- & filename
+plen="`echo ${#isopath}`" # liefert die Länge des Pfades zum .iso
+						  # length of full pathname (no .iso filename)
+
+# isoname=${isopname:plen+1:nlen} # extrahiert den reinen .iso Namen aus dem vollständigen Pfad
+# the upper line works also, but i think the following uncommented line is the correct code
+# i have tested both versions
+# +1 means jump away from the /
+isoname=${isopname:plen+1:nlen-plen-1} # extrahiert den reinen .iso Namen aus dem vollständigen Pfad
+									   # extracts the name of the .iso file (name.iso, no path)
+partpath=$isopname.files/$isoname.part- # setzt den Pfad und Namen für die aufgeteilten Dateien
+										# path of the splitted files incl. the new filename
+
+ISOPARTSIZE="100" # size of splitted files, preset to 100MB, can be changed while the program is running
+#------------------------------------------------------------------------------
+# gtkdialog
+#------------------------------------------------------------------------------
+# Dialog auf den Bildschirm
+export MAIN_DIALOG="<window title=\"$LOC100\" icon-name=\"gtk-file\">
+
+<frame $LOC102>
+<hbox>
+
+	<vbox>
+		<entry>
+			<default>${ISOPARTSIZE}</default>
+			<variable>ISOPARTSIZE</variable>
+		</entry>
+	</vbox>
+
+	<vbox>
+		<button ok></button>
+		<button cancel></button>
+	</vbox>
+
+</hbox>
+</frame>
+</window>"
+
+I=$IFS; IFS=""
+for RETSTRING in  $(gtkdialog3 --program=MAIN_DIALOG --center); do
+	eval $RETSTRING
+done
+IFS=$I 
+
+#------------------------------------------------------------------------------
+# the following function splits the file and saves the splitted files
+# a rebuild-script-file named build-script.sh will be created
+#------------------------------------------------------------------------------
+# Datei aufteilen
+function split_the_file()
+{	
+	# Directory für die aufgeteilten Dateien erzeugen
+	# create directory to save the splitted files
+	mkdir "$isopname.files"
+	
+	# Größenparameter modifizieren und Dateien aufteilen
+	# set size of splitted files, combine the input-string with "m" an split the file
+	IPS="$ISOPARTSIZE""m"
+	split -b "$IPS" "$isopname" "$partpath"
+	
+	# Script zum Zusammenbau der .iso-teile im Ordner derselben erstellen
+	# rebuild-script, created in the directory of the splitted files, click once and rebuild the file
+	scriptline="cat $partpath* > $isopname" # creates the line, written into build-script.sh
+	echo $scriptline >$isopname.files/build-script.sh
+}
+#------------------------------------------------------------------------------
+# programm has been executed, check the button and if ok, then split the file
+#------------------------------------------------------------------------------
+# Programm gestartet und ausgeführt (OK gedrückt und eine Größe angegeben)
+if [ "$EXIT" = "OK" ]; then
+	if [ "$ISOPARTSIZE" != "" ]; then
+		split_the_file;
+		Xdialog --title "$LOC100"   --wrap --screen-center --center --no-buttons --msgbox "$LOC103 $LOC101"   8 32 50 
+
+	fi
+fi
+
+exit 0
+#------------------------------------------------------------------------------
+# rightclick_split_file-1.0, using gtkdialog
+# 2011-10-31 by RSH (CeeLab)
+#------------------------------------------------------------------------------

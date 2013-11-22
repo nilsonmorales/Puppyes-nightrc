@@ -1,0 +1,5 @@
+#!/bin/sh
+cd "/usr/local/split_file/"
+exec "/usr/local/split_file/split_file" "$@"
+
+exit 0

@@ -1,0 +1,6 @@
+#!/bin/bash
+cd "/root/my-documents/PDF/"
+/usr/local/zathura_gui/zathura_gui 
+ 
+
+

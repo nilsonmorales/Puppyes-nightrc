@@ -1,0 +1,998 @@
+#! /bin/bash
+# Bacon Recorder version 1.8   June 2011
+# Bacon Recorder version 2.3   July 2011
+# fixed for spaces in name version 2.3.1  Aug 2011
+# changed for Russian version 2.3.3 Oct 2011
+# bug fix in warning message fixed  in version 2.3.4 oct 2011
+# version 2.3.6 Jan 2012 fixes false messages that disk is not mounted in some installs
+# version 2.4 FEB1 2012 introduces a new folder selector and new method to recognize a full install
+# version 2.5 FEB 6 2012  minor change to warning message "Recording stored in"
+# version 2.6 FEB 8 2012  -  corrected bug in warning message and added 2 more
+# version 2.6.1 FEB 11 2012 - corrected english localization file
+# version 2.7 March 11 2012   - default audio mixer used for saluki- space around play button
+# version 2.8 May 5 2012 -  now fits height of 480 pixels
+# version 2.9 july 22 2012  - modify interface - stop  alphabet input
+# written by Don White  (don570)
+# A simple audio recorder based on an egg timer 
+# localized using Zigbert's method
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+export WORKDIR=$HOME/.baconrecorder/tmp
+if [ ! -d $WORKDIR ]; then
+	mkdir -p $WORKDIR
+		
+	echo 60 > $WORKDIR/LENGTH
+	echo "/root/" > $WORKDIR/SAVEFOLDER
+	echo "$LOC400".wav > $WORKDIR/NAME
+fi
+
+export GTK2_RC_FILES=$WORKDIR/gtkrc2:/root/.gtkrc-2.0 #include theme stuff with system themes
+
+for P in gtkdialog4 gtkdialog3 gtkdialog; do
+  GTKDIALOG=$(which $P) && break
+done
+
+if [ ! -f $HOME/.baconrecorder/baconrecorderrc ] ; then
+echo 'export LENGTH=60
+export VERSION=2.9 
+export SAVEFOLDER=/root/' > $HOME/.baconrecorder/baconrecorderrc
+	chmod 722 $HOME/.baconrecorder/baconrecorderrc
+export DEFAULT_LENGTH=$LENGTH
+export DEFAULT_SAVEFOLDER=$SAVEFOLDER
+
+touch $WORKDIR/log
+touch $WORKDIR/log_tail
+echo 60 > $WORKDIR/DEFAULT_LENGTH
+echo /root/ > $WORKDIR/DEFAULT_SAVEFOLDER
+echo "$LOC400.wav" > $WORKDIR/DEFAULT_NAME	
+fi
+. $HOME/.baconrecorder/baconrecorderrc
+
+# make DF_FILE including a final extra line if frugal
+df > "$WORKDIR"/DF_FILE
+BOOTDISK_LINE=`grep  "/initrd/mnt/dev_" "$WORKDIR"/DF_FILE | sed 's/dev/mnt/'`
+BOOTDISK=${BOOTDISK_LINE:0:9}
+
+
+# For a full install then BOOTDISK_FULL is added to list of mounted partitions
+BOOTDISK_LINE=`grep  /$ "$WORKDIR"/DF_FILE | sed 's/dev/mnt/'`
+BOOTDISK_FULL=${BOOTDISK_LINE:0:9}
+
+#if [ ! -e /mnt/home ] ; then
+#FULLBOOT_LINE=`grep  /$ "$WORKDIR"/DF_FILE | grep  rootfs `
+#[ -n "FULLBOOT_LINE" ] 
+#if  [ $? -eq  0 ] ;then
+#ln -s  / /mnt/home
+
+#fi
+#fi
+
+
+ 
+read LENGTH < "$WORKDIR/LENGTH"
+read SAVEFOLDER < "$WORKDIR/SAVEFOLDER"
+#read NAME < "$WORKDIR/NAME"
+
+# set CLICK to zero if arecord isnt running
+read CLICK < "$WORKDIR/CLICK"
+if [ -z "$CLICK" ] ;then
+echo "0" > "$WORKDIR/CLICK"
+else
+if [ "$CLICK" -eq "1" ] ;then 
+ps > "$WORKDIR/PS"
+RUN_CHECK=`grep "arecord -d" "$WORKDIR/PS"`
+if [ ! -n "$RUN_CHECK" ] ;then
+echo "0" > "$WORKDIR/CLICK"
+fi
+fi
+fi
+
+###############################################
+#                                             #
+#              CHECK_ENDING1                  #
+#                                             #
+###############################################
+check_ending1(){
+	
+CHECK_LINE=`grep  /$ "$WORKDIR/SAVEFOLDER"` 
+[ -z  $CHECK_LINE ]
+if [ $? -eq 0 ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+
+$LOC959
+
+$LOC418
+$LOC419
+
+"   15 69 &
+
+exit 0
+fi
+
+case "$LENGTH" in
+[a-zA-Z]*) Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC421
+$LOC419"   9 59 && exit;;  # Begins with a letter?
+*        ) continue;;
+esac
+
+if [ "$LENGTH" -eq 0 ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+$LOC420
+"   15 69 &
+exit 0
+fi
+if [ -z "$LENGTH"  ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+$LOC421
+"   15 69 &
+exit 0
+fi
+check_disk &
+exit 0
+}
+
+###############################################
+#                                             #
+#              CHECK_ENDING2                  #
+#                                             #
+###############################################
+check_ending2(){
+CHECK_LINE=`grep  /$ "$WORKDIR/SAVEFOLDER"` 
+[ -z  "$CHECK_LINE" ]
+if [ $? -eq 0 ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+
+$LOC959
+
+$LOC418
+$LOC419
+
+"   15 69 &
+
+exit 0
+fi
+
+case "$LENGTH" in
+[a-zA-Z]*) Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC421
+$LOC419"   9 59 && exit;;  # Begins with a letter?
+*        ) continue;;
+esac
+
+if [ "$LENGTH" -eq 0 ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+$LOC420
+"   15 69 &
+exit 0
+fi
+if [ -z "$LENGTH"  ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+$LOC421
+"   10 69 &
+exit 0
+fi
+check_timer &
+exit 0
+}
+
+
+###############################################
+#                                             #
+#              CHECK_ENDING3                 #
+#                                             #
+###############################################
+check_ending3(){
+CHECK_LINE=`grep  /$ "$WORKDIR/SAVEFOLDER"` 
+[ -z  "$CHECK_LINE" ]
+if [ $? -eq 0 ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+
+$LOC959
+
+$LOC418
+$LOC419
+
+"   15 69 &
+
+exit 0
+fi
+if [ "$LENGTH" -eq 0 ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+$LOC420
+"   10 69 &
+exit 0
+fi
+if [ -z "$LENGTH"  ] ; then
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "
+$LOC421
+"   10 69 &
+exit 0
+fi
+
+
+check_countdown &
+exit 0
+}
+
+###############################################
+#                                             #
+#                L  O  G                      #
+#                                             #
+###############################################
+
+log_function(){
+	export GTK2_RC_FILES=/root/.gtkrc-2.0 #reset gtk
+#  put final 14 lines in log_tail	
+	tail -14 $WORKDIR/log > $WORKDIR/log_tail
+	
+	export log_pref='
+	<window title="'$LOC619'">
+	
+	<frame>
+	
+	<vbox>
+	<hbox width-request="610">
+	<text height-request="10"><label>""</label></text>	
+    </hbox> 	
+    </vbox>
+
+<text>
+       <label>This is a static text.</label>
+       <input file>/root/.baconrecorder/tmp/log_tail</input>
+</text>
+
+     <hbox>
+     <button>
+      <label>'$LOC101'</label>
+      <action type="exit">CLOSE</action>
+    </button>    
+    </hbox>
+    
+	 </frame>
+	
+	</window>'
+	$GTKDIALOG -p log_pref --center
+}
+###############################################
+#                                             #
+#                INFO DIALOG                  #
+#                                             #
+###############################################
+info_dialog(){
+	
+export info_box=" 
+<window title=\"$LOC950\" icon-name=\"gtk-info\" resizable=\"false\">
+
+<hbox>
+   
+
+<frame>
+   <vbox>
+   
+      <text use-markup=\"true\"><label>\"<b><u><span size='"'large'"' color='"blue"'>$LOC951</span></u></b>\"</label></text>
+      <text height-request=\"10\"><label> </label></text>
+  <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>/root/</span></b>\"</label></text>
+        <text height-request=\"10\"><label> </label></text>
+<text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>/root/my-documents/</span></b>\"</label></text>
+        <text height-request=\"10\"><label> </label></text>
+
+    <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>/mnt/home/</span></b>\"</label></text>
+      <text height-request=\"20\"><label> </label></text>
+
+  <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>/mnt/sda5/</span></b>\"</label></text>
+      <text height-request=\"20\"><label> </label></text>
+
+  <text use-markup=\"true\"><label>\"<b><span size='"'medium'"'  color='"blue"'>/mnt/SONY_DISK/</span></b>\"</label></text>
+      <text height-request=\"20\"><label> </label></text>
+
+   </vbox>
+</frame>
+   
+   
+   <vbox>
+   <text height-request=\"220\"><label> </label></text>
+    <hbox>
+    <button>
+      <label>$LOC101</label>
+      <action type=\"exit\">CLOSE</action>
+    </button>   
+    </hbox>
+    
+   <text><label>             </label></text>   
+   </vbox>
+   
+</hbox>
+
+</window>
+"
+
+$GTKDIALOG --program=info_box 
+
+
+}
+export -f info_dialog
+###############################################
+#                                             #
+#                P L A Y E R                  #
+#                                             #
+###############################################
+
+player_function(){
+read JUST_RECORDED < "$WORKDIR/JUST_RECORDED"	
+# if arecord is launched then do not play
+ps   > "$WORKDIR"/arecord_ps  
+grep arecord "$WORKDIR"/arecord_ps > "$WORKDIR"/arecord_check
+[ -s  "$WORKDIR"/arecord_check ]
+if [ $? -eq 0 ] ; then 
+
+
+Xdialog --title "$LOC959"   --wrap --screen-center --no-buttons --msgbox "$LOC415
+
+$LOC416
+$LOC417
+
+"   15 69 &
+
+exit 0
+else
+if [  -e "$JUST_RECORDED" ]; then
+# choose deadbeef, audacious  then  default  to pmusic
+for P in deadbeef audacious defaultaudioplayer; do
+  AUDIOPLAYER=$(which $P) && break
+done
+
+
+$AUDIOPLAYER "$JUST_RECORDED" &
+else
+     Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC412"    10 65 100  &
+fi
+exit 0
+fi
+}
+
+###############################################
+#                                             #
+#                K I L L                      #
+#                                             #
+###############################################
+
+kill_function(){
+# check if the processes check_countdown or check_timer exist and kill them
+    ps   >  $WORKDIR/PS
+    grep  check_ending  $WORKDIR/PS  > $WORKDIR/PROCESS1
+#	grep  check_countdown  $WORKDIR/PS  > $WORKDIR/PROCESS1
+#	grep  check_timer  $WORKDIR/PS > $WORKDIR/PROCESS2
+	grep "arecord -d"  $WORKDIR/PS > $WORKDIR/CHECK
+	
+	read processID1 < $WORKDIR/PROCESS1
+	kill ${processID1:0:5}
+	
+#	read processID2 < $WORKDIR/PROCESS2
+#	kill ${processID2:0:5}
+    read CHECK  < $WORKDIR/CHECK
+    read CLICK  < $WORKDIR/CLICK
+    
+    echo check $CHECK
+    echo click $CLICK
+# now check if arecord is in use
+    if [ -n  "$CHECK"  ] && [ $CLICK -ne "1" ] ;then
+  Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC409\n$LOC410\n$LOC411\n\n$LOC400 $LOC202 $LOC203\n $SAVEFOLDER"    17 65 100   &
+fi   
+	
+#  this message will show if stop button is clicked and  recording hasn't started	
+    if [ -z  "$CHECK"  ] ;then
+    Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC410\n$LOC411 "    12 65 100  
+    echo "$LOC205"  $( date +%T )  >>  $WORKDIR/log 
+    echo >>  $WORKDIR/log
+else
+   echo "$LOC205"  $( date +%T )  >>  $WORKDIR/log  
+   echo >>  $WORKDIR/log 
+   killall arecord
+fi
+
+echo "0" > $WORKDIR/CLICK
+exit 0
+
+}
+
+
+###############################################
+#                                             #
+#                AUDIOMIXER                   #
+#                                             #
+###############################################
+
+audiomixer(){
+# choose the correct audio mixer starting with retrovol
+
+if [ -e /usr/bin/retrovol ];then
+exec retrovol &
+else
+defaultaudiomixer &
+fi
+exit 0
+}
+
+
+###############################################
+#                                             #
+#            P R E F E R E N C E S            #
+#                                             #
+###############################################
+
+preferences(){
+	export GTK2_RC_FILES=/root/.gtkrc-2.0 #reset gtk
+	export baconrecorder_pref='
+	<window title="'$LOC300'">
+	 <vbox>
+	 <hbox>
+	   <text><label>'$LOC301'</label></text>
+	   <entry max_length="3"><variable>DEFAULT_LENGTH</variable><input>cat '$WORKDIR'/DEFAULT_LENGTH</input></entry>
+	  </hbox>
+	  
+	  <hbox>
+	   <text><label>'$LOC305'</label></text>
+	   <entry><variable>DEFAULT_SAVEFOLDER</variable><input>cat '$WORKDIR'/DEFAULT_SAVEFOLDER</input></entry>
+	  </hbox>
+	  
+	    <hbox>
+	   <text><label>'$LOC306'</label></text>
+	   <entry><variable>DEFAULT_NAME</variable><input>cat '$WORKDIR'/DEFAULT_NAME</input></entry>
+	  </hbox>
+	  
+	  
+	  <hbox>
+	   <text use-markup="true"><label>"<b>'$LOC303'</b> "</label></text>
+	   <button cancel></button>
+	   <button><label>'$LOC304'</label>
+	    <action>echo -e "export LENGTH=\"$LENGTH\"\nexport VERSION=\"$VERSION\"\nexport SAVEFOLDER=\"$SAVEFOLDER\"" > '$HOME'/.baconrecorder/baconrecorderrc</action>
+	    <action>echo $DEFAULT_LENGTH > "$WORKDIR"/DEFAULT_LENGTH</action>
+	    <action>echo $DEFAULT_LENGTH > "$WORKDIR"/LENGTH</action>
+	    <action>echo "$DEFAULT_SAVEFOLDER" > "$WORKDIR"/DEFAULT_SAVEFOLDER</action>
+	    <action>echo "$DEFAULT_SAVEFOLDER" > "$WORKDIR"/SAVEFOLDER</action>
+	    <action>echo "$DEFAULT_NAME" > "$WORKDIR"/DEFAULT_NAME</action>
+	    <action>echo "$DEFAULT_NAME" > "$WORKDIR"/NAME</action>
+	    <action>EXIT:exit</action>
+	   </button>
+	  </hbox>
+	 </vbox>
+	</window>'
+	$GTKDIALOG -p baconrecorder_pref --center
+}
+###############################################
+#                                             #
+#               CHECK DISK                    #
+#                                             #
+###############################################
+
+# check if disk is mounted has been set
+#  stop the recording from beginning if SKIP=0
+check_disk (){
+	
+
+# do not record if /mnt/home does not exit and has been choosen
+if [ ! -e /mnt/home ] ; then
+if [ "${SAVEFOLDER:0:9}" = "/mnt/home" ] ;then
+Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC408"   10 69 
+exit 0 
+fi
+fi
+
+if  [ "${SAVEFOLDER:0:5}" != "/root" ]; then
+df > "$WORKDIR"/DF_FILE
+echo "$BOOTDISK" >> "$WORKDIR"/DF_FILE
+echo "$BOOTDISK_FULL" >> "$WORKDIR"/DF_FILE
+grep  "${SAVEFOLDER:0:9}" "$WORKDIR"/DF_FILE > "$WORKDIR"/MOUNT_CHECK
+if [ ! -s "$WORKDIR"/MOUNT_CHECK ] && [ "${SAVEFOLDER:0:9}" != "/mnt/home" ]; then 
+Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC408"   10 69 
+exit 0 
+fi
+fi	
+		
+Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC401\n\n$LOC402 "$LENGTH" $LOC403 "    10 65 100  & 
+ENTRY=0
+
+record_function &
+ 
+exit 0
+}  
+
+###############################################
+#                                             #
+#               CHECK_COUNTDOWN              #
+#                                             #
+###############################################
+
+
+# check if countdown has been set
+check_countdown (){
+
+case "$LENGTH" in
+[a-zA-Z]*) Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC421
+$LOC419"   9 59 && exit;;  # Begins with a letter?
+*        ) continue;;
+esac
+
+case "$ENTRY" in
+[a-zA-Z]*) Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC406
+$LOC419"   9 59 && exit;;  # Begins with a letter?
+*        ) continue;;
+esac
+
+
+
+if  [ $ENTRY  -eq 0 ] ; then
+check_disk 
+fi
+
+	
+if  [ $ENTRY  -gt 0 ] ; then
+
+# dont record if /mnt/home/ does not exist and it was entered
+if [ ! -e /mnt/home ] ; then
+if [ "${SAVEFOLDER:0:9}" = "/mnt/home" ] ;then
+Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC406"   10 69 
+exit 0 
+fi
+fi
+# check if disk is mounted
+
+if  [ "${SAVEFOLDER:0:5}" != "/root" ]; then
+df > "$WORKDIR"/DF_FILE
+echo $BOOTDISK >> "$WORKDIR"/DF_FILE
+echo $BOOTDISK_FULL >> "$WORKDIR"/DF_FILE
+grep  "${SAVEFOLDER:0:9}" "$WORKDIR"/DF_FILE > "$WORKDIR"/MOUNT_CHECK
+if [ ! -s "$WORKDIR"/MOUNT_CHECK ] && [ "${SAVEFOLDER:0:9}" != "/mnt/home" ]; then 
+Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC408"   10 69 
+exit 0  
+fi
+fi
+
+Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC413 $ENTRY $LOC403 "   10 65 100  &  
+record_function &
+echo -e $LOC413 $ENTRY $LOC403 >> "$WORKDIR"/log
+else
+
+if [ -z "$ENTRY" ] ;then 
+Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC406\n\n$LOC407 "    10 65 100  
+
+else
+Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC401\n\n$LOC402"$LENGTH"$LOC403 "    15 65 100  &     
+record_function &
+fi
+
+fi
+
+
+exit 0
+}
+###############################################
+#                                             #
+#                CHECK_TIMER                  #
+#                                             #
+###############################################
+
+# check if timer set too low
+check_timer (){
+
+
+# dont record if /mnt/home/ does not exist and it was entered
+if [ ! -e /mnt/home ] ; then
+if [ "${SAVEFOLDER:0:9}" = "/mnt/home" ] ;then
+Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC408"   10 69 
+exit 0 
+fi
+fi
+# check if disk is mounted 
+
+if  [ "${SAVEFOLDER:0:5}" != "/root" ]; then
+df > "$WORKDIR"/DF_FILE
+echo $BOOTDISK >> "$WORKDIR"/DF_FILE
+echo $BOOTDISK_FULL >> "$WORKDIR"/DF_FILE
+grep  "${SAVEFOLDER:0:9}" "$WORKDIR"/DF_FILE > "$WORKDIR"/MOUNT_CHECK
+if [ ! -s "$WORKDIR"/MOUNT_CHECK ] && [ "${SAVEFOLDER:0:9}" != "/mnt/home" ]; then 
+Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC408"   10 69 
+exit 0  
+fi
+fi
+
+
+# Add a zero at beginning if user left this out
+if  [ "${#TIME_FUTURE}" = 7 ] ;then 
+TIME_FUTURE=`echo "0""$TIME_FUTURE"`	
+fi
+
+# Prepare the numbers for comparison
+a=$DATE_FUTURE":"$TIME_FUTURE
+time_long=${a//-/:}
+future_removed=${time_long//:/}
+a=$( date +%F:%T )
+time_long=${a//-/:}
+current_removed=${time_long//:/}
+
+let "b=current_removed+139"
+#  first check to see if time was set ahead
+if [[ $b  -ge $future_removed ]] ;then
+Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC404  \n\n$LOC405"    17 65  
+ 
+else
+# if  current time is greater than future time then start recording 
+echo -e $LOC414 "$TIME_FUTURE"   >>  "$WORKDIR/log"
+Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC414 $TIME_FUTURE "   10 65 100  &  
+loop15
+fi
+exit  0
+
+}
+###############################################
+#                                             #
+#                LOOP_15                      #
+#                                             #
+###############################################
+
+
+# loop every 15 seconds to check if time is ready
+loop15 (){
+	
+while  (("$current_removed" < "$future_removed"))    
+do
+sleep 15
+a=$( date +%F:%T )
+time_long=${a//-/:}
+current_removed=${time_long//:/}
+done
+ 
+ENTRY=0
+record_function
+
+}
+
+###############################################
+#                                             #
+#               RECORD_FUNCTION               #
+#                                             #
+###############################################
+
+record_function (){	
+		
+
+# extension is removed from recording filename	
+RECORDPATH_STRIPPED="${SAVEFOLDER}"
+# RECORDNAME="${RECORDPATH%/*}"
+# replace empty space with hard space 
+RECORDPATH_STRIPPED_MODIFIED="${RECORDPATH_STRIPPED// / }"
+read NAME < "$WORKDIR/NAME"
+NAME="${NAME%.*}"
+
+
+# convert minutes to seconds
+let ENTRY=ENTRY\*60
+
+
+sleep "$ENTRY"
+# first  log entry when recording actually starts	
+echo "$LOC200" "$( date )"    >>  $WORKDIR/log	
+echo "$LOC906   " "$LENGTH"    >>  $WORKDIR/log	
+
+# convert minutes to seconds
+let LENGTH=LENGTH\*60
+
+day1=$(date +%T)
+day2=$(date +%m-%d-%Y)
+
+
+
+#timestamp for filename is created
+time=$( date +_%m%d%H%M%S )	
+
+
+ if [ $COMBOBOX = "$LOC901" ]; then
+          echo "$RECORDPATH_STRIPPED${NAME}$time.wav" >  $WORKDIR/JUST_RECORDED
+          arecord -d $LENGTH -f cd   "${RECORDPATH_STRIPPED}${NAME}$time.wav"     
+           Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC200 "$day1"\n\n$LOC201 $( date +%T ) \n\n""${NAME}"$time.wav" $LOC202\n$LOC203\n "${RECORDPATH_STRIPPED_MODIFIED%/*}" "    17 65   &             
+           echo "$LOC201 $( date +%T ) 
+"${NAME}"$time.wav $LOC202 $LOC203 
+"${RECORDPATH_STRIPPED%/*}" " >>  $WORKDIR/log  
+           echo >>  $WORKDIR/log  
+           exit;
+          elif [ $COMBOBOX = "$LOC902" ]; then
+                        echo "$RECORDPATH_STRIPPED${NAME}$time.mp3" >  $WORKDIR/JUST_RECORDED
+                        arecord -d $LENGTH -f cd | lame  -V 3 --lowpass 22050 -m j - "$RECORDPATH_STRIPPED${NAME}$time.mp3"    
+                        Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC200 "$day1"\n\n$LOC201 $(date +%T)  \n\n ""${NAME}"$time.mp3" $LOC202\n$LOC203\n "${RECORDPATH_STRIPPED_MODIFIED%/*}" "    17 65   &  
+                        echo "$LOC201 $(date +%T)   
+"${NAME}"$time.mp3 $LOC202 $LOC203 
+"${RECORDPATH_STRIPPED%/*}" "  >>  $WORKDIR/log
+                        echo >>  $WORKDIR/log  
+                        exit;
+
+          else 
+                        echo "$RECORDPATH_STRIPPED${NAME}$time.mp3" >  $WORKDIR/JUST_RECORDED 
+                        arecord -d $LENGTH -f cd |  lame -b 16 -m m   -h -   "$RECORDPATH_STRIPPED${NAME}$time.mp3"    
+                        Xdialog --title "$LOC400"   --wrap --screen-center --center --no-buttons --msgbox "$LOC204 "$day1"\n\n$LOC201 $(date +%T)  \n\n ""${NAME}"$time.mp3" $LOC202\n$LOC203\n "${RECORDPATH_STRIPPED_MODIFIED%/*}" "    17 65   &  
+                        echo  "$LOC201 $(date +%T)   
+"${NAME}"$time.mp3 $LOC202 $LOC203  
+"${RECORDPATH_STRIPPED%/*}""  >>  $WORKDIR/log
+                        echo >>  $WORKDIR/log 
+                        exit;   
+          fi	
+
+exit 0
+}
+
+
+# check if disk is mounted when first launched and give a warning
+
+# give warning if /mnt/home/ does not exist and it was entered
+if [ ! -e /mnt/home ] ; then
+if [ "${SAVEFOLDER:0:9}" = "/mnt/home" ] ;then
+Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC408"   10 69 
+fi
+fi
+
+if  [ "${SAVEFOLDER:0:5}" != "/root" ]; then
+df > "$WORKDIR"/DF_FILE
+echo $BOOTDISK >> "$WORKDIR"/DF_FILE
+echo $BOOTDISK_FULL >> "$WORKDIR"/DF_FILE
+grep  "${SAVEFOLDER:0:9}" "$WORKDIR"/DF_FILE > "$WORKDIR"/MOUNT_CHECK
+if [ ! -s "$WORKDIR"/MOUNT_CHECK ] && [ "${SAVEFOLDER:0:9}" != "/mnt/home" ]; then 
+Xdialog --title "$LOC400"   --wrap --screen-center --no-buttons --msgbox "$LOC408"   10 69    
+fi
+fi
+
+
+#gtk-theme
+echo 'gtk-icon-sizes="gtk-button=32,32"
+' > $WORKDIR/gtkrc
+export GTK2_RC_FILES=$WORKDIR/gtkrc:/root/.gtkrc-2.0 #include theme stuff with system themes
+
+
+export -f record_function audiomixer preferences check_countdown loop15 check_timer log_function kill_function player_function check_disk check_ending1 check_ending2 check_ending3
+
+
+
+###############################################
+#                                             #
+#                  A B O U T                  #
+#                                             #
+###############################################
+
+export about="
+<window title=\"$LOC602\" window_position=\"1\">
+ <notebook labels=\"$LOC602|About|License\">
+  <frame>
+      <text><label>\"$LOC605 $LOC606 $LOC607 $LOC608 $LOC609  $LOC610 $LOC613 $LOC614 $LOC615 $LOC616 $LOC617 $LOC618 $LOC621 $LOC622 $LOC624\"</label></text>   
+  
+  </frame>
+  <frame>
+   <text><label>\"\"</label></text>
+   <progressbar>
+    <input>echo 0; echo \"Bacon Recorder $VERSION\"</input>
+   </progressbar>
+    <text use-markup=\"true\"><label>\"<b>Don White, Copyright 2012</b>\"</label></text>
+    <text use-markup=\"true\"><label>\"<b> </b>\"</label></text>
+    <text use-markup=\"true\"><label>\"<b>written 2011-2012</b>\"</label></text>
+   <text height-request=\"30\"><label>\"\"</label></text>
+   
+  </frame>
+  <frame>
+   <text use-markup=\"true\"><label>\"Bacon Recorder is released under the <b>GNU General Public License</b> (GPL). You have the right to use and modify this software in any way you like, so long as any derivative works remain under a GPL license.\"</label></text>
+   <text use-markup=\"true\"><label>\"This program is distributed in the hope that it will be useful, but <b><span color='"'red'"'>WITHOUT ANY WARRANTY</span></b>. See the GNU General Public License homepage for more details.\"</label></text>
+   <hbox>
+    <button>
+     <label>\"http://www.gnu.org/licenses/\"</label>
+     <action>defaulthtmlviewer http:\/\/www.gnu.org\/licenses\/</action>
+    </button>
+   </hbox>
+  </frame>
+ </notebook>
+</window>"
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+
+export MY_RECORDING='
+<window title="Bacon Recorder '$VERSION'" resizable="false" window_position="1">
+ <vbox>
+  <frame>
+<hbox homogeneous="true">
+
+<hbox> 
+ <button relief="2" height-request="48" tooltip-text="'$LOC508'
+'$LOC509'">
+      <input file stock="gtk-stop"></input>
+     <label>'$LOC623'</label>
+	  <action>kill_function</action>
+</button>
+
+ <button relief="2" height-request="48" tooltip-text="'$LOC507'">
+      <input file stock="gtk-properties"></input>
+     <label>'$LOC619'</label>
+	  <action>log_function &</action>
+</button>
+     
+<button relief="2" height-request="48" tooltip-text="'$LOC500'">
+      <input file stock="gtk-preferences"></input>
+     <label>'$LOC620'</label>
+	  <action>audiomixer &</action>
+</button>
+
+<button relief="2" height-request="48"  tooltip-text="'$LOC501'">
+     <label>'$LOC603'</label>
+    <input file stock="gtk-refresh"></input>
+    <action>preferences</action>
+ </button>
+ 
+ 
+  <button relief="2" height-request="48"  tooltip-text="'$LOC502'">
+ <label>'$LOC502'</label>   
+    <input file stock="gtk-quit"></input>
+    <action>exit:EXIT</action>
+   </button>
+   </hbox>
+</hbox>
+</frame>
+
+
+ <hbox>
+ 
+  <text>
+     <label>"'$LOC906'"</label>
+     </text>
+       
+      <combobox width-request="70"  tooltip-text=" '$LOC906'">
+      <variable>LENGTH</variable>
+      <item>'$LENGTH'</item>
+      <item>30</item>
+      <item>60</item>
+      <item>90</item>
+      <item>120</item>
+      <item>180</item>
+      <item>240</item>
+    </combobox>
+ 
+
+      
+   
+  <hbox>
+    
+    <combobox width-request="120" tooltip-text=" '$LOC900' 
+ '$LOC613' ">
+      <variable>COMBOBOX</variable>
+      <item>'$LOC901'</item>
+      <item>'$LOC902'</item>
+      <item>'$LOC903'</item>
+    </combobox>
+  </hbox> 
+     <button tooltip-text="'$LOC512'">
+<label>'$LOC102'</label>
+      <input file stock="gtk-media-play"></input>
+	  <action>player_function &</action>
+</button>           
+  </hbox>               
+                 
+<frame>
+
+<hbox>
+    <text><label>"'$LOC957'"</label></text>
+ 
+    <entry tooltip-text=" '$LOC517' ">
+     <input>cat "$WORKDIR/SAVEFOLDER"</input>
+     <variable>SAVEFOLDER</variable>
+     
+    </entry>
+<button tooltip-text=" '$LOC516' ">
+     <input file>/usr/share/images/folder-open.png</input>
+        <action>Xdialog --title "'$LOC958'" --stdout --no-buttons  --dselect /mnt 32 80 > $WORKDIR/SAVEFOLDER</action>      
+        <action>refresh:SAVEFOLDER</action>        
+    </button>
+   <button tooltip-text="'$LOC950'">
+      <input file stock="gtk-info"></input>     
+	 <action>info_dialog &</action>
+</button>
+
+</hbox>
+
+
+</frame>
+
+
+     <hbox>
+<frame '$LOC800'>
+    
+<hbox homogeneous="true">  
+   <hbox width-request="40">
+    <entry max_length="4" tooltip-text=" '$LOC515'">
+         <variable>ENTRY</variable>
+       </entry>
+ </hbox> 
+  </hbox> 
+ <text height-request="5"><label>""</label></text>  
+  
+       <text><label>"'$LOC802' "</label></text>
+ <hbox homogeneous="true">  
+         
+        <button tooltip-text=" '$LOC802' '$LOC803' ">        
+        <input file>/usr/share/images/document-open-recent.png</input>
+        <action>echo "$SAVEFOLDER" > "$WORKDIR/SAVEFOLDER"</action>
+        <action>echo $LENGTH > "$WORKDIR"/LENGTH</action>
+        <action>echo 0 > "'$WORKDIR'/CLICK"</action>
+        <action>check_ending3</action>        
+      </button> 
+  </hbox> 
+  
+</frame>
+
+
+ <vbox width-request="95">  
+      <button relief="2"   tooltip-text="'$LOC514'
+'$LOC513'">
+            <input file>'/usr/share/images/anime.gif'</input>
+            <action>rxvt -geometry "64x10-0+0" -e arecord -vvv /dev/null 2>/dev/null &</action>
+      </button>  
+             <text height-request="30"><label>""</label></text>   
+            <text height-request="10"><label>""</label></text>
+ <hbox homogeneous="true">  
+ <hbox width-request="48">     
+      <button relief="2" height-request="48" width-request="48" tooltip-text=" '$LOC602' ">
+            <input file stock="gtk-help"></input>
+            <action>launch:about</action>
+      </button>
+</hbox></hbox>
+ </vbox>               
+
+
+ <vbox>
+ <frame '$LOC911'>
+    <text>
+     <label>   '$LOC908' </label>
+     </text>
+      <entry>
+      <input>date +%H:%M:00</input>
+      <variable>TIME_FUTURE</variable>
+    </entry>
+      <entry>
+      <input>date +%F</input>
+      <variable>DATE_FUTURE</variable>      
+    </entry>
+    
+    <button height-request="30" tooltip-text="'$LOC505'">
+        <label>'$LOC909'</label>
+        <action>echo 0 > '$WORKDIR'/CLICK</action>
+        <action>echo "$SAVEFOLDER" > "'$WORKDIR'/SAVEFOLDER" </action>
+        <action>echo $LENGTH > "'$WORKDIR'/LENGTH"</action>
+        <action>check_ending1</action>        
+    </button>
+    
+    <button  height-request="50" tooltip-text="'$LOC506'">
+        <label>'$LOC910'</label>
+        <action>echo 0 > '$WORKDIR'/CLICK</action>
+        <action>echo "$SAVEFOLDER" > "'$WORKDIR'/SAVEFOLDER"</action>
+        <action>echo $LENGTH > "'$WORKDIR'/LENGTH"</action>
+        <action>check_ending2</action>       
+    </button> 
+</frame>  
+</vbox>
+        
+</hbox>
+ </vbox>
+ 
+ </window>
+'
+$GTKDIALOG -p MY_RECORDING -c
+   
+exit 0

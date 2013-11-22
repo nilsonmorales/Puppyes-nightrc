@@ -1,0 +1,47 @@
+#!/bin/bash
+#HFS_image
+#version=1.x
+#language=english
+#translator:don570
+
+set -a
+
+#warning window
+LOC100="Warning"
+LOC101="A folder must be chosen."
+LOC102="A folder must not be empty."
+
+#button text
+LOC200="Cancel"
+LOC201="Create"
+
+
+#Heading text
+LOC400="Extraction"
+LOC402="Choose an archive"
+LOC403="Choose a folder"
+LOC404="and click CREATE"
+LOC405="Select a Directory"
+LOC406="for use in MAC emulators."
+LOC407="Save in HOME (rather than current folder)"
+
+#Xdialog warning
+LOC410="Please wait for completion..."
+
+#Help text
+LOC500="Help"
+LOC501="Place some files you want transfered"
+LOC502="to a guest computer (i.e. Mac) in a folder. "
+LOC503="Create the image with a click on button."
+LOC504="When image is mounted in guest computer,"
+LOC505="you can move the files or modify them."
+
+#text in window heading
+LOC600="Create an HFS image"
+
+
+#xdialog text
+LOC701="Storage location: "
+LOC703="Create an HFS image"
+LOC704="Image name: "
+LOC705="Size: "

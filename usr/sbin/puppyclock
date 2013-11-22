@@ -1,0 +1,5 @@
+#!/bin/bash
+cd "/usr/local/puppyclock"
+"/usr/local/puppyclock/puppyclock" 
+
+

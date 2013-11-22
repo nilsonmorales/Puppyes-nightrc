@@ -1,0 +1,65 @@
+#!/bin/bash
+# written by Don White (don570)  Aug 2011
+# rewritten feb 2012   to give time of conversion
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+
+a=${1%/*}
+FILE_PATH=`echo "$1" | sed "s/\/$//"`
+#FILE_NAME="${FILE_PATH##/*/}"
+
+t="${FILE_PATH%.*}"
+file_name="${FILE_PATH##*/}"
+cd "$a"
+SIZE=`ls -l  |  grep $file_name | awk  '{ print $5 }'`
+
+
+let "TIME=$SIZE*10/12100000"
+if [ $TIME -lt 1 ] ;then
+TIME=1
+fi
+
+if [ -e "$t.wav" ];then
+
+Xdialog --title "$LOC202"   --wrap --screen-center --center --no-buttons --msgbox "          ${t##*/}.wav $LOC100
+
+$LOC101"    17 65 100 
+
+  exit 0 
+fi 
+
+
+
+DIALOG=Xdialog
+
+$DIALOG --wrap --title "$LOC200"   --yesno "$LOC400\n$LOC401\n\n$LOC500 $TIME $LOC501" 0 0 
+if [ "$?" -eq "1" ] ;then 
+exit 0
+fi
+
+
+rxvt -geometry "85x25-0+0" -e ffmpeg -i  "$FILE_PATH" -f wav -acodec pcm_s16le -ab 160k -ar 44100 "$t.wav" 
+
+#lame --decode "$FILE_PATH" "$t.wav"
+#sleep 1
+
+Xdialog --title "$LOC202"   --wrap --screen-center --center --no-buttons --msgbox ".           $LOC300           . 
+
+$LOC202
+
+$LOC500 $TIME $LOC501
+"   17 65 100 &
+exit 0

@@ -1,0 +1,5 @@
+#!/bin/bash
+cd "/usr/local/pclock"
+"/usr/local/pclock/pclock" "$@"
+
+

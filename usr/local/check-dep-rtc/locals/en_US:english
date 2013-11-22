@@ -1,0 +1,66 @@
+#!/bin/sh
+# Right-Click Dependenies Checker
+# 2012-03-09 RSH
+# English localization
+# version=1.x
+
+set -a
+# window heading
+
+APPLICATIONNAME="RSHs Right-Click Dependenies Checker"
+CHKDEPTXT="Check Dependencies of"
+SNDRESGEANY1="Send Results of"
+SNDRESGEANY2="-Check to Text Editor or"
+SNDRESGEANY3="Terminal. Please choose..."
+
+CHKSENDTO="To see Results in Text Editor, click the 'OK' button. "
+
+BACKTITLE='
+Click OK to transmit the Results to Geany Text Editor!
+'
+
+chkdepttl='
+-------------------------------------------------------------------------------
+### ! ! ! Check Dependencies ! ! ! ###
+### A Right-Click Dependencies Checker Tool by RSH for Puppy Linux - GPL2 ###
+-------------------------------------------------------------------------------'
+
+chkversttl='
+
+-------------------------------------------------------------------------------
+### Version ###
+-------------------------------------------------------------------------------
+'
+
+chkhlpttl='
+
+-------------------------------------------------------------------------------
+### Help ###
+-------------------------------------------------------------------------------
+'
+
+chkfullttl='
+
+-------------------------------------------------------------------------------
+### Full Information ###
+-------------------------------------------------------------------------------
+'
+
+chkundepsttl='
+
+-------------------------------------------------------------------------------
+### Dependencies ###
+-------------------------------------------------------------------------------
+'
+
+endinfttl='
+
+-------------------------------------------------------------------------------
+### ! ! ! End of Information ! ! ! ###
+-------------------------------------------------------------------------------
+'
+
+lddfile='Information to Application: '
+
+lddfile2='
+Check Dependencies of: '

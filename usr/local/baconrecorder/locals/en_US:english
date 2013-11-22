@@ -1,0 +1,133 @@
+#!/bin/bash
+#Bacon recorder
+#version=1.x
+#language=english
+#translator:Native
+
+set -a
+# miscellaneous buttons
+LOC101="Close"
+LOC102="Play"
+
+# Completion message
+LOC200="The recording started at "
+LOC201="The recording finished at "
+LOC202="is stored"
+LOC203="in the folder"
+LOC204="The mono recording started at "
+LOC205="Stop button was clicked "
+
+#Default Preferences
+LOC300="Default Entries"
+LOC301="Default length of recording"
+LOC302="Path of output file"
+LOC303="Restart Bacon Recorder to activate changes"
+LOC304="    Set    "
+LOC305="Default destination folder"
+LOC306="Default name (extension is optional)"
+
+#Warning messages
+LOC400="Recording"
+LOC401="The recording has started now."
+LOC402="It will finish in "
+LOC403=" minutes."
+LOC404="Start time wasn't set correctly."
+LOC405="Try again by setting the start time to the future."
+LOC406="The countdown has not been set."
+LOC407="Please set a value."
+LOC408="Check if the partition is mounted for your recording"
+LOC409="You have stopped the current recording."
+LOC410="You are ready to make a new recording."
+LOC411="Enter new settings."
+LOC412="No recording was found."
+LOC413="Recording will start in"
+LOC414="Recording will start at"
+LOC415="Error.   You are currently recording a file."
+LOC416="The recording must be stopped "
+LOC417="before clicking play button."
+LOC418="You must end a path with /"
+LOC419="Make the correction and try again."
+LOC420="Warning. The length of the recording cannot be zero."
+LOC421="Warning. The length must be set."
+
+#Popups
+LOC500="Audio Mixer"
+LOC501="Restoration of previous settings"
+LOC502="Quit"
+LOC503="Help"
+LOC505="Recording will begin immediately"
+LOC506="Recording will begin at START TIME"
+LOC507="Check the last 14 lines of the log"
+LOC508="Stop a scheduled recording"
+LOC509="or a recording that is underway."
+LOC510="Select to prevent over-recording"
+LOC511="of a previous recording"
+LOC512="Play previous recording"
+LOC513="Check sound volume before recording"
+LOC514="Click here. "
+LOC515="Set the delay before a recording begins."
+LOC516="Folder selector"
+LOC517="Folder destination for recording"
+
+#Preferences and help
+LOC600="Preferences"
+LOC601="Instructions"
+LOC602="Help"
+LOC603="Default settings"
+LOC604="Quit"
+LOC605="There are two types of recordings possible, Countdown and Timer."
+LOC606="Use Timer if you know the time of the start of the recording."
+LOC607="There will be a message of completion when"
+LOC608="the recording has finished."
+LOC609="The default path of your recording"
+LOC610="can be set in Preferences."
+LOC611="Adding a Timestamp will prevent the possible"
+LOC612="over recording of a previous recording."
+LOC613="Wave and MP3 Stereo are high quality"
+LOC614="whereas MP3 Mono is lower quality,"
+LOC615="but the file size is small!!"
+LOC616="A countdown of zero starts recording immediately."
+LOC617="A lack of numerals will be signaled."
+LOC618="To prematurely stop the recording, type 'killall arecord' in the terminal."
+LOC619="Log "
+LOC620="Mixer"
+LOC621="The Stop button will stop a scheduled recording,"
+LOC622="or a recording that is currently underway."
+LOC623="Stop"
+LOC624="Recommendation: Install DeaDBeef as Music Player"
+
+#Countdown Recording
+LOC800="Enter Countdown (minutes)"
+LOC802="Start Countdown"
+LOC803="to Record"
+
+#Timer-recording
+LOC900="Choose the recording format"
+LOC901="Wave"
+LOC902="MP3 Stereo"
+LOC903="MP3 Mono"
+LOC904="Output file"
+LOC905="Add Timestamp"
+LOC906="Recording Length (minutes)"
+LOC908="START TIME (24 hour)"
+LOC909="Begin Recording Now"
+LOC910="Set Timer Recording"
+LOC911="Timer Recording"
+
+# Path Examples -pop up
+LOC950="Path examples"
+
+# Path Examples - help text
+LOC951="Examples of a Folder path"
+LOC952="The folder's name must end with a '/ '"
+LOC953="Save the recording in Puppy's home folder"
+LOC954="Save in the partition holding your frugal installation"
+LOC955="Save in a partition named 'sda5'"
+LOC956="Save in a partition with the label 'SONY_DISK'"
+
+# Path of save folder - text
+LOC957="Destination Folder (path)"
+
+# Window title
+LOC958="Choose Directory to save recording"
+LOC959="Error"

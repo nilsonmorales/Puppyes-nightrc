@@ -1,0 +1,16 @@
+
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.2
+Name=Compression of Folder
+
+GenericName=Archive maker
+
+Exec=/usr/bin/compression.sh
+Icon=mini-folder.xpm
+Terminal=false
+Type=Application
+
+Categories=GTK;Archiving;
+StartupNotify=true
+MimeType=inode/directory;

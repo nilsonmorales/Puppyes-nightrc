@@ -1,0 +1,336 @@
+#!/bin/sh
+# script to make playlist by stu90
+# modified july 20 2012 to make a playlist in pmusic by don570 (Don White)
+# version 1.4 -modified aug 2 2012 - player list is build from scratch
+#+ Saluki is now supported
+# version 1.5 - removed a 'rm' command to make pmusic launch 
+
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+
+VERSION=1.5
+for P in gtkdialog4 gtkdialog3 gtkdialog; do
+    GTKDIALOG=$(which $P) && break
+  done
+  
+  
+
+DIR="$@"
+if [ ! -d "$DIR"  ] ; then
+Xdialog --title "$LOC100"   --wrap --screen-center --left --no-buttons --msgbox   "$LOC900\n$LOC901\n"   0 0 100  &  
+exit 0
+fi
+
+#NAME_RAW="` basename "$DIR" `"
+NAME_RAW=`echo "${DIR##*/}"`
+# put underscore in name
+NAME=`echo "$NAME_RAW" | sed -e "s/ /_/g"`
+
+STOREPL="$HOME"
+
+# make change of DIR if symbolic link chosen
+
+TEST=`stat -c %F "$DIR"`
+if [ "$TEST" = "symbolic link" ]; then
+  DIR=`stat -c %N "$DIR" | cut -f3 -d '\`'`
+  DIR=${DIR%?}
+fi
+
+mkdir -p /tmp/create-m3u-list/COMBOBOX_LIST
+rm -f /tmp/create-m3u-list/COMBOBOX_LIST/* # clear out temp folder of files
+
+
+rm -f /tmp/create_*
+export i=0  # initialize loop counter
+
+#  loop through the list of apps that you make
+for P in pmusic audacious deadbeef gnome-mplayer aqualung xine xnoise; do 
+
+          APP_FOUND=`echo $(which $P)` 
+          if [  -n  "$APP_FOUND"  ] ; then    
+          APP[$i]="${APP_FOUND##*/}"   # shorten to the app name  
+          let  i=$i+1   #  number of apps found
+          fi
+done
+
+  
+#  fill folder with files representing the file names
+        cd  /tmp/create-m3u-list/COMBOBOX_LIST
+        for ((a=0; a <= i ; a++))
+        do
+        touch  ${APP[$a]}
+        done
+        
+function COMBOBOX()
+{
+       ls -A | while read line; do
+       echo "<item>${line}</item>"
+       done
+}
+
+###############################################
+#                                             #
+#            create_check                     #
+#                                             #
+###############################################
+create_check(){
+# click on ok button makes a 'proceed' flag	and stores depth on hard drive
+echo "Proceed" > /tmp/create_m3u
+echo "$DEPTH" > /tmp/create_depth
+# click on ok button stores checkbox and combobox on hard drive
+echo "$CHECKBOX" > /tmp/create_checkbox
+echo "$PLAYER" >  /tmp/create_player
+
+if [ "$ALL_FORMATS" = "true"  ];then
+echo "all" > /tmp/create_all
+fi
+if [ "$MP3" = "true"  ];then
+echo "mp3" > /tmp/create_true
+fi
+if [ "$WAV" = "true"  ];then
+echo "wav" > /tmp/create_true
+fi
+if [ "$OGG" = "true"  ];then
+echo "ogg" > /tmp/create_true
+fi
+if [ "$FLAC" = "true"  ];then
+echo "flac" > /tmp/create_true
+fi
+if [ "$WMA" = "true"  ];then
+echo "wma" > /tmp/create_true
+fi
+if [ "$AAC" = "true"  ];then
+echo "aac" > /tmp/create_true
+fi
+
+}
+export -f create_check
+
+###############################################
+#                                             #
+#                     GUI                     #
+#                                             #
+###############################################
+export BEGINNING='
+<window title="Create m3u  v'$VERSION'"  icon-name="mini-modules"  resizable="false" decorated="true">
+ <hbox>
+ <vbox>
+ <text height-request="10"><label>""</label></text>
+ <text>
+<label>"'$LOC200'
+'$LOC201'
+'$LOC202'
+'$LOC203'
+"</label>
+</text>
+<checkbox active="true">
+      <label>'$LOC800'</label>
+      <variable>CHECKBOX</variable>
+    </checkbox>
+    <text height-request="20"><label>""</label></text> 
+        
+  <hbox homogeneous="true">
+   <hbox> <text><label>'$LOC700'</label> </text>  <text><label>"          '$LOC701'"</label> </text>    
+    </hbox>
+    </hbox>      
+  <hbox homogeneous="true">
+   <hbox>
+      <combobox width-request="140">      
+          <variable>PLAYER</variable>
+                     '"$(COMBOBOX)"'
+            </combobox>  
+    </hbox>
+ <hbox>
+      <combobox width-request="70">      
+      <variable>DEPTH</variable>
+      <item>"1"</item>
+      <item>"2"</item>
+      <item>"3"</item>      
+    </combobox>
+    </hbox>
+    </hbox>
+   
+
+<text><label>_______________________________________</label></text>
+<hbox homogeneous="true">
+
+<button>
+    <input file stock="gtk-help"></input>
+<action>`Xdialog --title "$LOC300"   --wrap --screen-center --left --no-buttons --msgbox   "$LOC301\n$LOC302\n$LOC303\n$LOC304\n\n$LOC305\n$LOC306\n$LOC307\n "   0 0 100  & `</action>
+</button>
+
+
+<button cancel></button>
+<button can-default="true" has-default="true" use-stock="true">
+<input file stock="gtk-ok"></input>
+<label>"'$LOC400'"</label>
+
+<action type="refresh">MP3</action> 
+
+<action>create_check</action>
+<action type="exit">CLOSE</action>
+</button>
+
+</hbox>
+
+</vbox>
+
+<vbox>
+<frame>
+<radiobutton>
+        <label>'$LOC600'</label>
+        <default>true</default>
+        <variable>ALL_FORMATS</variable>
+</radiobutton>
+<radiobutton>
+        <label>"mp3"</label>        
+        <variable>MP3</variable>
+</radiobutton>
+<radiobutton>
+        <label>"wav"</label>
+        <variable>WAV</variable>
+</radiobutton> 
+<radiobutton>
+        <label>"ogg"</label>
+        <variable>OGG</variable>
+</radiobutton>
+<radiobutton>
+        <label>"flac"</label>
+        <variable>FLAC</variable>
+</radiobutton> 
+<radiobutton>
+        <label>"wma"</label>
+        <variable>WMA</variable>
+</radiobutton>
+<radiobutton>
+        <label>"aac"</label>
+        <variable>AAC</variable>
+</radiobutton>
+</frame>
+</vbox>
+</hbox>
+
+
+ 
+ </window>'
+$GTKDIALOG --geometry=+200+100  --program BEGINNING
+  
+  
+
+CHECK=`cat /tmp/create_m3u`
+if  [ "$CHECK" != "Proceed"  ];then
+exit 0
+fi
+
+# read back data that has been stored on hard disk
+
+read PLAYER  < /tmp/create_player
+read CHECKBOX  < /tmp/create_checkbox
+read EXTENSION < /tmp/create_true
+read DEPTH < /tmp/create_depth
+read ALL_FORMATS < /tmp/create_all
+
+IFS=$'\n'
+if [ "$ALL_FORMATS" = "all"  ];then
+for X in mp3 wav ogg flac wma aac
+do
+      ## find media files to build playlist ##
+    for FILES in ` find "$DIR" -maxdepth $DEPTH  -type f |grep "\\.$X" | sort ` ;do
+# stu90 has a different line  to find music files 
+#     for FILES in ` find "$DIR" -maxdepth 1 -iregex '.*\(mp3\\|m4a\|ogg\|wav\)' -o -iname 'Flash*' -type f | sort ` ;do
+       echo "$FILES" >> "$STOREPL/$NAME.mpl"
+       
+       ## for .m3u format playlist
+       if [[ ! -f "$STOREPL/$NAME.m3u" ]]; then
+       touch "$STOREPL/$NAME.m3u"
+       echo -e "#EXTM3U" >> "$STOREPL/$NAME.m3u"
+       fi
+       FILENAME=`basename "$FILES" `
+       
+       echo "#EXTINF:0,$FILENAME" >> "$STOREPL/$NAME.m3u"       
+       echo "$FILES" >> "$STOREPL/$NAME.m3u"
+       echo "found" > /tmp/create_found
+     done
+     done
+     if [ ! -e  /tmp/create_found ];then
+Xdialog --title "$LOC100"   --wrap --screen-center --left --no-buttons --msgbox  "$LOC500 $EXTENSION $LOC501 "  0 0 100  & 
+exit 0
+     fi
+    rm -f /tmp/create_*
+       if [[ -f "$STOREPL/$NAME.mpl" ]]; then
+       echo "Created Media Playlists > $STOREPL/$NAME " |  osd_cat -p "top"  -f "sans 15" -c "white" -d "4" -l "1" - &
+       ## load playlist ##
+       rm -f "$STOREPL/$NAME.mpl"
+       
+       continue     
+      
+       fi 
+       
+       
+       
+       
+else 
+ ## find media files to build playlist ##
+    for FILES in ` find "$DIR" -maxdepth $DEPTH  -type f |grep "\\.$EXTENSION" | sort ` ;do
+# stu90 has a different line  to find music files 
+#     for FILES in ` find "$DIR" -maxdepth 1 -iregex '.*\(mp3\\|m4a\|ogg\|wav\)' -o -iname 'Flash*' -type f | sort ` ;do
+       echo "$FILES" >> "$STOREPL/$NAME.mpl"
+       
+       ## for .m3u format playlist
+       if [[ ! -f "$STOREPL/$NAME.m3u" ]]; then
+       touch "$STOREPL/$NAME.m3u"
+       echo -e "#EXTM3U" >> "$STOREPL/$NAME.m3u"
+       fi
+       FILENAME=`basename "$FILES" `
+
+       echo "#EXTINF:0,$FILENAME" >> "$STOREPL/$NAME.m3u"       
+       echo "$FILES" >> "$STOREPL/$NAME.m3u"
+       echo "found" > /tmp/create_found
+     done
+     if [ ! -e  /tmp/create_found ];then
+Xdialog --title "$LOC100"   --wrap --screen-center --left --no-buttons --msgbox   "$LOC500 $EXTENSION $LOC501  "    0 0 100  & 
+exit 0
+     fi
+     rm -f /tmp/create_*
+       if [[ -f "$STOREPL/$NAME.mpl" ]]; then
+       echo "Created Media Playlists > $STOREPL/$NAME " |  osd_cat -p "top"  -f "sans 15" -c "white" -d "4" -l "1" - &
+       ## load playlist ##
+        rm -f "$STOREPL/$NAME.mpl"
+       
+       continue
+     
+       fi 
+        
+fi 
+
+cp "$STOREPL/$NAME.m3u" /tmp/create-m3u-list/"$NAME.m3u"
+sync
+rm -f "$HOME/.pmusic/tmp/playlist"
+#rm -f "$HOME/.pmusic/tmp/PLAYLIST"
+
+if [ "$PLAYER" = "pmusic" ] ; then
+exec /usr/local/bin/pmusic  "/tmp/create-m3u-list/$NAME.m3u" &
+else
+exec "$PLAYER"  "/tmp/create-m3u-list/$NAME.m3u" &
+fi
+
+
+if [ "$CHECKBOX"  =  "true" ]; then
+rm -f "$STOREPL/$NAME.m3u"
+fi
+
+exit 0
+

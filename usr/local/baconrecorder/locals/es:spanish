@@ -1,0 +1,135 @@
+#!/bin/bash
+#Bacon recorder
+#version=2.x
+#language=Spanish
+#translator:Native/ferro10n /modified by don570
+
+set -a
+# miscellaneous buttons
+LOC101="Cerrar"
+LOC102="Reproducir"
+
+# Completion message
+LOC200="La grabación comenzó a las "
+LOC201="La grabación terminó a las "
+LOC202="se almacena"
+LOC203="en la carpeta"
+LOC204="La grabación mono comenzó a las "
+LOC205="Se pulsó el botón Detener "
+
+#Default Preferences
+LOC300="Entradas predeterminadas"
+LOC301="Longitud predeterminada de grabación"
+LOC302="Ruta del archivo de salida"
+LOC303="Reiniciar Bacon Recorder para activar cambios"
+LOC304="Ajustar"
+LOC305="Por defecto la carpeta de destino"
+LOC306="El nombre por defecto (la extensión es opcional)"
+
+#Warning messages
+LOC400="Grabación"
+LOC401="La grabación comenzó"
+LOC402="Finalizará en "
+LOC403=" minutos."
+LOC404="La hora de inicio no se asignó correctamente."
+LOC405="Pruebe de nuevo ajustando el tiempo de inicio al futuro."
+LOC406="No se ajustó la cuenta regresiva."
+LOC407="Por favor, asigne un valor."
+LOC408="Revisar si la partición está montada para la grabación"
+LOC409="Ud. ha detenido la grabación."
+LOC410="Ud. está en condiciones de hacer una grabación nueva."
+LOC411="Ingresar nuevos ajustes."
+LOC412="No se encontró ninguna grabación."
+LOC413="La grabación comenzará en "
+LOC414="La grabación comenzará a las "
+LOC415="Error. En este momento está grabando un archivo"
+LOC416="El registro debe ser detenido"
+LOC417="antes de hacer clic botón de reproducción."
+LOC418="Usted debe poner fin a una ruta con '/ '."
+LOC419="Hacer la corrección y vuelva a intentarlo."
+LOC420="Advertencia. La longitud de la grabación no puede ser cero"
+LOC421="Advertencia. La longitud debe ser establecido."
+
+#Popups
+LOC500="Mezclador de Audio"
+LOC501="Restaurar ajustes previos"
+LOC502="Salir"
+LOC503="Ayuda"
+LOC505="La grabación comenzará inmediatamente"
+LOC506="La grabación comenzará a la HORA DE INICIO"
+LOC507="Revisar las últimas 14 líneas del registro"
+LOC508="Detener una grabación programada"
+LOC509="o una grabación en curso."
+LOC510="Seleccionar para impedir la sustitución"
+LOC511="de una grabación anterior."
+LOC512="Reproducir grabación anterior"
+LOC513="Revisar volumen de sonido antes de grabar"
+LOC514="Haga clic aquí."
+LOC515="Configuración de la demora antes de que comience la grabación."
+LOC516="Carpeta de selección"
+LOC517="Carpeta de destino para la grabación"
+
+
+#Preferences and help
+LOC600="Preferencias"
+LOC601="Instrucciones"
+LOC602="Ayuda"
+LOC603="Ajustes predeterminados"
+LOC604="Salir"
+LOC605="Hay dos tipos posibles de grabación, Cuenta Regresiva y Temporizador."
+LOC606="Use Temporizador si sabe la hora de inicio de la grabación."
+LOC607="Habrá un mesaje de finalización cuando"
+LOC608="la grabación haya terminado."
+LOC609="La ruta predeterminada de su grabación"
+LOC610="se puede ajustar en Preferencias."
+LOC611="Agregar una etiqueta de tiempo impide la posible"
+LOC612="sustitución de una grabación previa."
+LOC613="Wave y MP3 Estéreo son de alta calidad"
+LOC614="mientras que MP3 Mono es de baja calidad,"
+LOC615="¡¡pero el tamaño de archivo es pequeño!!"
+LOC616="Una Cuenta Regresiva de cero empieza a grabar inmediatamente."
+LOC617="Se señala una falta de numerales."
+LOC618="Para detener la grabación prematuramente, ingrese 'killall arecord' en el terminal."
+LOC619="Registro "
+LOC620="Mezclador"
+LOC621="El botón Detener corta una grabación programada,"
+LOC622="o una grabación que está en curso."
+LOC623="Detener"
+LOC624="Recomendación: Instale DeaDBeef como Reproductor de Música"
+
+#Countdown Recording
+LOC800="Ingresar Cuenta Regresiva (minutos)"
+LOC802="Comenzar Cuenta"
+LOC803="Regresiva"
+
+#Timer-recording
+LOC900="               Elegir formato de grabación"
+LOC901="Wave"
+LOC902="MP3 Estéreo"
+LOC903="MP3 Mono"
+LOC904="Archivo de Salida"
+LOC905="Agregar Etiqueta de Tiempo"
+LOC906="Longitud de la Grabación (minutos)"
+LOC908="HORA DE INICIO (24 horas)"
+LOC909="Comenzar Grabación Ahora"
+LOC910="Ajustar Grabación con Temporizador"
+LOC911="Grabación con Temporizador" 
+
+
+# Ruta ejemplos-pop-up
+LOC950="Ejemplos de una ruta de carpeta"
+
+# Ejemplos de ruta - el texto de ayuda
+LOC951="Ejemplos de una ruta de carpeta"
+LOC952="El nombre de la carpeta debe terminar con un '/ '"
+LOC953="Guardar la grabación en la cartpeta de '/root/'"
+LOC954="Guardar en la partición que tiene la instalación frugal"
+LOC955="Guardar en una partición llamada 'sda5' "
+LOC956="Guardar en una partición con la etiqueta 'SONY_DISK'"
+
+# Ruta de la carpeta de almacenamiento - el texto
+LOC957="Carpeta de destino (ruta)"
+
+# Título de la ventana
+LOC958="Elegir directorio para guardar la grabación"
+LOC959="Error"

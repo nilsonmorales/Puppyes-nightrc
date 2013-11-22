@@ -1,0 +1,194 @@
+#!/bin/sh
+# split-file  -  written by Don White april 8
+# open a mp3 file (and text) and split it into small chunks
+# version 1.2  -  warning if empty or hidden files chosen
+
+export WORKDIR=$HOME/.config/split-file
+if [ ! -d $WORKDIR ]; then
+	mkdir -p $WORKDIR
+		
+	echo 3600 > $WORKDIR/LENGTH	
+fi
+if [ ! -s "$1" ];then
+  Xdialog --title "Warning"   --wrap --screen-center --center --no-buttons --msgbox "  
+    The file was empty.   
+    It can't be split.     
+ "   10 65 100  &
+exit 0
+fi
+
+
+
+
+export FULL_PATH="$1"
+export BASE_NAME=${FULL_PATH##*/}
+export DIR_NAME=${FULL_PATH%/*}
+#EXTENSION2="${BASE_NAME#*.}"
+export EXTENSION="."${BASE_NAME:(-3)}
+export VERSION=1.2
+
+if [ "${BASE_NAME:0:1}" = "." ];then
+  Xdialog --title "Warning"   --wrap --screen-center --center --no-buttons --msgbox "  
+    Split does not work on file beginning with a dot.   
+         
+ "   10 65 100  &
+
+  exit 0
+fi
+
+
+cd "$DIR_NAME"
+read LENGTH  < $WORKDIR/LENGTH
+
+###############################################
+#                                             #
+#              SPLIT_FUNCTION                 #
+#                                             #
+###############################################
+
+split_function(){
+ #check if LENGTH has a period
+ LENGTH="${LENGTH%.*}"
+#make a folder that is empty - i is tail number	
+if [ $LENGTH -gt "0" ];then
+
+if [  "${BASE_NAME#*.}" =  "$BASE_NAME" ];then
+EXTENSION=""
+fi
+
+
+i=1
+while true
+do
+    dir=SPLIT_$i
+    mkdir  SPLIT_$i
+    #check if file zero size
+    if [ ! "$(ls -A $dir)" ]; then   
+    break    
+    fi 
+    let "i=$i + 1"
+done
+
+
+
+mv "$FULL_PATH" "$dir"
+
+cd "$dir"
+
+echo $LENGTH > $WORKDIR/LENGTH
+
+if [ $UNIT = "Kilobytes" ];then
+split -d --bytes="$LENGTH"k "$DIR_NAME/$dir/$BASE_NAME" CHUNK_
+mv "$BASE_NAME" ..
+
+for fname in *
+do
+mv "$fname" "$fname"$EXTENSION
+done
+  Xdialog --title "Summary"   --wrap --screen-center --center --no-buttons --msgbox "  
+  Split was successful in folder 
+  $DIR_NAME/$dir 
+         
+ "   10 65 100  	&
+exit 0	
+
+
+else
+split -d --bytes="$LENGTH"m "$DIR_NAME/$dir/$BASE_NAME" CHUNK_
+mv "$BASE_NAME" ..
+for fname in *
+do
+mv "$fname" "$fname"$EXTENSION
+done
+  Xdialog --title "Summary"   --wrap --screen-center --center --no-buttons --msgbox "  
+  Split was successful in folder 
+  $DIR_NAME/$dir 
+         
+ "   10 65 100  	&
+exit 0
+fi
+
+fi
+  Xdialog --title "Warning"   --wrap --screen-center --center --no-buttons --msgbox "  
+    Length must be greater than zero.   
+         
+ "   10 65 100  &
+
+  exit 0
+}
+export -f split_function
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+
+export SPLIT='
+<window title="Split-file '$VERSION'" resizable="false"> 
+<vbox>
+<text height-request="10"><label>""</label></text>
+<hbox>
+<text>  
+     <label> Choose a length for each chunk, then the unit.  </label>
+</text>
+</hbox>
+<text height-request="10"><label>""</label></text>
+  
+  
+<hbox> 
+   <text>
+     <label>Length</label>
+     </text>       
+      <combobox>
+      <variable>LENGTH</variable>
+      <item>'$LENGTH'</item>
+      <item>3600</item>
+      <item>7200</item>
+      <item>30</item>
+      <item>60</item>
+      <item>90</item>
+      <item>120</item>   
+    </combobox>
+</hbox>
+    
+<hbox>
+    <text>
+      <label>Unit</label>
+    </text>
+    <combobox>
+      <variable>UNIT</variable>
+      <item>Kilobytes</item>
+      <item>Megabytes</item>      
+    </combobox>
+</hbox> 
+ 
+ 
+         <text height-request="10"><label>"       "</label></text>
+
+
+
+
+<text><label>"_________________________________________"</label></text> 
+ <hbox homogeneous="false">
+  <button tooltip-text=" Exit ">
+     <label>"  Cancel    "</label>
+      <input file stock="gtk-close"></input>
+      <action type="exit">quit_now</action>
+     </button>
+ 
+<button tooltip-text="Split the file into chunks">
+       <input file stock="gtk-edit"></input>
+       <label>Split the file into chunks</label>       
+      <action>split_function &</action>
+      <action>exit:EXIT</action>      
+</button> 
+     
+</hbox>
+
+ </vbox>
+</window>
+'
+
+gtkdialog3  --program=SPLIT --center
+ exit 0

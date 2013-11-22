@@ -1,0 +1,23 @@
+#!/bin/bash
+#ptmtimer
+#version=1.x
+#language=english
+#translator:Native
+
+set -a
+
+#Gui
+LOC200="Message"
+LOC201="Note: "
+LOC202="Sound File"
+LOC203="Enter number of minutes"
+LOC204="Start"
+
+#yaf-splash
+LOC300="Alarm"
+LOC301="Minutes is completed."
+LOC302="The Timer has finished."
+
+
+
+

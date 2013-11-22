@@ -1,0 +1,335 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-31 22:08+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ffconvert08:47
+msgid "Wait a moment ..."
+msgstr ""
+
+#: ffconvert08:72
+msgid "Yes"
+msgstr ""
+
+#: ffconvert08:73
+msgid "No"
+msgstr ""
+
+#: ffconvert08:91
+msgid "An error occured"
+msgstr ""
+
+#: ffconvert08:114
+msgid "Launching %s"
+msgstr ""
+
+#: ffconvert08:136
+msgid "Custom"
+msgstr ""
+
+#: ffconvert08:137
+msgid "Copy"
+msgstr ""
+
+#: ffconvert08:138
+msgid "None"
+msgstr ""
+
+#: ffconvert08:139
+msgid "Same as source"
+msgstr ""
+
+#: ffconvert08:140
+msgid "Not specify"
+msgstr ""
+
+#: ffconvert08:141
+msgid "mono"
+msgstr ""
+
+#: ffconvert08:142
+msgid "stereo"
+msgstr ""
+
+#: ffconvert08:170
+msgid "Source"
+msgstr ""
+
+#: ffconvert08:198
+msgid "Source file"
+msgstr ""
+
+#: ffconvert08:199
+msgid "Type or drag the source video file here."
+msgstr ""
+
+#: ffconvert08:206
+msgid "Browse and select the source video file."
+msgstr ""
+
+#: ffconvert08:211
+msgid "Property of the source video file."
+msgstr ""
+
+#: ffconvert08:212
+msgid "Info."
+msgstr ""
+
+#: ffconvert08:216
+msgid "Play back the source video file."
+msgstr ""
+
+#: ffconvert08:217 ffconvert08:857
+msgid "Play"
+msgstr ""
+
+#: ffconvert08:223
+msgid ""
+"Tik if you want to convert all files with same extention in the same "
+"directory."
+msgstr ""
+
+#: ffconvert08:225
+msgid "All files in the same directory"
+msgstr ""
+
+#: ffconvert08:228
+msgid "Tik to overwrite the destination files if they are exist."
+msgstr ""
+
+#: ffconvert08:230
+msgid "Overwrite files"
+msgstr ""
+
+#: ffconvert08:235
+msgid "Dest. dir."
+msgstr ""
+
+#: ffconvert08:236
+msgid "Type or select the destination directory here."
+msgstr ""
+
+#: ffconvert08:240
+msgid "Browse and select the destination directory."
+msgstr ""
+
+#: ffconvert08:247
+msgid "Preset"
+msgstr ""
+
+#: ffconvert08:248
+msgid "Select preset options."
+msgstr ""
+
+#: ffconvert08:252
+msgid "Load preset options."
+msgstr ""
+
+#: ffconvert08:254
+msgid "Load"
+msgstr ""
+
+#: ffconvert08:258
+msgid "Save preset options."
+msgstr ""
+
+#: ffconvert08:260
+msgid "Save"
+msgstr ""
+
+#: ffconvert08:267
+msgid "Video"
+msgstr ""
+
+#: ffconvert08:269 ffconvert08:324
+msgid "Codec"
+msgstr ""
+
+#: ffconvert08:277
+msgid "Quality"
+msgstr ""
+
+#: ffconvert08:284 ffconvert08:332
+msgid "Bitrate"
+msgstr ""
+
+#: ffconvert08:291
+msgid "Screen size"
+msgstr ""
+
+#: ffconvert08:298
+msgid "Aspect"
+msgstr ""
+
+#: ffconvert08:305
+msgid "Frame rate"
+msgstr ""
+
+#: ffconvert08:312 ffconvert08:353
+msgid "Adv. options"
+msgstr ""
+
+#: ffconvert08:313
+msgid "Type additional options for video codec here."
+msgstr ""
+
+#: ffconvert08:321
+msgid "Audio"
+msgstr ""
+
+#: ffconvert08:339
+msgid "Sampling"
+msgstr ""
+
+#: ffconvert08:346
+msgid "Channels"
+msgstr ""
+
+#: ffconvert08:347
+msgid "Select the number of audio channel."
+msgstr ""
+
+#: ffconvert08:354
+msgid "Type additional options for audio codec here."
+msgstr ""
+
+#: ffconvert08:360
+msgid "No audio stream"
+msgstr ""
+
+#: ffconvert08:363
+msgid "File format"
+msgstr ""
+
+#: ffconvert08:364
+msgid "Select the target file format."
+msgstr ""
+
+#: ffconvert08:370
+msgid "Processing"
+msgstr ""
+
+#: ffconvert08:371
+msgid "1-pass for quick, 2-pass for slow but high quality."
+msgstr ""
+
+#: ffconvert08:381
+msgid "Convert"
+msgstr ""
+
+#: ffconvert08:385
+msgid "Browse the ffmpeg document on the internet."
+msgstr ""
+
+#: ffconvert08:389 ffconvert08:792 ffconvert08:833
+msgid "Quit"
+msgstr ""
+
+#: ffconvert08:432
+msgid "No preset found."
+msgstr ""
+
+#: ffconvert08:442
+msgid "Save as the new preset?"
+msgstr ""
+
+#: ffconvert08:443
+msgid "Same name already exists.\\nReplace the preset?"
+msgstr ""
+
+#: ffconvert08:446
+msgid "Preset name"
+msgstr ""
+
+#: ffconvert08:447
+msgid "Type new preset name to save."
+msgstr ""
+
+#: ffconvert08:474
+msgid "No video nor audio stream in %s."
+msgstr ""
+
+#: ffconvert08:700
+msgid "%s is a directory."
+msgstr ""
+
+#: ffconvert08:701
+msgid "Convert all files in this directory?"
+msgstr ""
+
+#: ffconvert08:710
+msgid "%s not found."
+msgstr ""
+
+#: ffconvert08:712
+msgid "Souce file not specified."
+msgstr ""
+
+#: ffconvert08:739
+msgid "Create new directory?"
+msgstr ""
+
+#: ffconvert08:789
+msgid "%s already exists."
+msgstr ""
+
+#: ffconvert08:790
+msgid "Replace it?"
+msgstr ""
+
+#: ffconvert08:791
+msgid "Replace"
+msgstr ""
+
+#: ffconvert08:815
+msgid "Press [ENTER] to exit :"
+msgstr ""
+
+#: ffconvert08:827
+msgid "An error occured."
+msgstr ""
+
+#: ffconvert08:828
+msgid "You can check the generated command in %s."
+msgstr ""
+
+#: ffconvert08:829
+msgid "Look up"
+msgstr ""
+
+#: ffconvert08:831
+msgid "Skip this file and continue?"
+msgstr ""
+
+#: ffconvert08:832
+msgid "Skip"
+msgstr ""
+
+#: ffconvert08:848
+msgid "No files converted."
+msgstr ""
+
+#: ffconvert08:852
+msgid "Brawse"
+msgstr ""
+
+#: ffconvert08:853
+msgid "%s files successfully converted in %s."
+msgstr ""
+
+#: ffconvert08:858
+msgid "Successfully converted into %s."
+msgstr ""

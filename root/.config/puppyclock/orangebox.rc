@@ -1,0 +1,6 @@
+style 'orange_background' {
+                bg[NORMAL] = { 1.0, 0.84, 0.38 }
+                fg[NORMAL] = { 0, 0, 0 }
+}
+widget '*' style 'orange_background'
+

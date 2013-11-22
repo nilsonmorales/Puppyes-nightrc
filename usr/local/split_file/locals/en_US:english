@@ -1,0 +1,12 @@
+#!/bin/sh
+# split_file
+# English localization
+# version=1.x
+
+
+set -a
+# window heading
+LOC100="Split a File"
+LOC101="Click the OK Button."
+LOC102="Size in MB (20 for 20MB)"
+LOC103="Split File executed."

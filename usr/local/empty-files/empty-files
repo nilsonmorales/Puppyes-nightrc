@@ -1,0 +1,425 @@
+#!/bin/bash
+# empty-files
+#  creation of empty files in a folder 
+#  written by Don White (don570) version 1.0  April 1 2012
+
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+rm -rf /tmp/tmp_empty
+
+FILE_DIRECTORY=`echo "$1" | sed "s/\/$//"`
+cd "$FILE_DIRECTORY"
+export VERSION=1.0
+
+mkdir  -p  /tmp/tmp_empty # make a directory for  storage of list
+
+WORKDIR=/tmp/tmp_empty
+touch $WORKDIR/LIST_SIMILAR
+# use nicoedit to view list of similar files
+if [ -e /usr/bin/nicoedit ]; then
+LIST_EDITOR=nicoedit
+else
+LIST_EDITOR=defaulttexteditor
+fi
+#make heading for list
+echo  "$LOC505 
+
+$LOC506 
+$LOC507 
+$LOC508 
+
+" > $WORKDIR/LIST_SIMILAR
+
+
+# for use in text
+quotation="'"
+spacer=" "
+
+###############################################
+#                                             #
+#               LAUNCH_FUNCTION               #
+#                                             #
+###############################################
+
+launch_function (){
+if [ $SIMPLE_CHANGE = "true" ];then
+check_num1 &
+break
+fi	
+if [ $COMPLEX_CHANGE = "true" ];then
+check_num2 &
+break
+fi
+
+
+exit 0
+}
+export -f launch_function
+###############################################
+#                                             #
+#               NUM_FUNCTION2                 #
+#                                             #
+###############################################
+
+num_function2 (){
+
+        # extension is removed from  filename -  %%  gives longest stripping	
+        file_STRIPPED="${FILENAME2%%.*}" 
+        #find extension
+        EXTENSION=".""${FILENAME2#*.}"
+       #  ADD is the characters to add to front of number of file
+       ADD=00
+       # initialize the loop
+       i=0
+       # initialize MATCH  which checks for similar filenames
+       MATCH=0
+while [ $i -le $((NUM_EMPTY2-1)) ]
+do
+        SUFFIX="$ADD"$i
+        i=$((i+1))
+        # create final 3 characters
+        CORRECT=${SUFFIX:(-3)} 
+        # check if similar file exists
+
+        [ -e "$file_STRIPPED""_"$CORRECT$EXTENSION  ] 
+if [ $? -ne 0 ] ; then
+        touch "$file_STRIPPED""_"$CORRECT$EXTENSION
+else
+        let MATCH=MATCH+1
+        echo "$file_STRIPPED""_"$CORRECT$EXTENSION >> $WORKDIR/LIST_SIMILAR
+fi
+        
+done
+if [ $MATCH -gt 0 ] ;then
+        exec $LIST_EDITOR $WORKDIR/LIST_SIMILAR &
+fi
+
+exit 0
+}
+export -f num_function2
+###############################################
+#                                             #
+#               NUM_FUNCTION                  #
+#                                             #
+###############################################
+
+num_function (){
+
+#  go to num_function2 if there is extension
+# dot must be excaped
+echo "$FILENAME2" | grep -q "\."       
+if [ $? -eq "0" ] ; then 
+num_function2
+fi 
+
+       #  ADD is the characters to add to front of number of file
+       ADD=00
+       # initialize the loop
+       i=0
+       # initialize MATCH  which checks for similar filenames
+       MATCH=0
+while [ $i -le $((NUM_EMPTY2-1)) ]
+do
+  SUFFIX="$ADD"$i
+        i=$((i+1))
+        # create final 3 characters
+        CORRECT=${SUFFIX:(-3)} 
+
+[ -e "$FILENAME2""_"$CORRECT  ] 
+if [ $? -ne 0 ] ; then
+touch "$FILENAME2""_"$CORRECT
+else
+let MATCH=MATCH+1
+echo "$FILENAME2""_"$CORRECT >> $WORKDIR/LIST_SIMILAR
+fi
+
+done
+if [ $MATCH -gt 0 ] ;then
+exec $LIST_EDITOR $WORKDIR/LIST_SIMILAR &
+fi
+
+exit 0
+}
+export -f num_function
+###############################################
+#                                             #
+#                Create-empty2                #
+#                                             #
+###############################################
+create-empty2(){
+	
+# extension is removed from  filename -  %%  gives longest stripping	
+file_STRIPPED="${FILENAME1%%.*}" 	
+EXTENSION=".""${FILENAME1#*.}"	
+MATCH=0
+i=1
+while (($NUM_EMPTY1+1-$i))
+do
+
+[ -e "$file_STRIPPED"$i$EXTENSION  ] 
+if [ $? -ne 0 ] ; then
+touch "$file_STRIPPED"$i$EXTENSION
+else
+let MATCH=MATCH+1
+echo "$file_STRIPPED"$i$EXTENSION >> $WORKDIR/LIST_SIMILAR
+fi
+let i=i+1
+done
+if [ $MATCH -gt 0 ] ;then
+exec $LIST_EDITOR $WORKDIR/LIST_SIMILAR
+fi
+exit 0
+
+}
+export -f create-empty2
+###############################################
+#                                             #
+#                Create-empty                 #
+#                                             #
+###############################################
+create-empty(){
+	
+echo "$FILENAME1" | grep -q "\."  
+     
+if [ $? -eq "0" ] ; then 
+create-empty2
+fi 
+
+MATCH=0
+i=1
+while (($NUM_EMPTY1+1-$i))
+do
+
+[ -e "$FILENAME1"$i  ] 
+if [ $? -ne 0 ] ; then
+touch "$FILENAME1"$i
+else
+let MATCH=MATCH+1
+echo "$FILENAME1"$i >> $WORKDIR/LIST_SIMILAR
+fi
+let i=i+1
+done
+if [ $MATCH -gt 0 ] ;then
+exec $LIST_EDITOR $WORKDIR/LIST_SIMILAR
+fi
+exit 0
+
+}
+export -f create-empty
+###############################################
+#                                             #
+#                  CHECK_NUM1                 #
+#                                             #
+###############################################
+check_num1(){
+
+if [ $NUM_EMPTY1 -gt 0 ] ;then
+create-empty 
+fi
+Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox " 
+$LOC401
+$LOC220
+ "   10 65 100         
+	
+empty-files   &
+exit 0
+}
+export -f check_num1
+###############################################
+#                                             #
+#                  CHECK_NUM2                 #
+#                                             #
+###############################################
+check_num2(){
+if [ ${NUM_EMPTY2:0:1} = "0" ] ;then	
+Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox " 
+$LOC221
+ "   10 65 100         
+	
+empty-files  &
+exit 0
+fi
+	
+if [ $NUM_EMPTY2 -gt 0 ] ;then
+ let NUM_EMPTY2=NUM_EMPTY2+0
+num_function
+fi
+Xdialog --title "$LOC201"   --wrap --screen-center --center --no-buttons --msgbox " 
+$LOC401
+$LOC220
+ "   10 65 100         
+	
+empty-files   &
+exit 0
+}
+export -f check_num2
+
+###############################################
+#                                             #
+#                  A B O U T                  #
+#                                             #
+###############################################
+
+export about="
+<window title=\"$LOC700\" window_position=\"1\">
+ <notebook labels=\"$LOC700|$LOC701\">
+  <frame>
+   <text><label>\"\"</label></text>
+   <progressbar>
+    <input>echo 0; echo \"Empty-files $VERSION\"</input>
+   </progressbar>
+    <text use-markup=\"true\"><label>\"<b>Don White, Copyright 2012</b>\"</label></text>
+    <text use-markup=\"true\"><label>\"<b>written April 2012</b>\"</label></text>
+   <text height-request=\"30\"><label>\"\"</label></text>
+   
+  </frame>
+  <frame>
+   <text use-markup=\"true\"><label>\"Empty-files is released under the <b>GNU General Public License</b> (GPL). You have the right to use and modify this software in any way you like, so long as any derivative works remain under a GPL license.\"</label></text>
+   <text use-markup=\"true\"><label>\"This program is distributed in the hope that it will be useful, but <b><span color='"'red'"'>WITHOUT ANY WARRANTY</span></b>. See the GNU General Public License homepage for more details.\"</label></text>
+   <hbox>
+    <button>
+     <label>\"http://www.gnu.org/licenses/\"</label>
+     <action>defaulthtmlviewer http:\/\/www.gnu.org\/licenses\/</action>
+    </button>
+   </hbox>
+  </frame>
+ </notebook>
+</window>"
+
+
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+
+export CONVERT='
+<window title="Empty-files '$VERSION'" resizable="false"> 
+<frame>
+<vbox>
+
+      
+<vbox>  
+    <hbox> 
+    <button tooltip-text=" '$LOC500' ">
+    <input file stock="gtk-about"></input>
+    <label>'$LOC700''$spacer'</label>
+    <action>launch:about</action>
+    </button>   
+    </hbox>
+</vbox>
+  
+         <text use-markup="true">
+            <label>"<b>'$LOC314'
+'$LOC315'
+'$LOC300'
+'$LOC301' <b><span color='"'blue'"'>'$quotation''$LOC302''$quotation'</span></b>
+</b>"</label>
+         </text> 
+  
+ 
+ <text height-request="10"><label>""</label></text>
+
+
+
+
+
+<vbox>
+   
+<hbox> 
+
+<vbox>
+ 
+<radiobutton tooltip-text="'$LOC403'">
+<label>"'$LOC105'"</label>
+<default>true</default>
+<variable>SIMPLE_CHANGE</variable>
+</radiobutton>
+
+<text height-request="50"><label>""</label></text>
+
+
+ <radiobutton tooltip-text="'$LOC402'">
+<label>"'$LOC106''$spacer''$spacer'"</label>
+<variable>COMPLEX_CHANGE</variable>
+</radiobutton>
+     
+</vbox>  
+  
+  
+
+
+
+
+  
+  
+  
+  
+<vbox>
+
+    <entry  tooltip-text="'$LOC400'">
+    <default>"'$LOC800'" </default>
+    <variable>FILENAME1</variable>
+  </entry>
+  
+  <entry  tooltip-text="'$LOC401'">
+    <default>"'$LOC801'" </default>
+    <variable>NUM_EMPTY1</variable>
+  </entry>
+<text height-request="35"><label>""</label></text>       
+    <entry  tooltip-text="'$LOC400'">
+    <default>"'$LOC800'" </default>
+    <variable>FILENAME2</variable>
+  </entry>
+  
+  <entry  tooltip-text="'$LOC401'">
+    <default>"'$LOC801'" </default>
+    <variable>NUM_EMPTY2</variable>
+  </entry>
+</vbox>
+</hbox>
+</vbox>
+
+
+
+
+
+
+
+
+
+
+
+<text><label>"___________________________________________________________"</label></text> 
+ <hbox>
+  <button cancel></button>
+<text>  <label> "          " </label></text> 
+<button tooltip-text="'$LOC504'">
+       <input file stock="gtk-edit"></input>
+       <label>'$spacer''$LOC302''$spacer'</label>       
+      <action>launch_function &</action>
+      <action>exit:EXIT</action>      
+</button> 
+      <text height-request="10"><label>"                        "</label></text>
+</hbox>
+ </vbox>
+ </frame>
+</window>
+'
+
+gtkdialog3  --program=CONVERT --center
+ 

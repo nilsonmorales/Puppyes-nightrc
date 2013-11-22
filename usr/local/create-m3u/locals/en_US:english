@@ -1,0 +1,49 @@
+#!/bin/bash
+#create-m3u
+#version=1.x
+#language=english
+#translator:don570
+
+set -a
+
+#warning window
+LOC100="Warning message"
+
+#front window text
+LOC200="Do you want to create an m3u file for a player?"
+LOC201="Choose an extension to search in folder."
+LOC202="The m3u file is saved in HOME folder."
+LOC203="You may edit the file afterwards or delete it."
+
+
+#Xdialog help
+LOC300="Help"
+LOC301="A file with the extension m3u will be created"
+LOC302="in the HOME folder of user."
+LOC303="Inside the file is a list of music file names"
+LOC304="that you may edit later, if you wish."
+LOC305="Example: launch Pmusic and open Music-Source > Bookmarks."
+LOC306="Choose your HOME folder and make a Pmusic playlist"
+LOC307="from your m3u file."
+LOC308="The m3u file can be safely deleted with the checkbox option."
+
+#button label
+LOC400="Proceed"
+
+#final Xdialog warning message
+LOC500="No files with"  # Extension given
+LOC501="extension were found."
+
+#Radio button text label
+LOC600="All song formats"
+
+# Depth of search box
+LOC700="Audio Player"
+LOC701="Depth of search"
+
+# Depth of search box
+LOC800="Delete temporary m3u file in HOME folder"
+
+# xdialog warning
+LOC900="You must right click on a folder. "
+LOC901="Try again."

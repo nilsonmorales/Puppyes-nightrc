@@ -1,0 +1,10 @@
+[Desktop Entry]
+Exec=markup
+Icon=mini.stick.xpm
+Terminal=false
+Type=Application
+Categories=TextEditor
+StartupNotify=true
+Name=Markup Attribute Composition
+GenericName=Markup
+Comment=Markup language

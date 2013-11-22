@@ -1,0 +1,132 @@
+#!/bin/bash
+#Bacon recorder
+#version=1.x
+#language=portuguese
+#translator:ferro10n modified by don570
+
+set -a
+# miscellaneous buttons
+LOC101="Fechar"
+LOC102="Reproduzir"
+
+# Completion message
+LOC200="A gravação começou às "
+LOC201="A gravação terminou às "
+LOC202="é armazenada"
+LOC203="na pasta"
+LOC204="A gravação mono começou às "
+LOC205="Apertou-se o botão Deter "
+
+#Default Preferences
+LOC300="Entradas Padrão"
+LOC301="Comprimento padrão da gravação"
+LOC302="Caminho do arquivo de saida"
+LOC303="Reiniciar Bacon Recorder para ativar mudanças"
+LOC304=" Ajustar  "
+LOC305="pasta de destino padrão"
+LOC306="nome padrão (a extensão é opcional)"
+
+#Warning messages
+LOC400="Gravando"
+LOC401="A gravação tem começado agora."
+LOC402="Ela vai terminar em "
+LOC403=" minutos."
+LOC404="A hora de início não ajustou-se corretamente."
+LOC405="Prove outra vez ajustando a hora de início ao futuro."
+LOC406="Não tem se ajustado a contagem regressiva."
+LOC407="Por favor assinale um valor."
+LOC408="Revisar se a partição estar montada para sua gravação"
+LOC409="Você tem detido a gravação atual."
+LOC410="Você está pronto para fazer uma nova gravação."
+LOC411="Introduzir nova configuração."
+LOC412="Não achou-se nehuma gravação."
+LOC413="A gravação vai começar em"
+LOC414="A gravação vai começar às"
+LOC415="Erro. ​​Você está atualmente gravando um arquivo".
+LOC416="A gravação deve ser interrompido"
+LOC417="antes de clicar em botão 'Reproduzir'."
+LOC418="Você deve terminar com um caminho '/ '."
+LOC419="Faça a correção e tente novamente."
+LOC420="Aviso. A duração da gravação não pode ser zero."
+LOC421="Aviso. O comprimento deve ser definido."
+
+#Popups
+LOC500="Misturador de Som"
+LOC501="Restabelecer configuração padrão"
+LOC502="Sair"
+LOC503="Ajuda"
+LOC505="A gravação vai começar imediatamente"
+LOC506="A gravação vai começar à HORA DE INÍCIO"
+LOC507="Revisar as últimas 14 linhas do registro"
+LOC508="Deter uma gravação programada"
+LOC509="ou uma gravação em curso."
+LOC510="Selecionar para impedir sobre-gravação"
+LOC511="de uma gravação prévia"
+LOC512="Reproduzir gravação prévia"
+LOC513="Revisar volume de som antes de gravar"
+LOC514="Clique aqui"
+LOC515="Defina o atraso antes de a gravação começar."
+LOC516="Pasta selector"
+LOC517="pasta de destino para a gravação"
+
+#Preferences and help
+LOC600="Configuração"
+LOC601="Instruções"
+LOC602="Ajuda"
+LOC603="Configuração padrão"
+LOC604="Sair"
+LOC605="Há dois tipos de gravação possíveis, Contagem Regressiva e Temporizador."
+LOC606="Use Temporizador se você sabe a que horas começa a gravação."
+LOC607="Haverá uma mensagem de conclusão quando "
+LOC608="a gravação tenha terminado."
+LOC609="O caminho padrão de sua gravação"
+LOC610="pode se ajustar em Configuração."
+LOC611="Adicionar uma Etiqueta de Tempo vai impedir a possível"
+LOC612="sobre-gravação de uma gravação prévia."
+LOC613="Wave e MP3 Stereo são de alta qualidade"
+LOC614="enquanto que MP3 Mono é de baixa qualidade,"
+LOC615="¡¡mas o tamanho do arquivo é pequeno!!"
+LOC616="Uma contagem regressiva de zero começa a gravar imediatamente."
+LOC617="Assinala-se uma falta de numerais."
+LOC618="Para deter uma gravação prematuramente, escreva 'killall arecord' no terminal."
+LOC619="Registro "
+LOC620="Misturador"
+LOC621="O botão Deter vai deter uma gravação programada,"
+LOC622="ou uma gravação que é atualmente ativa."
+LOC623="Deter"
+LOC624="Recomendação: Instale DeaDBeef como Reprodutor de Música"
+
+#Countdown Recording
+LOC800="Introduzir Contagem Regresiva (minutos)"
+LOC802="Começar Contagem"
+LOC803="Regressiva"
+
+#Timer-recording
+LOC900="               Escolher o formato de gravação"
+LOC901="Wave"
+LOC902="MP3 Stereo"
+LOC903="MP3 Mono"
+LOC904="Arquivo de saida"
+LOC905="Adicionar Etiqueta de Tempo"
+LOC906="Comprimento da gravação (minutos)"
+LOC908="HORA DE INÍCIO (24 horas)"
+LOC909="Começar Gravação Agora"
+LOC910="Ajustar Gravação com Temporizador"
+LOC911="Gravação com Temporizador" 
+# Caminho Exemplos-pop-up
+LOC950="Caminho exemplos"
+
+# Exemplos Caminho - texto de ajuda
+LOC951="Exemplos de um caminho de pasta"
+LOC952="Nome da pasta deve terminar com uma '/ '"
+LOC953="Salvar a gravação na pasta do filhote de cachorro da casa"
+LOC954="Salvar na partição que contém sua instalação frugal"
+LOC955="Salvar em uma partição chamada 'sda5'"
+LOC956="Salvar em uma partição com o rótulo 'SONY_DISK'"
+
+# Caminho da pasta save - texto
+LOC957="Pasta de Destino (caminho)"
+
+# Título da janela
+LOC958="Escolher Pasta de Destino para salvar gravação"
+LOC959="Erro"

@@ -1,0 +1,76 @@
+#!/bin/bash
+#Pclock
+#version=0.3.x
+#language=french
+#translator:Médor
+
+set -a
+
+#Popups
+LOC200="Plein écran"
+LOC201="Préférences"
+LOC202="À propos"
+LOC203="Quitter"
+LOC204="Jouer un fichier de son"
+LOC205="ou lancer une tâche"
+
+#Preferences
+LOC300="Configurer l'horloge système"
+LOC301="Taille de la police"
+LOC302="Couleur de l'arrière-plan"
+LOC303="Couleur des chiffres"
+LOC304="Relancer pClock pour activer les changements"
+LOC305="Abandonner"
+LOC306="Valider"
+LOC307="pClock - Préférences"
+
+#Alarm
+LOC400="Alarme"
+LOC401="Construire une alarme"
+LOC402=" à votre convenance"
+LOC403="Horloge (12 heures)"
+LOC404="Horloge (24 heures)"
+LOC405="Aide"
+LOC406="Définir une alarme musicale"
+LOC407="Son"
+LOC408="Définir une alarme textuelle"
+LOC409="Entrer le message ici"
+LOC410="Note :"
+
+#Help
+LOC509="Instructions"
+LOC500="pClock utilise le planificateur pSchedule."
+LOC501="pour programmer l'alarme. Cliquer sur" 
+LOC502="le bouton 'Définir' (le son ou le message)"
+LOC503="pour afficher les options permettant de"
+LOC504="définir l'heure et l'action. Divers formats"
+LOC505="de fichiers sonores comme le MP3"
+LOC506="sont utilisables pour l'alarme musicale"
+LOC507="Cliquer sur le bouton '24 heures' ou "
+LOC508="'12 heures' pour changer de format."
+
+#Stopwatch
+LOC600="Chronomètre"
+LOC601="Cycle"
+LOC602="Durée du cycle"
+LOC603="Total"
+LOC604="Démarrer"
+LOC605="Indiquer les centièmes"
+LOC606="Effacer"
+LOC607="Cycle"
+
+#Countdown
+LOC700="Minuteur"
+LOC701="Démarrer"
+LOC702="Compte à rebours, temps total en secondes :"
+LOC703="1 minute"
+LOC704="1 heure"
+LOC705="1 jour"
+LOC706="Son/Tâche à t=0"
+
+#pclock - about
+LOC800="À propos de pClock"
+
+#pSchedule label
+LOC900="Alarme musicale"
+LOC901="Alarme textuelle"

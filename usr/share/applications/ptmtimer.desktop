@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=ptm-Timer
+Name[de]=PTM Timer - Zeitschaltuhr
+Name[es]=PTM Timer - Minutero
+Name[fr]=PTM Timer - Minuteur
+Icon=mini-clock.xpm
+Comment=pTM Timer
+Exec=ptmtimer
+Terminal=false
+Type=Application
+Categories=X-PersonalUtility
+GenericName=pTM Timer

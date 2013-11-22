@@ -1,0 +1,2 @@
+#!/bin/sh
+exec Extract-pet  "$@" 

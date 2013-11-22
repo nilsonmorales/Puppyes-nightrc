@@ -1,0 +1,191 @@
+#!/bin/sh
+# make an HFS image for mac emulators
+# july10 2012 Don White (don570)
+
+APPDIR="`dirname $0`"
+[ "$APPDIR" = "." ] && APPDIR="`pwd`"
+export APPDIR="$APPDIR"
+
+
+export APPDIR=`dirname $0`
+[ $APPDIR = '.' ] && export APPDIR=`pwd`
+
+#set language
+TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%.*}`"
+. $APPDIR/locals/en_US:english #always run to fill gaps in translation
+#fallback to macrolanguage if available (ISO 639-1 two letter code: en, es, fr, etc.)
+[ -z $TMP ] && TMP="`ls -1 $APPDIR/locals/ | grep ${LANG%_*}:`" && echo $TMP
+[ "$TMP" != "en_US:english" ] && . $APPDIR/locals/$TMP 2> /dev/null
+
+
+export Version=1.0
+
+ for P in gtkdialog4 gtkdialog3 gtkdialog; do
+    GTKDIALOG=$(which $P) && break
+  done
+
+
+export FOLDER="$1"
+echo "$FOLDER"  > /tmp/image_path
+if [ -n "$FOLDER" ];then
+
+if [ ! -d "$FOLDER" ];then
+Xdialog --title "$LOC100"   --wrap --screen-center --no-buttons --msgbox "
+$LOC101 "   9 45 100 &
+rm -f  /tmp/image_*
+exit 0
+fi
+fi
+
+#check if empty, but $FOLDER mustn't be null
+if [ -n "$FOLDER" ] && [ ! "$(ls -A "$FOLDER")" ]; then 
+ Xdialog --title "$LOC100"   --wrap --screen-center --no-buttons --msgbox "
+$LOC102 "   9 45 100 &
+rm -f  /tmp/image_*
+exit 0
+fi 
+
+  
+###############################################
+#                                             #
+#                     IMAGE                   #
+#                                             #
+###############################################
+  
+make_image(){
+	# check if empty field
+	if [ -z "$DIR" ] ;then
+Xdialog --title "$LOC100"   --wrap --screen-center --no-buttons --msgbox "
+$LOC101 "   9 45 100 &
+rm -f  /tmp/image_*
+exit 0
+fi
+
+
+#check if empty
+if [ ! "$(ls -A "$DIR")" ]; then 
+ Xdialog --title "$LOC100"   --wrap --screen-center --no-buttons --msgbox "
+$LOC102 "   9 45 100 &
+rm -f  /tmp/image_*
+exit 0
+fi 
+
+
+# make correction if slash is final character
+final=`echo ${DIR: -1}`
+if [ "$final" = "/" ];then
+DIR2="$DIR"/
+DIR=`echo "$DIR2" | sed 's/\/\///'`
+fi
+
+# find name of storage folder
+STORAGE="$HOME"
+if [  "$CHECKBOX" = "false" ] ;then
+STORAGE=`dirname "$DIR"`
+fi
+
+# find directory by removal between slashes
+DIRNAME="${DIR##/*/}"
+
+# move to directory that will be processed
+cd "$STORAGE"
+
+#  Check whether storage folder  contains space(s).
+echo "$DIRNAME" | grep -q " "       
+if [ $? -eq "0" ]                   
+then
+DIRNAME=`echo "$DIRNAME" | sed -e "s/ /_/g"`   # Substitute underscore for blank.
+fi
+
+
+
+yaf-splash -close never -fontsize large -bg orange -fb black -text "$LOC410" & PID=$!
+
+mkisofs -hfs -hfs-unlock -probe -V "My Stuff" -o "$DIRNAME".dsk "$DIR"/*
+sync
+s=`du -m  "$DIRNAME".dsk | sed "s/\s.*//"` 
+kill $PID
+Xdialog --title "$LOC703"   --wrap --screen-center --left --no-buttons --msgbox  "
+$LOC704  $DIRNAME.dsk
+$LOC701   $STORAGE  
+$LOC705 $s MB
+______________________________________"   0 0 100  &
+
+rm -f  /tmp/image_*
+exit 0
+}
+export -f make_image
+
+
+
+###############################################
+#                                             #
+#               M A I N   G U I               #
+#                                             #
+###############################################
+
+export IMAGE='
+<window title="'$LOC703'" icon-name="mini-modules" resizable="false" decorated="true">
+<vbox width-request="380">
+ 
+
+<text height-request="10"><label>""</label></text>
+
+    <text use-markup="true">
+    <label>"<b>'$LOC600'
+'$LOC406'</b>"</label>
+  </text>    
+ <text height-request="10"><label>""</label></text>
+        <text><label>"'$LOC403' '$LOC404'"</label></text>
+ 
+ <hbox>       
+        <entry accept="directory">
+        <label>'$LOC405'</label>
+        <input>cat  /tmp/image_path</input>
+        <variable>DIR</variable>
+        </entry>
+        <button>
+        <input file stock="gtk-open"></input>
+        <action type="fileselect">DIR</action>               
+        </button>   
+</hbox>
+
+<hbox homogeneous="true">
+      <checkbox active="false">
+      <label>'$LOC407'</label>
+      <variable>CHECKBOX</variable>
+      </checkbox>
+</hbox>
+
+      <text height-request="20"><label>""</label></text>
+        <text><label>____________________________________________</label></text>
+        
+<hbox homogeneous="true">
+
+<button tooltip-text="'$LOC500'">
+    <input file stock="gtk-help"></input>
+<action>`Xdialog --title "$LOC500"   --wrap --screen-center --left --no-buttons --msgbox   "$LOC501\n$LOC502\n\n$LOC503\n\n$LOC504\n$LOC505 "   15 60 100  & `</action>
+</button>
+
+
+ <button>
+        <input file stock="gtk-cancel"></input>
+        <label>'$LOC200'</label>
+        <action type="exit">CLOSE</action>
+</button>
+
+<button can-default="true" has-default="true" use-stock="true">
+      <input file stock="gtk-ok"></input>
+      <label>"'$LOC201'"</label>        
+      <action>make_image &</action>  
+      <action type="exit">CLOSE</action>           
+</button>     
+</hbox>
+</vbox>
+
+
+</window>'
+
+$GTKDIALOG  --geometry=+200+100 -p IMAGE
+
+

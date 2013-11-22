@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Puppy Clock
+Icon=mini-clock.xpm
+Comment=puppyClock Time tools
+Exec=puppyclock
+Terminal=false
+Type=Application
+Categories=X-PersonalUtility
+GenericName=puppyClock Time tools

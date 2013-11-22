@@ -1,0 +1,4 @@
+#!/bin/sh
+cp -Lrf "$1" /root/my-documents/Screenshots/
+exit
+

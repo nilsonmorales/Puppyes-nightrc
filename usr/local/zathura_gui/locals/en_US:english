@@ -1,0 +1,59 @@
+#!/bin/bash
+#Zathura_gui  (july 2011)
+#version=1.x
+#language=english
+#translator:Native
+
+set -a
+# miscellaneous buttons
+LOC100=" Open PDF "
+LOC101="Keyboard"
+LOC102="Shortcuts"
+LOC103="Close"
+LOC104="Recently Opened"
+
+# help
+LOC200="^f   'Scroll page down'"
+LOC201="^b   'Scroll page up'"
+LOC202="^d   'Scroll half a page down'"
+LOC203="^u   'Scroll half a page up'"
+LOC204="^m   'Toggle lower bar'"
+LOC205="^q   'Quit'"
+LOC206="J    'Go to next page'"
+LOC207="K    'Go to previous page'"
+LOC208="h    'Scroll to the left'"
+LOC209="k    'Scroll upwards'"
+LOC210="j    'Scroll downwards'"
+LOC211="l    'Scroll to the right'"
+LOC212="s    'Zoom to width'"
+LOC213="a    'Zoom to fit'"
+LOC214="+    'Zoom in'"
+LOC215="-    'Zoom out'"
+LOC216="F5    'Toggle Full Screen'"
+LOC217="<ESC>    'Delete characters'"
+LOC218="?    'Search backwards'"
+LOC219="/     'Search forwards'"
+LOC220="To search for 'WORD',  type"
+LOC221="/WORD ,  then tap a dead key"
+LOC222="to search forward in document."
+LOC223="gg     Go to first page"
+LOC224="GG     Go to last page"
+LOC225="139G   Go to page 139"
+LOC226="<TAB>   Show index (rarely used)"
+LOC227="<BACKSPACE>    Delete last character"
+LOC228="f    Follow link.  A small number will appear "
+LOC229="beside link. Enter this number and tap <ENTER>"
+LOC230="Text transfer-Drag mouse across text to select"
+LOC231="and middle button click in text editor."
+LOC232="You can create a zathurarc configuration file"
+LOC233="(default path: ~/.config/zathura/zathurarc)"
+LOC234="to overwrite settings"
+
+# title
+LOC300="Zathura PDF Viewer"
+LOC301="Keyboard Shortcuts"
+
+# warning
+LOC400="Unfortunately you have selected a folder,"
+LOC401="rather than a PDF file."
+LOC402="Try again.  Click to continue."

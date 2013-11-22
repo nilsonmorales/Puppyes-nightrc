@@ -1,0 +1,12 @@
+#!/bin/sh
+# split_file
+# German localization
+# version=1.x
+
+
+set -a
+# window heading
+LOC100="Aufteilen von Dateien."
+LOC101="Klicken Sie auf OK."
+LOC102="Größe in MB angeben (20 für 20MB)"
+LOC103="Aufteilen fertiggestellt."

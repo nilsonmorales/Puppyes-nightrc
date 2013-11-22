@@ -1,0 +1,56 @@
+#!/bin/sh 
+
+### Meditation Timer  jpeps 1/11
+
+## Help
+## Sound path is /root/puppy-reference/audio
+
+if [ "$1" == "" -o "$1" == "-h" ]; then
+  echo "USAGE: [min]:[sec] [sound]" 
+  echo "USAGE: [min]"
+  echo "sound path: /root/puppy-reference/audio"
+               
+  exit
+fi
+
+dir="/root/puppy-reference/audio/"
+
+## Set Sound 
+if [ "$2" ]; then
+snd="$2"
+else
+snd="2barks.wav" 
+fi
+message="$3"
+
+sep="$(echo ${1} | grep ":")"
+
+min="$(echo ${1} | cut -d":" -f1)"
+[ "$min" ] || min="0"
+sec="$(echo ${1} | cut -d":" -f2)"
+[ "$sec" ] || sec="0"
+tmin="$((${min}*60 ))"
+
+## Allow for entree without ":"  for minutes
+if [ "$sep" == "" ]; then 
+ tsec="$((${1}*60))"  
+else
+ tsec="$((${tmin}+${sec}))" 
+fi 
+
+x="tsec"
+n="0"
+for ((i=0;i<=${x};i++)); do
+n="$((${n} + 1))"
+if [ "$n" == "${tsec}" ]; then
+yaf-splash   -bg orange -fontsize x-large -deco $LOC300  -text  " $min  $LOC301      
+ $LOC302   
+
+ $message " -close box &
+
+aplay ${dir}${snd} 2>/dev/null
+fi
+sleep 1
+done
+
+exit

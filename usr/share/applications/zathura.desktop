@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Zathura
+GenericName=Document viewer
+Comment=View documents
+Comment[de]=Ein minimalistischer PDF-Betrachter
+Exec=zathura
+Icon=/usr/share/epdfview/pixmaps/icon_epdfview-24.png
+MimeType=application/pdf;
+Type=Application
+Terminal=false

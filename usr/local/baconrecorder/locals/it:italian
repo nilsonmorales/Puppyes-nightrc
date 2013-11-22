@@ -1,0 +1,135 @@
+#!/bin/bash
+#Bacon recorder
+#version=1.x
+#language=italiano
+#translator:ferro10n,modified by don570
+
+set -a
+# miscellaneous buttons
+LOC101="Chiudi"
+LOC102="Riproduci"
+
+# Completion message
+LOC200="La registrazione ha cominciato alle "
+LOC201="La registrazione ha finito alle "
+LOC202="è salvata"
+LOC203="in la cartella"
+LOC204="La registrazione mono ha cominciato alle "
+LOC205="Il bottone Fermare è stato cliccato "
+
+#Default Preferences
+LOC300="Entrate Default"
+LOC301="Lunghezza default della registrazione"
+LOC302="Percorso del file di uscita"
+LOC303="Riavviare Bacon Recorder per attivare i cambi"
+LOC304=" Regolare "
+LOC305="Default cartella di destinazione"
+LOC306="Nome Default (estensione è facoltativa)"
+
+#Warning messages
+LOC400="Registrando"
+LOC401="La registrazione ha cominciato subito."
+LOC402="Finirà in "
+LOC403=" minuti."
+LOC404="L'ora d'inizio non è venuto regolata correttamente."
+LOC405="Prova di nuovo impostando l'ora d'inizio al futuro."
+LOC406="Il Conto alla Rovescia non è stato regolato."
+LOC407="Per favore assegna un valore."
+LOC408="Verifica se la partizione è montata per sua registrazione"
+LOC409="Hai fermato la registrazione attuale."
+LOC410="Sei pronto per fare una nuova registrazione."
+LOC411="Introduci nuove impostazioni."
+LOC412="Non ci sono registrazioni."
+LOC413="La registrazione comincerà in"
+LOC414="La registrazione comincerà alle"
+LOC415="Errore. Stai registrando un file."
+LOC416="La registrazione deve essere fermato"
+LOC417="prima di cliccare il tasto 'Riproduci'."
+LOC418="È necessario terminare un percorso con '/ '."
+LOC419="Fare la correzione e riprovare."
+LOC420="Attenzione. La durata della registrazione non può essere zero"
+LOC421="Attenzione. La lunghezza deve essere impostato."
+
+
+#Popups
+LOC500="Audio Mixer"
+LOC501="Ristabili impostazioni precedenti"
+LOC502="Esci"
+LOC503="Aiuto"
+LOC505="La registrazione comincerà immediatamente"
+LOC506="La registrazione comincerà all'ORA D'INIZIO"
+LOC507="Verifica l'ultime 14 linee del log"
+LOC508="Fermare una registrazione programmata"
+LOC509="oppure una registrazione in corso."
+LOC510="Seleziona per impedire la sostituzione"
+LOC511="di una registrazione precedente"
+LOC512="Riproduci registrazione precedenti"
+LOC513="Verifica il volume di suono prima di registrare"
+LOC514="Clicca qui."
+LOC515="Imposta il ritardo prima della registrazione."
+LOC516="Cartella selettore"
+LOC517="Cartella di destinazione per la registrazione"
+
+#Preferences and help
+LOC600="Impostazioni"
+LOC601="Istruzioni"
+LOC602="Aiuto"
+LOC603="Impostazioni default"
+LOC604="Esci"
+LOC605="C'è due tipi di registrazione possibili, Conto alla Rovescia e Temporizzatore."
+LOC606="Usa Temporizzatore se sai l'ora d'inizio della registrazione."
+LOC607="Ci sarà un messaggio di conclusione quando"
+LOC608="la registrazione sia finita."
+LOC609="Il percorso default di sua registrazione"
+LOC610="si può regolare in Impostazioni."
+LOC611="Aggiungere una Etichetta di Tempo impede la possibile"
+LOC612="sopra-registrazione d'una registrazione precedente."
+LOC613="Wave e MP3 Stereo sono di alta qualità"
+LOC614="mentre MP3 Mono è di bassa qualità,"
+LOC615="ma la dimensione del file è piccola!!"
+LOC616="Un Conto alla Rovescia di zero comincia a registrare subito."
+LOC617="Si segnala una mancanza di numerali."
+LOC618="Per fermare prematuramente la registrazione, scrivi 'killall arecord' nel terminale."
+LOC619="Log "
+LOC620="Mixer"
+LOC621="Il bottone Fermare ferma una registrazione programmata,"
+LOC622="oppure una registrazione in corso."
+LOC623="Fermare"
+LOC624="Suggerimento: Installa DeaDBeef come Riproduttore di Musica"
+
+#Countdown Recording
+LOC800="Introduci Conto alla Rovescia (minuti)"
+LOC802="Comincia Conto"
+LOC803="alla Rovescia"
+
+#Timer-recording
+LOC900="               Scegli il formato di registrazione"
+LOC901="Wave"
+LOC902="MP3 Stereo"
+LOC903="MP3 Mono"
+LOC904="File di uscita"
+LOC905="Aggiungi Etichetta di Tempo"
+LOC906="Lunghezza della registrazione (minuti)"
+LOC908="ORA D'INIZIO (24 ore)"
+LOC909="Comincia Registrazione Subito"
+LOC910="Imposta Registrazione con Temporizzatore"
+LOC911="Registrazione con Temporizzatore" 
+
+
+# Percorso Esempi pop-up
+LOC950="Percorso esempi"
+
+# Esempi di testo Percorso - help
+LOC951="Esempi di un percorso della cartella"
+LOC952="Il nome della cartella deve finire con una '/ '"
+LOC953="Salvare la registrazione nella cartella '/root/'"
+LOC954="Salva nella partizione che contiene l'installazione frugale"
+LOC955="Salva in una partizione di nome 'sda5'"
+LOC956="Salva in una partizione con l'etichetta nome 'SONY_DISK'"
+
+# Percorso della cartella save - testo
+LOC957="Cartella di destinazione (percorso)"
+
+# Titolo della finestra
+LOC958="Scegli Cartella per salvare la registrazione"
+LOC959="Errore"
