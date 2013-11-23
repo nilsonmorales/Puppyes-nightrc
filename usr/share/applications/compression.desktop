@@ -3,6 +3,7 @@
 Encoding=UTF-8
 Version=1.2
 Name=Compression of Folder
+Name[es]=Compresor de directorios
 
 GenericName=Archive maker
 
@@ -11,6 +12,6 @@ Icon=mini-folder.xpm
 Terminal=false
 Type=Application
 
-Categories=GTK;Archiving;
+Categories=Archiving
 StartupNotify=true
 MimeType=inode/directory;

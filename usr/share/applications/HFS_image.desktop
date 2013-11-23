@@ -3,14 +3,16 @@
 Encoding=UTF-8
 Version=1.0
 Name=Create HFS image
+Name[es]=Crear imagen HFS
 
 GenericName=HFS image maker
+GenericName[es]=HFS credor de imágen
 
 Exec=/usr/bin/HFS_image
 Icon=mini-folder.xpm
 Terminal=false
 Type=Application
 
-Categories=GTK;Archiving;
+Categories=Archiving
 StartupNotify=true
 MimeType=inode/directory;

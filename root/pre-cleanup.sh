@@ -14,6 +14,8 @@
 rm /root/.config/lxpanel/default/panels/top
 rm /usr/share/applications/ROX-Filer-file-manager.desktop
 rm /usr/share/applications/getflash.desktop
+rm /usr/share/applications/JWM-configuration.desktop
+rm /usr/share/applications/jwmthememaker.desktop
 
 # Opciones click derecho
 rm '/usr/share/applications/Ycalc-TI-59-scientific-calculator.desktop' 
