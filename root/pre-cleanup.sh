@@ -1,7 +1,21 @@
 #!/bin/sh
+# nilsonmorales 23.11.2013
+#Este script tiene la finalidad de mostrar una vista previa de lo que será la version final de Puppyes
+#Como utilizar:
+# Descargar y Correr nightrc en ram 
+# clonar el repositorio desde github $ git clone https://github.com/nilsonmorales/Puppyes-nightrc.git
+# copiar el repositorio en otra carpeta
+# crear un pet del repositorio
+# instalar
+# abrir terminal y ejecutar ./pre-cleanup.sh
+
+
+
 rm /root/.config/lxpanel/default/panels/top
 rm /usr/share/applications/ROX-Filer-file-manager.desktop
 rm /usr/share/applications/getflash.desktop
+
+# Opciones click derecho
 rm '/usr/share/applications/Ycalc-TI-59-scientific-calculator.desktop' 
 rm '/usr/share/applications/Xcalc-scientific-calculator.desktop' 
 rm '/usr/share/applications/wallaper_x_consola.desktop' 
@@ -34,21 +48,99 @@ rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-cd-image/Burn with
 rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-cd-image/MD5sum check'
 rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-cd-image/Open with Isomaster'
 rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-cd-image/Trash'
-rm /root/.config/rox.sourceforge.net/OpenWith/.application_x-compressed-tar/"MD5sum check"
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-compressed-tar/MD5sum check'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-compressed-tar/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-compressed-tar/Open archive'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-deb/MD5sum check'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-deb/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-delta/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-desktop/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-desktop/Geany'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-executable/Run in Terminal'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-executable/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-flash-video/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-gzip/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-iso9660/MD5sum check' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-iso9660/Open with Isomaster' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-iso9660/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-iso9660/Burn with Pburn' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-lzma/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-lzma/xarchive-archive' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-rar/MD5sum check'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-rar/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-shellscript/Open with Abiword' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-shellscript/Run_In_Terminal' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-shellscript/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-shellscript/Geany'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-shockwave-flash/defaulthtmlviewer'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-squashfs-image/MD5sum check' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-squashfs-image/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-squashfs-image/sfs_load'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-tar/Open archive'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-tar/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-tgz/MD5sum check' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-tgz/Open archive' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_x-tgz/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_zip/MD5sum check'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_zip/Open archive'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.application_zip/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_mp4/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_mpeg/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_x-flac/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_x-mp3/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_x-mpegurl/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_x-ms-wma/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_x-pn-realaudio/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_x-vorbis+ogg/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.audio_x-wav/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_bmp/Copy to Screenshots Folder'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_bmp/Default Image Viewer'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_bmp/Edit with mtPaint' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_bmp/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_gif/Edit with mtPaint' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_jpeg/Copy to Backgrounds Folder'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_jpeg/Edit with mtPaint'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_jpeg/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_png/Copy to Backgrounds Folder'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_png/Edit with mtPaint'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_png/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_svg+xml/Edit with mtPaint'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_svg+xml/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_tiff/Copy to Backgrounds Folder'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_tiff/Edit with mtPaint' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_tiff/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_x-xcf/Paint' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_x-xpixmap/Edit with mtPaint' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.image_x-xpixmap/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.inode_directory/Make archive'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.inode_directory/Make ISO'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.inode_directory/Search with Pfind'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.inode_mount-point/Search inside'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.text_html/defaulthtmlviewer' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.text_html/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.text_plain/Open with Abiword'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.text_plain/Open with Browser'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.text_plain/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.text_plain/Geany'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.video_mp4/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.video_mpeg/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.video_quicktime/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.video_x-flv/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.video_x-ms-asf/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.video_x-msvideo/Trash' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/.video_x-ms-wmv/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/.video_x-theora+ogg/Trash'
+rm '/root/.config/rox.sourceforge.net/OpenWith/abiword' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/ouvrir  archivo' 
+rm '/root/.config/rox.sourceforge.net/OpenWith/Trash'
 
-
-
-
-
-
-
-
-
+# Archivos clonados de git
 rm /applist.txt
-rm /build_info
 rm /CHANGELOG
 rm /COPYING 
 rm /README.md
+
+# Habilitanto tecla printscreen
 rm /var/lib/xkb/server-*.xkm 
 setxkbmap 
 killall ROX-Filer 
@@ -56,3 +148,9 @@ rox -p /root/Choices/ROX-Filer/PuppyPin
 openbox --reconfigure
 startx
 fixmenus 
+
+# Script de construccion de iso
+rm /build_info
+
+
+
