@@ -16,6 +16,7 @@ rm /usr/share/applications/ROX-Filer-file-manager.desktop
 rm /usr/share/applications/getflash.desktop
 rm /usr/share/applications/JWM-configuration.desktop
 rm /usr/share/applications/jwmthememaker.desktop
+rm /usr/share/applications/wmswitcher.desktop
 rm /usr/bin/jwm
 rm /usr/bin/jwm-xdgmenu
 

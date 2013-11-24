@@ -311,3 +311,72 @@ Autor: Fabián Bonetti 22-11-2013 20:16
 º Añadio flash player 11.2.202.327
 
 -------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 11:24:04
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 11:24:04
+
+º Las opciones de click derecho estan en ingles y necesita trabajo para 
+º traducir, se sacan del proyecto.
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 11:27:34
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 11:27
+
+º Comienza el trabajo de traducción de opciones de click derecho
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 12:41:32
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 12:41
+º Se agregan propuestas de wallpaper tambien se cambia el tema de iconos y se 
+º hacen cambios menores al pinboar
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 13:46:59
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 13:46
+
+º Se comienza el trabajo de revisión del script de bienvenida
+º la idea es sacar tint2 y la eleccion de paquetes de traducción 
+º Se esperan comentarios.
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 20:11:20
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 20:11:20
+
+º Para tener una idea mas clara de lo que va a ser la version final 
+º se crea un script que remueve todos los archivos que no vendran en la proxima 
+º iso
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 21:38:54
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-22 21:38:54
+
+º Edición en gimp de la imagen de menu en lxpanel
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-23 08:54:17
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-23 08:54:17
+
+º Se actualiza cleanup
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-23 10:45:48
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-23 10:45:48
+
+º Se actualiza el cleanup
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-23 11:19:35
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-23 11:19:35
+
+º Se continua editando el cleanup cada vez que se edita significa que algo se 
+º saca de la iso es recomendable ver el script para estar informado de los 
+º cambios
+º se agrega obkey una interface sencilla y liviana que permite editar los 
+º atajos del teclado en openbox.
+-------------------------------------------------------------------------------
+
+Autor: root <root@puppy-es.lan>  2013-11-24 09:59:05
+Committer: root <root@puppy-es.lan>  2013-11-24 09:59:05
+
+º Se agrega atajo de teclado para htop y se edita cleanup 
+-------------------------------------------------------------------------------
