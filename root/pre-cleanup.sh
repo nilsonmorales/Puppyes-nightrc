@@ -16,6 +16,9 @@ rm /usr/share/applications/ROX-Filer-file-manager.desktop
 rm /usr/share/applications/getflash.desktop
 rm /usr/share/applications/JWM-configuration.desktop
 rm /usr/share/applications/jwmthememaker.desktop
+rm /usr/bin/jwm
+rm /usr/bin/jwm-xdgmenu
+
 
 # Opciones click derecho
 rm '/usr/share/applications/Ycalc-TI-59-scientific-calculator.desktop' 
@@ -148,7 +151,7 @@ setxkbmap
 killall ROX-Filer 
 rox -p /root/Choices/ROX-Filer/PuppyPin
 openbox --reconfigure
-startx
+lxpanel
 fixmenus 
 
 # Script de construccion de iso

@@ -182,6 +182,11 @@
         <command>defaultchat</command>
       </action>
     </keybind>
+    <keybind key="A-F10">
+      <action name="Execute">
+        <command>roxterm -e htop</command>
+      </action>
+    </keybind>
     <keybind key="A-F9">
       <action name="Execute">
         <command>xorgwizard</command>
@@ -209,11 +214,6 @@
     </keybind>
     <keybind key="A-F3">
       <action name="Iconify"/>
-    </keybind>
-    <keybind key="A-F2">
-      <action name="Execute">
-        <command>htop</command>
-      </action>
     </keybind>
     <keybind key="C-A-Left">
       <action name="DesktopLeft">
