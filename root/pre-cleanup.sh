@@ -2,12 +2,13 @@
 # nilsonmorales 23.11.2013
 #Este script tiene la finalidad de mostrar una vista previa de lo que será la version final de Puppyes
 #Como utilizar:
-# Descargar y Correr nightrc en ram 
 # clonar el repositorio desde github $ git clone https://github.com/nilsonmorales/Puppyes-nightrc.git
 # copiar el repositorio en otra carpeta
 # crear un pet del repositorio
-# instalar
-# abrir terminal y ejecutar ./pre-cleanup.sh
+# Descargar y Correr nightrc en ram 
+# instalar el pet 
+# cuando aparesca la ventana de seleccion de idioma y pais abrir terminal con alt+F7 y ejecutar ./pre-cleanup.sh
+# seguir con la instalación normal
 
 
 
@@ -19,6 +20,14 @@ rm /usr/share/applications/jwmthememaker.desktop
 rm /usr/share/applications/wmswitcher.desktop
 rm /usr/bin/jwm
 rm /usr/bin/jwm-xdgmenu
+rm /usr/local/choosepanel/langpack_es-20130213.pet
+rm /usr/local/choosepanel/langpack_fr-20130322.pet
+rm /usr/local/choosepanel/tint2configuration.desktop
+rm /usr/local/choosepanel/tint2
+rm /usr/local/choosepanel/tint2conf
+rm /usr/local/choosepanel/lxpanel.png
+rm /usr/local/choosepanel/tint2.png
+rm /usr/local/choosepanel/tint22.png
 
 
 # Opciones click derecho

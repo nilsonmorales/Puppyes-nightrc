@@ -7,7 +7,7 @@
     <icon>/usr/local/lib/X11/pixmaps/save48.png</icon>
   </rule>
   <rule match="/root/.pup_event/drive_sda1">
-    <icon>/usr/local/lib/X11/pixmaps/drive_mntd48.png</icon>
+    <icon>/usr/local/lib/X11/pixmaps/drive48.png</icon>
   </rule>
   <rule match="/root/.pup_event/drive_sda2">
     <icon>/usr/local/lib/X11/pixmaps/drive48.png</icon>
@@ -42,8 +42,14 @@
   <rule match="/usr/sbin/dotpup">
     <icon>/usr/local/lib/X11/pixmaps/pet48.png</icon>
   </rule>
+  <rule match="/usr/local/apps/ROX-Filer/ROX/MIME/x-ext3-image.xml">
+    <icon>/usr/share/icons/wary.png</icon>
+  </rule>
   <rule match="/usr/sbin/pmount">
     <icon>/usr/local/lib/X11/pixmaps/drive48.png</icon>
+  </rule>
+  <rule match="/usr/share/mime/application/x-ext3-image.xml">
+    <icon>/usr/share/icons/wary.png</icon>
   </rule>
   <rule match="/usr/local/bin/defaultmediaplayer">
     <icon>/usr/local/lib/X11/pixmaps/multimedia48.png</icon>
