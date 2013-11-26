@@ -18,8 +18,6 @@ rm /usr/share/applications/getflash.desktop
 rm /usr/share/applications/JWM-configuration.desktop
 rm /usr/share/applications/jwmthememaker.desktop
 rm /usr/share/applications/wmswitcher.desktop
-rm /usr/bin/jwm
-rm /usr/bin/jwm-xdgmenu
 rm /usr/local/choosepanel/langpack_es-20130213.pet
 rm /usr/local/choosepanel/langpack_fr-20130322.pet
 rm /usr/local/choosepanel/tint2configuration.desktop
