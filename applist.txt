@@ -6,7 +6,7 @@ Listado de app que iran y/o no iran o se sumaran.
 
 Navegador: el que viene se quita ::  Se añade Firefox ++.
                                               Opera +.
-                                              Seamonkey + (El que obtenga más puntos se queda).
+                                              Seamonkey ++ (El que obtenga más puntos se queda).
 Editor de texto por consola :: vi se quita --- Se añade nano +.
 Buscador de archivos :: se mantiene pfind+ --- se agrega locate+.
 Administrador de archivos :: Se conservan los que estan ---- Pcmanfm+ Rox+.
