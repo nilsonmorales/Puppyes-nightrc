@@ -1,13 +1,13 @@
 # -- THEME AUTO-WRITTEN DO NOT EDIT
-include "/usr/share/themes/Murrine Brave Dark/gtk-2.0/gtkrc"
+include "/usr/share/themes/Mist/gtk-2.0/gtkrc"
 
 style "user-font" {
-	font_name = "Ubuntu 15"
+	font_name = "Ubuntu Light 15"
 }
 
 widget_class "*" style "user-font"
 
-gtk-font-name="Ubuntu 15"
+gtk-font-name="Ubuntu Light 15"
 
 include "/root/.gtkrc.mine"
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Options>
-  <Option name="display_unkn_colour">#000000000000</Option>
+  <Option name="display_unkn_colour">#0c3d1b3bffff</Option>
   <Option name="toolbar_show_info">1</Option>
   <Option name="display_show_headers">1</Option>
   <Option name="pinboard_right_margin">10</Option>
@@ -14,7 +14,7 @@
   <Option name="action_link">1</Option>
   <Option name="pinboard_clamp_icons">1</Option>
   <Option name="bind_dclick_resizes">0</Option>
-  <Option name="display_pipe_colour">#d3ebd1cb1db0</Option>
+  <Option name="display_pipe_colour">#a24072510000</Option>
   <Option name="panel_style">1</Option>
   <Option name="pinboard_tasklist_per_workspace">0</Option>
   <Option name="panel_on_top">0</Option>
@@ -22,11 +22,11 @@
   <Option name="panel_avoid">1</Option>
   <Option name="dnd_drag_to_icons">1</Option>
   <Option name="display_cdev_colour">#000000000000</Option>
-  <Option name="display_adir_colour">#c119cdd43fc6</Option>
+  <Option name="display_adir_colour">#5ced92f70b5d</Option>
   <Option name="menu_quick">0</Option>
   <Option name="toolbar_disable">gtk-close, gtk-jump-to, gtk-refresh, gtk-zoom-in, gtk-zoom-fit, gtk-help</Option>
   <Option name="filer_change_size_num">20</Option>
-  <Option name="display_exec_colour">#e124d6d23000</Option>
+  <Option name="display_exec_colour">#03e55f9b0139</Option>
   <Option name="action_mount_command">mount</Option>
   <Option name="display_colour_types">1</Option>
   <Option name="action_mount">1</Option>
@@ -86,7 +86,7 @@
   <Option name="pinboard_left_margin">10</Option>
   <Option name="panel_xinerama">0</Option>
   <Option name="action_force">0</Option>
-  <Option name="display_dir_colour">#e0e1635b143b</Option>
+  <Option name="display_dir_colour">#042104210421</Option>
   <Option name="display_small_width">250.000000</Option>
   <Option name="xattr_ignore">0</Option>
   <Option name="action_recurse">0</Option>

@@ -19,7 +19,7 @@
     <icon>/usr/local/lib/X11/pixmaps/drive48.png</icon>
   </rule>
   <rule match="/root/.pup_event/drive_sda5">
-    <icon>/usr/local/lib/X11/pixmaps/drive48.png</icon>
+    <icon>/usr/local/lib/X11/pixmaps/drive_mntd48.png</icon>
   </rule>
   <rule match="/root/.pup_event/drive_sdc1">
     <icon>/usr/local/lib/X11/pixmaps/usbdrv_mntd48.png</icon>
