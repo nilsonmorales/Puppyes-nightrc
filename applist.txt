@@ -6,14 +6,15 @@ Listado de app que iran y/o no iran o se sumaran.
 
 Navegador: el que viene se quita ::  Se añade Firefox ++.
                                               Opera +.
-                                              Seamonkey ++ (El que obtenga más puntos se queda).
-Editor de texto por consola :: vi se quita --- Se añade nano +.
+                                              Seamonkey +++
+                                              Midori        (El que obtenga más puntos se queda).
+Editor de texto por consola :: vi se quita --- Se añade nano ++.
 Buscador de archivos :: se mantiene pfind+ --- se agrega locate+.
 Administrador de archivos :: Se conservan los que estan ---- Pcmanfm+ Rox+.
 Panel :: Se retira Tint2-   Se conserva Lxpanel+.
 Window manager:: se conserva Openbox+.  
-Cliente de chat:: que se vote entre Pidgin+ y Xchat- :: El que gane se queda.
-Un voto en contra Getflash su servidor reporta fallos:: Getflash-.
+Cliente de chat:: que se vote entre Pidgin++ y Xchat- :: El que gane se queda.
+Un voto en contra Getflash su servidor reporta fallos:: Getflash--.
 Voto a favor que se cree gui propia para descargar o modificar el ya existente.                                   
 Puppy necesita mas aplicaciones para terminal no ocupan mucho espacio y son basicas para toda distribución linux
 ej. mc, mocp, ncftp, nano, vim, wavemon, etc. (Pueden proponer candidatos)

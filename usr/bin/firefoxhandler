@@ -1,0 +1,15 @@
+#!/bin/bash
+#Made by Disciple 30/4/07.
+#Script to make firefox use ROX Filer to "open containing folder" of downloaded files, and use ROX file associations to open files with whatever program they open with if you click on them in ROX.
+#Is probably useful for other browsers and maybe some other program.
+#Should work with other file managers too if you just replace the 'rox' command.
+#If it doesn't work for something, please post the full path to the downloaded file at http://murga-linux.com/puppy/viewtopic.php?p=113779#113779 as browsers may change path characters other than spaces, that I am not aware of.
+
+#Put this script in /usr/bin and call it firefoxhandler
+#Put the following lines in prefs.js, or in Firefox type about:config in the address bar, right-click>new>string for the first one and boolean for the other two, using what is in the first set of quotation marks for the name, and what is in the second set for the value.
+#user_pref("network.protocol-handler.app.file", "firefoxhandler");
+#user_pref("network.protocol-handler.expose.file", true);
+#user_pref("network.protocol-handler.external.file", true);   
+
+location=`echo ${1#file://} | sed 's/%20/ /g'`
+rox "$location" 
