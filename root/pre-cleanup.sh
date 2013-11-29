@@ -165,5 +165,11 @@ fixmenus
 # Script de construccion de iso
 rm /build_info
 
+# Las aplicaciones 
+rm -rf /root/.config/iron
+rm /usr/bin/iron
+rm -rf /usr/lib/iron-linux
+rm /usr/share/applications/defaultbrowser.desktop
+
 
 
