@@ -1,0 +1,30 @@
+#!/bin/bash
+# lff
+# find files according to file size
+# spanish localization
+#version=1.x
+#Translator nilsonmorales
+
+set -a
+
+# Text labels and buttons
+LOC101="Buscar archivos superiores a:"
+LOC102="Proceder"
+LOC103="Cancelar"
+LOC104="Examinando archivos, por favor espere..."
+LOC105="Doble clic para localizar un item usando Rox-Filer."
+LOC106="No."
+LOC107="Tamaño"
+LOC108="Nombre del archivo"
+LOC109="Ruta completa"
+LOC110="Ruta del directorio:"
+LOC111="Total de archivos:"
+LOC112="Tamaño total:"
+LOC113="Modo recursivo?"
+
+# unit labels
+LOC200="B"
+LOC201="K"
+LOC202="M"
+LOC203="G"
+LOC204="T"
