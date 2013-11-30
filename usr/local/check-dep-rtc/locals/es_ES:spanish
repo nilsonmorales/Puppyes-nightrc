@@ -1,0 +1,67 @@
+#!/bin/sh
+# Right-Click Dependenies Checker
+# 2012-03-09 RSH
+# Spanish localization
+# Translator nilsonmorales
+# version=1.x
+
+set -a
+# window heading
+
+APPLICATIONNAME="Revisador de deps. Opciones de click derecho RSHs"
+CHKDEPTXT="Revisar Dependencias de"
+SNDRESGEANY1="Enviar resulatados de"
+SNDRESGEANY2="-Reviar en editor de texto o en"
+SNDRESGEANY3="Terminal. Por favor elija..."
+
+CHKSENDTO="Para ver los resultados en el Editor de texto, haga click en el botón 'Aceptar'. "
+
+BACKTITLE='
+Clic en Aceptar para transmitir el resultado al Editor de texto Geany!
+'
+
+chkdepttl='
+-------------------------------------------------------------------------------
+### ! ! ! Revisando dependencias ! ! ! ###
+### Una herramienta de clic derecho revisador de dependencias por RSH para Puppy Linux - GPL2 ###
+-------------------------------------------------------------------------------'
+
+chkversttl='
+
+-------------------------------------------------------------------------------
+### Versión ###
+-------------------------------------------------------------------------------
+'
+
+chkhlpttl='
+
+-------------------------------------------------------------------------------
+### Ayuda ###
+-------------------------------------------------------------------------------
+'
+
+chkfullttl='
+
+-------------------------------------------------------------------------------
+### Información completa ###
+-------------------------------------------------------------------------------
+'
+
+chkundepsttl='
+
+-------------------------------------------------------------------------------
+### Dependencias ###
+-------------------------------------------------------------------------------
+'
+
+endinfttl='
+
+-------------------------------------------------------------------------------
+### ! ! ! Fin de Información ! ! ! ###
+-------------------------------------------------------------------------------
+'
+
+lddfile='Información para Application: '
+
+lddfile2='
+Revisar dependencias de: '

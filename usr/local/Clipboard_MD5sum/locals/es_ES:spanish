@@ -1,0 +1,39 @@
+#!/bin/bash
+# Clipboard_MD5sum
+# Spnanish localization
+#version=1.x
+# Translator nilsonmorales
+
+set -a
+
+# Text labels  for md5sum check
+LOC101="Exito"
+LOC102="Falló"
+LOC103="Todo está bien"
+LOC104="Falló"
+LOC105="Chequeo MD5sum"
+LOC106="Pruebe descargando de nuevo"
+LOC107="Aprobado"
+
+# Calculate MD5sum  GUI
+
+LOC201="Pregunta"
+LOC202="Quiere calcular la MD5sum de"
+LOC203="El cálculo puedo tomar"
+LOC204="algunos segundos"
+LOC205="si el archivo esta guardado en un disco duro."
+LOC206="Calcular MD5sum"
+
+#window text
+LOC300="Pegar MD5sum en la caja,"
+LOC301="luego click en REVISAR MD5sum"
+
+# cancel button
+LOC400="Cancelar"
+#Xdialog warning
+LOC401="Por favor espere que termine..."
+
+# Xdialog warning
+LOC501="Advertencia!!"
+LOC502="Por favor escoja un archivo regular."
+
