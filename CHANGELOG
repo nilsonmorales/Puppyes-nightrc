@@ -380,3 +380,112 @@ Committer: root <root@puppy-es.lan>  2013-11-24 09:59:05
 
 º Se agrega atajo de teclado para htop y se edita cleanup 
 -------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-24 14:34:25
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-24 14:34:25
+
+º Tema mlocate solucionado se hicieron pruebas.
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-25 08:47:03
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-25 08:47:03
+
+º Se cambian mimes de pupsave 
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-25 20:03:31
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-25 20:03:31
+
+º Se actualiza script de redimensionado de archivo personal
+-------------------------------------------------------------------------------
+
+Autor: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-26 13:47:20
+Committer: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-26 13:47:20
+
+º Se crea carpeta de trabajo del Actualizador en linea
+-------------------------------------------------------------------------------
+
+Autor: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-26 13:49:13
+Committer: Fabián Bonetti <mama21mama@mamalibre.com.ar>  2013-11-26 13:49:13
+
+º Se agrega al menu, ajuste de propiedades de flash player
+-------------------------------------------------------------------------------
+
+Autor: mama21mama <mama21mama2000@yahoo.com.ar>  2013-11-27 11:53:53
+Committer: mama21mama <mama21mama2000@yahoo.com.ar>  2013-11-27 11:53:53
+
+º Se actualiza el applist mozilla firefox y seamonkey se encuentran empatados.
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-27 20:45:22
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-27 20:45:22
+
+º Se agrega el firefox handler y se acutaliza el applist
+º Seamonkey y pidgin van a la cabeza.
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-28 10:30:42
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-28 10:30:42
+
+º Se cambian los temas gtk oscuros por claros y se comienzan pruebas con los 
+º navegadores en este punto pienso en trabajar por aparte los navegadores 
+º y hacer pruebas tanto en seamonkey como en firefox cuando halla un ganador 
+º procederé a hacer merge
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-28 10:34:36
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-28 10:34:36
+
+º Posible apariencia del navegador seamonkey se cambia el tema tradicional
+º Tambien se configura chatzilla para que inicie automaticamente en 
+º el servidor freenode y los canales #puppy-es y #puppylinux.
+-------------------------------------------------------------------------------
+ 
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-28 11:03:39
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-28 11:03:39
+
+º Continua la configuración de seamonkey
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-29 00:34:54
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-29 00:34:54
+
+º  Se crea la rama seamonkey
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-28 23:09:07
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-28 23:09:07
+
+º Configurando about:plugins firefoxhandler
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-29 22:15:24
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-29 22:15:24
+
+º Comienza trabajo de traduccion de opciones de click derecho.
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-30 08:36:50
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-11-30 08:36:50
+
+º Continua trabajo de traducción
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-12-01 01:11:56
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-12-01 01:11:56
+
+º Se crea la rama firefox para probar el navegador 
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-12-01 02:24:08
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-12-01 02:24:08
+
+º Se agregan librerias python previas a instalacion de youtube-dl 
+º descargador de videos por linea de comandos.
+-------------------------------------------------------------------------------
+
+Autor: nilsonmorales <nilsonmorales@hotmail.com>  2013-12-01 20:58:41
+Committer: nilsonmorales <nilsonmorales@hotmail.com>  2013-12-01 20:58:41
+
+º Se agrega youtube-dl 
+-------------------------------------------------------------------------------
