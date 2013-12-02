@@ -2,6 +2,7 @@
 # /usr/local/bin/Extract-pet
 ## 2009-7-15 TazOC
 # 2010-04 TazOC partial CL fix
+# 02.12.2013 nilsonmorales beginer translate
 
 APPTITLE="Extract-pet"
 
@@ -30,7 +31,7 @@ if ! [ "$FILE" = "" ]; then
    if [ $Err -gt 0 ] ;then
     MSG=`which gxmessage` || MSG=xmessage
     $MSG -title " $APPTITLE" -center -buttons "$B_OK:101" "
-'tar -xf "$PKGLONGNAME$$.tar.gz"' failed in
+'tar -xf "$PKGLONGNAME$$.tar.gz"' failed in 
  "$WORKINGDIR" with error code $Err."
     exit $Err # END SCRIPT
    fi
@@ -48,15 +49,18 @@ if ! [ "$FILE" = "" ]; then
     mkdir -p $PKGLONGNAME/var/log/packages
     echo -e "PACKAGE NAME:     $PKGLONGNAME" > $PKGLONGNAME/var/log/packages/$PKGLONGNAME
    fi
-   yaf-splash -deco 'Extraction Info' -center -close box -bg orange -fontsize x-large -text "
-$BASEPETFILE was extracted into the folder 
+   yaf-splash -deco 'Extraction Info' -center -close box -bg orange -fontsize x-large -text " 
+$BASEPETFILE fué extraido en el directorio
 $PKGLONGNAME/
    " &
-   
+# Spanish translate (beginer way)
+#  was extracted into the folder   
+#  "(II) $APPTITLE looked for a .pet file in '$PETFILE' but did not find one."
+#    Filename must end with .pet. '$PETFILE' not extracted." &
   else
-   echo "(II) $APPTITLE looked for a .pet file in '$PETFILE' but did not find one."
+   echo "(II) $APPTITLE busco un archivo .pet en '$PETFILE' pero no encotró ninguno."
    MSG=`which gxmessage` || MSG=xmessage
    $MSG -center -title " $APPTITLE"  -buttons "$B_OK" "
-   Filename must end with .pet. '$PETFILE' not extracted." &
+   Archivo debe terminar en .pet. '$PETFILE' no se extrajo." &
 fi
 exit #END SCRIPT

@@ -1,0 +1,58 @@
+#!/bin/sh
+# /usr/local/bin/Extract-Debian
+## 2009-8 TazOC
+# 2010-04 TazOC partial CL fix
+# 02.12.2013 nilsonmorales beginer translate
+
+APPTITLE="Extract-Debian"
+
+# Set up buttons for gxmessage Nathan Fisher 2007-01
+# For more, gtk-demo, click stock items and icon browser
+B_OK="GTK_STOCK_OK"
+
+DEBFILE="$1"
+BASEDEBFILE=`basename "$DEBFILE"`
+DIRDEBFILE=`dirname "$DEBFILE"`
+PKGLONGNAME="`basename "$DEBFILE" .deb`"
+PKGSHORTNAME="`echo "$PKGLONGNAME" | cut -f 1 -d '_'`"
+
+# Check for a valid .deb file
+FILE="$PKGLONGNAME"
+FILE=`ls "$DIRDEBFILE/$FILE".deb`
+FILE=`basename "$FILE"`    # if no .deb file present, result will be blank
+
+if [ $FILE ]; then
+   WORKINGDIR="$DIRDEBFILE/extracted-debian"
+   mkdir -p "$WORKINGDIR"
+   cp  "$DEBFILE" "$WORKINGDIR"
+   cd "$WORKINGDIR"
+   undeb "$DEBFILE"
+   if [ $Err -gt 0 ] ;then
+    MSG=`which gxmessage` || MSG=xmessage
+    $MSG -title "$APPTITLE" -center -buttons "$B_OK:101" "
+'undeb "$DEBFILE"' failed in
+ "$WORKINGDIR" with error code $Err."
+   		   rm -f "$WORKINGDIR"/"$BASEDEBFILE"
+       exit $Err # END SCRIPT
+    else
+        mkdir -p var/log/packages
+        echo -e "PACKAGE NAME:     $PKGLONGNAME" > var/log/packages/$PKGLONGNAME
+        echo -e "COMPRESSED PACKAGE SIZE: \nUNCOMPRESSED PACKAGE SIZE: \nPACKAGE LOCATION: packages.debian.org/$PKGSHORTNAME\nPACKAGE DESCRIPTION: " >> var/log/packages/$PKGLONGNAME
+    fi
+    rm -f "$WORKINGDIR"/"$BASEDEBFILE"
+   MSG=`which gxmessage` || MSG=xmessage
+! [ "$2" = "-q" -o "$2" = "--quiet" ] && $MSG -center -title "$APPTITLE" -timeout 20 -buttons "$B_OK" \
+   "                                                  Autoclose in 20 sec
+   
+   '$BASEDEBFILE' fué extraico en el archivo
+   '$WORKINGDIR'" &
+# was extracted into the folder   
+#"(II) $APPTITLE looked for a .deb file in '$DEBFILE' but did not find one."
+# Filename must end with .deb. $APPTITLE did not extract '$DEBFILE'."
+else
+   echo "(II) $APPTITLE buscó un archivo .deb en '$DEBFILE' pero no encontró ninguno."
+   MSG=`which gxmessage` || MSG=xmessage
+   $MSG -center -title "$APPTITLE" -buttons "$B_OK" "
+   El archivo debe terminar con .deb. $APPTITLE no fué extraido '$DEBFILE'." &
+fi
+exit #END SCRIPT
