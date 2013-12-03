@@ -3,14 +3,15 @@
 ## Stu90 ##
 ## drag the directory you wish to make ##
 ## into  .pet onto then makepet script ##  
+## nilsonmorales beginer translate
 
 MP="$@"
 DIR=`dirname "$MP" `
 PET=`basename "$MP" `
 
 DIALOG=Xdialog
-
-$DIALOG --wrap --title "Question"   --yesno "Do you want to create a pet package?" 0 0
+#$DIALOG --wrap --title "Question"   --yesno "Do you want to create a pet package?" 0 0
+$DIALOG --wrap --title "Pregunta"   --yesno "¿Desea crear un paquete pet?" 0 0
 if [ "$?" -eq "1" ] ;then 
 exit 0
 fi

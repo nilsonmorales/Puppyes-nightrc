@@ -33,6 +33,8 @@ rn /usr/bin/iron
 rm -rf '/usr/lib/iron-linux'
 rm '/root/.config/lxpanel/facebook.desktop' 
 rm '/root/.config/lxpanel/twitter.desktop'
+rm '/usr/share/applications/update.desktop'
+rm '/usr/share/applications/defaultbrowser.desktop' 
 
 
 # Opciones click derecho
