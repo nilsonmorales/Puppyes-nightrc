@@ -29,7 +29,7 @@ rm /usr/local/choosepanel/tint22.png
 rm -rf '/root/.config/myGtkMenu'
 rm -rf '/root/.config/tint2'
 rm -rf '/root/.config/iron' 
-rn /usr/bin/iron
+rn '/usr/bin/iron'
 rm -rf '/usr/lib/iron-linux'
 rm '/root/.config/lxpanel/facebook.desktop' 
 rm '/root/.config/lxpanel/twitter.desktop'

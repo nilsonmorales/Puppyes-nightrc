@@ -1,0 +1,13 @@
+#!/bin/sh
+# split_file
+# spanish localization
+# version=1.x
+# 04.12.2013 nilsonmorales 
+
+
+set -a
+# window heading
+LOC100="Dividir un archivo"
+LOC101="Click en el botón Aceptar."
+LOC102="Tamaño en MB (20 para 20MB)"
+LOC103="Dividir archivo ejecutado."
