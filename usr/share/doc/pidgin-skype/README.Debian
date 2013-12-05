@@ -1,0 +1,9 @@
+pidgin-skype for Debian
+-----------------------
+
+pidgin-skype works as a complete replacement for the Skype user interface
+but pidgin-skype will NOT work if Linux Skype client is not installed.
+You can download i386 and amd64 versions at
+	http://www.skype.com/intl/en/download/skype/linux/choose/
+
+ -- Gabriele Giacone <1o5g4r8o@gmail.com>  Mon, 28 Nov 2009 03:24:42 +0100
