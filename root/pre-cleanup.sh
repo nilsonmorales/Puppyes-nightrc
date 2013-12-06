@@ -35,7 +35,8 @@ rm '/root/.config/lxpanel/facebook.desktop'
 rm '/root/.config/lxpanel/twitter.desktop'
 rm '/usr/share/applications/update.desktop'
 rm '/usr/share/applications/defaultbrowser.desktop' 
-
+rm '/root/Startup/update_notify'
+rm '/root/my-applications/bin/update' 
 
 # Opciones click derecho
 rm '/usr/share/applications/Ycalc-TI-59-scientific-calculator.desktop' 

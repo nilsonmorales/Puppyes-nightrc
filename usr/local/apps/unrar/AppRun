@@ -3,13 +3,18 @@
 if   [ ! -e /usr/bin/unrar ] || [ ! -e /usr/bin/rar ] ;then
 
 DIALOG=Xdialog
-$DIALOG --wrap --title "Warning"   --wrap --screen-center --center --no-buttons --msgbox "
-You must install Rar or Unrar application
-to extract this archive.  Available as
-download from Rar developer. 
+$DIALOG --wrap --title "Advertencia"   --wrap --screen-center --center --no-buttons --msgbox "
+Debe tener instalada la aplicación Rar o Unrar  
+para extraer este archivo. Descarga habilitada
+desde el desarrollador de Rar. 
 
 "     0 0
 exit 0
 fi
 
 exec Extract-rar  "$@"
+#"Warning"
+#You must install Rar or Unrar application
+#to extract this archive. Available as
+#download from Rar developer.
+
