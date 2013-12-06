@@ -1,0 +1,78 @@
+#!/bin/sh
+# /usr/local/bin/Extract-tgz
+## 2009-7-6 TazOC
+# 2010-03 TazOC updated for Sakura terminal
+# 2010-04 TazOC partial CL fix
+# 06.12.2013 nilsonmorales beginer translate
+
+APPTITLE="Extract-tgz"
+
+# Set up buttons for gxmessage Nathan Fisher 2007-01
+# For more, gtk-demo, click stock items and icon browser
+B_OK="GTK_STOCK_OK"
+# Determine the path to this application.
+
+TGZFILE="$@"
+BASETGZFILE=`basename "$TGZFILE"`
+DIRTGZFILE=`dirname "$TGZFILE"`
+
+# Check for a valid tar-gzipped file
+FILE="`echo "$TGZFILE" | grep '\.tgz$'`" # if no .tgz file present, result will be blank
+if [ "$FILE" = "" ]; then
+ FILE="`echo "$TGZFILE" | grep '\.tar\.gz$'`" # if no .tar.gz file present, result will be blank
+fi
+
+if ! [ "$FILE" = "" ]; then
+   PKGLONGNAME="`basename "$TGZFILE" .tgz`"
+   WORKINGDIR="$DIRTGZFILE/extracted-tgz"
+   mkdir -p "$WORKINGDIR"
+   cp  "$TGZFILE" "$WORKINGDIR"
+   cd "$WORKINGDIR"
+   tar -xf "$TGZFILE"
+   Err=$?
+   if [ $Err -gt 0 ] ;then
+    MSG=`which gxmessage` || MSG=xmessage
+    $MSG -title " $APPTITLE" -center -buttons "$B_OK:101" "
+'tar "$TGZFILE"' falló en
+ "$WORKINGDIR" con codigo de error $Err."
+    rm -f "$BASETGZFILE"
+    exit $Err # END SCRIPT
+   fi
+#  failed in   with error code $Err."
+#Please wait...
+#Press Enter or close this window to continue
+   rm -f "$BASETGZFILE"
+   if [ -e ./install/doinst.sh ]; then
+    echo -e "echo \"Por favor espere...\"" > ./doinst.sh
+    cat ./install/doinst.sh >> ./doinst.sh
+    chmod 0755 doinst.sh
+    echo -e "echo; read -p \"doinst.sh ran in ./extracted-tgz. Presione Enter o cierre esta ventana para continuar.\"" >> doinst.sh
+    sakura -t "$APPTITLE doinst.sh" -r 12 -e "./doinst.sh"
+    rm -f ./doinst.sh
+   fi 
+   if [ -d install ]; then
+     PKGSHORTNAME="`echo "$PKGLONGNAME" | cut -f 1 -d '-'`"
+     DESC="`cat install/slack-desc | grep "$PKGSHORTNAME" | grep ":"`"
+     mkdir -p var/log/packages
+     echo -e "PACKAGE NAME:     $PKGLONGNAME" > var/log/packages/$PKGLONGNAME
+     echo -e "COMPRESSED PACKAGE SIZE: \nUNCOMPRESSED PACKAGE SIZE: \nPACKAGE LOCATION: \nPACKAGE DESCRIPTION: " >> var/log/packages/$PKGLONGNAME
+     echo "$DESC" >> var/log/packages/$PKGLONGNAME
+     rm -fR ./install
+   fi
+   MSG=`which gxmessage` || MSG=xmessage
+   $MSG  -center -title " $APPTITLE" -timeout 20 -buttons "$B_OK" \
+   "                                                  Se cerrará en 20 seg
+   
+   '$BASETGZFILE' fué extraido en el directorio
+   '$WORKINGDIR'" &
+#Autoclose in 20 sec
+# was extracted into the folder
+#looked for a .tgz file in '$TGZFILE' but did not find one."
+#Filename must end with .tgz. or .tar.gz '$TGZFILE' not extracted."
+else
+   echo "(II) $APPTITLE buscó un archivo .tgz en '$TGZFILE' pero no encontró ninguno."
+   MSG=`which gxmessage` || MSG=xmessage
+   $MSG -center -title " $APPTITLE" -buttons "$B_OK" "
+   Archivo debe terminar con .tgz. o .tar.gz '$TGZFILE' no fué extraido." &
+fi
+exit #END SCRIPT
