@@ -1,0 +1,45 @@
+#!/bin/sh
+# Copyright (C) Gius & QuaLaPinna (Whitesnow on Puppy Linux forum, repository: http://tinyurl.com/linux-pub-repo, blog: http://qualapinna.slamp.org)
+# April 2013, license: GPL3 and any later versions
+# Credits: Puppy Linux forum user josejp2424 for input and collaboration in NLS development (see es_AR localized file).
+# nilsonmorales sleep-time modified 18 to 360 6.12.2013
+# Version 1.2
+
+export TEXTDOMAIN=xbatalarm
+export OUTPUT_CHARSET=UTF-8
+
+ALRM_PERC="0.150"
+SLEEP_TIME=360
+
+f_get_values() {
+	REAL_CHRG=$(grep remaining /proc/acpi/battery/*/state | awk '{print $3}')
+	LAST_F_CHRG=$(grep full /proc/acpi/battery/*/info | awk '{print $4}')
+	ALRM_MARK=$(echo "$LAST_F_CHRG * $ALRM_PERC" | bc)
+	CHARG_STATUS=$(grep charging /proc/acpi/battery/*/state | awk '{print $3}')
+}
+
+
+
+while [ true ]
+do
+
+f_get_values
+
+echo
+echo BATTERY LEVEL NOW = $REAL_CHRG
+echo ALARM THRESHOLD = $ALRM_MARK
+
+	if [ "$CHARG_STATUS" == "charging" ]; then 
+		sleep $SLEEP_TIME
+		continue
+	fi
+
+	if (( $(bc <<< "$REAL_CHRG < $ALRM_MARK") )); then
+		 Xdialog --title "Xbatalarm" --center --timeout 8 --msgbox "`gettext '## WARNING! ## \n \n YOUR BATTERY NEEDS TO BE CHARGED.\n PLEASE, CONNECT YOUR CHARGER.'`" 10 46 &
+			mplayer /usr/share/audio/error.wav &> /dev/null &
+	fi
+
+	sleep $SLEEP_TIME
+done
+
+exit 0
