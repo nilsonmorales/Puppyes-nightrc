@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=SeaMonkey web browser
+Name[es]=Navegador SeaMonkey
+Icon=/usr/share/icons/seamonkey.png
+Comment=SeaMonkey web browser
+Comment[es]=Navegador SeaMonkey
+Exec=/opt/seamonkey/seamonkey
+Terminal=false
+Type=Application
+Categories=X-Internet
+GenericName=SeaMonkey web browser
