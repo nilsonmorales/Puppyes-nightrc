@@ -37,6 +37,7 @@ rm '/usr/share/applications/update.desktop'
 rm '/usr/share/applications/defaultbrowser.desktop' 
 rm '/root/Startup/update_notify'
 rm '/root/my-applications/bin/update' 
+rm -rf '/usr/local/lib/X11/themes/Blue-Moon'
 
 # Opciones click derecho
 rm '/usr/share/applications/Ycalc-TI-59-scientific-calculator.desktop' 
