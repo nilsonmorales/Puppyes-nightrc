@@ -1,0 +1,213 @@
+Listado de aplicaciones de puppy-es nightrc
+
+ESCRITORIO
+
+Administrador de iconos de uniad
+Adobe flash player configuracion
+Ajusta tamaño global de las fuentes
+Aplicaciones preferidas
+Cambiador de iconos de rox
+Cambiar iconos de escritorio
+Elegir tema gtk
+Configurar bloqueo de pantalla
+Desactivar activar bloqueo de pantalla
+Perfiles de iconos de escritorio
+Configurar panel tactil
+Selector de fondo de pantalla
+Editor de atajos del teclado
+Selector de temas del puntero del raton
+Preferencias del escritorio
+Ajustar las propiedades de X
+Portapales
+Visor de fuentes
+
+SISTEMA
+
+Formatear discos floppy
+Gparted
+Grub4dos
+Grub legacy
+Pdisk administrador de particiones
+Cups administrador de impresion
+Hard info
+Herramienta de escala de frecuencia del cpu
+Htop
+IPinfo
+Pdiag
+Administrador de procesos
+Pupscan
+Top 
+Xlock
+
+
+CONFIGURACION
+Asistente de asistentes
+Cambia la configuracion de puppy-es
+POU
+PPM
+Quick setup ajustes de primer inicio
+SFS load
+Verificador de dependencias
+Icono de bandeja del firewall
+Gpptp
+Linux firewall
+PcurlFtp
+Peasy-port explorador de puertos
+Pnethood
+Pure ftpd
+YASSM front-end de samba
+Asistente de actualizador de video
+Asistente de conexion a internet
+Asistente del cortafuego
+Asitente del raton
+Asistente de sonido
+Asistente de tarjetas de sonido multiples
+Asistente de unidades cd/dvd
+Asistente de video xorg
+Bootflash instalar puppy a usb
+Cups gestor de impresiones
+Instalador universal de puppy
+Quitar paquetes preinstalados
+Remasterizar live cd
+Wake pup crear diskete de arranque
+
+
+HERRAMIENTAS
+
+Roxterm
+Urxvt
+Xconsole
+Apagado programado
+Compresor de directorio
+Crear imagen HFS
+Gadmin-rsync respaldo remoto
+Glade
+Gtkhash
+Herramienta para configurar temas gtk
+Momanager
+Pbackup respalda y sincroniza
+Pmirror
+Pudd copiar particiones
+Puppy backup
+Redimensionar archivo personal
+SFS convert
+Xarchive
+Xdelta
+Xdiff-cut
+
+SISTEMA DE ARCHIVOS
+
+Gestor pcmanfm
+Gestor Rox
+Gdmap 
+GfmRename
+Partview
+Pfind
+Pmount
+
+GRAFICOS
+
+Screenshot browser
+Viewnior
+Gcolor2
+Gtkam
+Mtpaint
+Peasyglue
+Peasyprint
+Peasyscale
+Peasyscan
+Pupcamera
+Pupsnap
+Xsane
+
+DOCUMENTOS
+
+Abiword
+Peasy-PDF
+E3 editor de consola
+Epdf view
+Geany
+Markup atrubute Composition
+MP editor de consola
+PuppyPDF
+Zathura Pdf viewer
+
+NEGOCIOS
+
+Gnumeric
+Planner
+Calculator
+Cgtkcalc
+Gmeasures
+
+PERSONAL
+
+Bcrypt
+Figaros
+Notecase
+Osmo
+Stop watch
+Ptimer
+PTM timer
+Puppy clock
+
+REDES
+
+Icono de bandeja del firewall
+Gpptp
+Linux firewall
+PcurlFtp
+Peasy-port explorador de puertos
+Pnethood
+Pure ftpd
+YASSM front-end de samba
+
+INTERNET
+
+Acceso remoto via ssh
+axel acelerador de descargas
+Capturador de podcast
+xchat
+gFTP
+Navegador seamonkey
+Pcreateorrent
+Pctorrent
+Pup-advert blocker
+Puppy-phone
+Ssh-gui
+Transmission
+Uget
+
+MULTIMEDIA
+
+Burniso2cd
+Dvd95 converter
+ISOmaster
+Pburn
+Asunder
+Bacon recorder
+FFconvert
+gnome player
+Guvcview
+Mhwavedit
+Pavrecord
+Pcd reproductor de cds
+Pcdripper
+Pdvdrsab 
+Pmetatagger
+Pmusic
+Precord
+Pupradio
+Retrovol
+
+DIVERSION
+
+Tile
+
+
+
+
+
+
+
+
