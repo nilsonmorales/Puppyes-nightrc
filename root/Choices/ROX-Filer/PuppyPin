@@ -1,11 +1,6 @@
 <?xml version="1.0"?>
 <pinboard>
   <backdrop style="Stretched">/usr/share/backgrounds/default.jpg</backdrop>
-  <icon x="288" y="960" label="sda8" args="drive ext2">/root/.pup_event/drive_sda8</icon>
-  <icon x="224" y="960" label="sda7" args="drive ext2">/root/.pup_event/drive_sda7</icon>
-  <icon x="160" y="960" label="sda6" args="drive ext2">/root/.pup_event/drive_sda6</icon>
-  <icon x="96" y="960" label="sda5" args="drive ext2">/root/.pup_event/drive_sda5</icon>
-  <icon x="32" y="960" label="sda1" args="drive ntfs">/root/.pup_event/drive_sda1</icon>
   <icon x="128" y="32" label="PPM">/usr/share/applications/Puppy-package-manager.desktop</icon>
   <icon x="1248" y="224" label="Papelera">/usr/local/apps/Trash</icon>
   <icon x="1248" y="32" label="Bloquear">/usr/local/apps/Xlock</icon>
