@@ -38,6 +38,12 @@ rm '/usr/share/applications/defaultbrowser.desktop'
 rm '/root/Startup/update_notify'
 rm '/root/my-applications/bin/update' 
 rm -rf '/usr/local/lib/X11/themes/Blue-Moon'
+rm '/usr/bin/xchat'
+rm '/usr/lib/xchat'
+rm '/usr/share/applications/xchat.desktop'
+rm '/usr/share/icons/gnome/scalable/apps/xchat.svg'
+rm '/usr/share/locale/es/LC_MESSAGES/xchat.mo'
+rm '/usr/share/pixmaps/xchat.png'
 
 # Opciones click derecho
 rm '/usr/share/applications/Ycalc-TI-59-scientific-calculator.desktop' 
