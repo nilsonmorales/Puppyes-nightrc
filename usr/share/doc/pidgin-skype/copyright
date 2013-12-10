@@ -1,0 +1,24 @@
+Format-Specification: http://dep.debian.net/deps/dep5/
+Name: Skype plugin for libpurple messengers
+Maintainer: Eion Robb <eionrobb@gmail.com>
+Source: http://skype4pidgin.googlecode.com/svn/trunk/
+Disclaimer: This package complies with the DFSG (Debian Free Software
+ Guidelines) but is not part of the Debian GNU/Linux distribution.
+ It's included in contrib archive area because it requires the package
+ Skype client which doesn't comply with the DFSG and which is not in
+ Debian archive.
+ Files under icons/* have been removed from the upstream tarball because
+ released with a non-DFSG compliant license.
+
+Copyright: 2007-2010, Eion Robb <eionrobb@gmail.com>
+License: GPL-3+
+On Debian systems the full text of the GNU General Public 
+License can be found in the `/usr/share/common-licenses/GPL-3'
+file.
+
+Files: debian/*
+Copyright: 2009-2010, Gabriele Giacone <1o5g4r8o@gmail.com>
+License: GPL-3+
+On Debian systems the full text of the GNU General Public 
+License can be found in the `/usr/share/common-licenses/GPL-3'
+file.
