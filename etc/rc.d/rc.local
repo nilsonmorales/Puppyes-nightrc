@@ -1,0 +1,7 @@
+#this file called from rc.sysinit
+#you can edit this file
+#When firewall is installed, will append lines to this file...
+
+if [ -x /etc/rc.d/rc.firewall ]; then
+  /etc/rc.d/rc.firewall start
+fi
