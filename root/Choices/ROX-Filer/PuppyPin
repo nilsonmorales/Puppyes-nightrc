@@ -12,5 +12,5 @@
   <icon x="128" y="224" label="Conectar">/usr/local/apps/Connect</icon>
   <icon x="32" y="32" label="Instalar">/usr/sbin/dotpup</icon>
   <icon x="128" y="128" label="Video">/usr/local/bin/defaultmediaplayer</icon>
-  <icon x="32" y="320" label="Config.">/usr/sbin/wizardwizard</icon>
+  <icon x="32" y="320" label="Config">/usr/sbin/wizardwizard</icon>
 </pinboard>
