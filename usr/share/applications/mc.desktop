@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name[es]=Midnight Commander
+Name=Midnight Commander
+Comment[es]=Administrador de archivos por terminal
+Comment=FileManager terminal 
+GenericName=Mignight Commander
+Exec=roxterm -e mcc
+Icon=/usr/share/icons/mc.png
+Type=Application
+Categories=TerminalEmulator

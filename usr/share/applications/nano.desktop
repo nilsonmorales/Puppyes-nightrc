@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name[es]=Gnu-nano
+Name=Gnu-nano
+Comment[es]=Editor por terminal
+Comment=Terminal editor
+GenericName=Terminal
+TryExec=nano
+Exec=roxterm -e nano
+Icon=/usr/share/icons/gnunano.png
+Type=Application
+Categories=TerminalEmulator
