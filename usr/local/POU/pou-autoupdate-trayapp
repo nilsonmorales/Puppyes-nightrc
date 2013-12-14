@@ -16,8 +16,8 @@ export APPDIR=`dirname $0`
 DEFLANG=`env|grep "LANG="`
 LANGUAGE=`echo $LANG|head -c5`
 TMPLANG="`ls $APPDIR/locals/ | grep $LANGUAGE`"
-. $APPDIR/locals/en_US:english
-[[ "$TMPLANG" != "en_US:english" ]] && . $APPDIR/locals/$TMPLANG 2> /dev/null
+. $APPDIR/locals/es_ES:spanish
+[[ "$TMPLANG" != "es_ES:spanish" ]] && . $APPDIR/locals/$TMPLANG 2> /dev/null
 echo $TMPLANG
 #------------------------------------------------------------------------------
 
