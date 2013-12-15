@@ -157,7 +157,7 @@ if [ "`readlink /usr/bin/X`" = "Xorg" -o -e /etc/videomode ];then #w007
    RETAPLAY=$?
    PIDAPLAY=$!
   fi
-  welcome1stboot.sh & #110412 now in /usr/sbin 
+  reinicio-y-agradecimiento & #110412 now in /usr/sbin 
   #Hack for xchat
 #  if [ -f $HOME/.xchat2/xchat.conf ];then#
 #		x=$RANDOM
