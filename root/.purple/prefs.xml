@@ -272,6 +272,7 @@
 			<pref name='filter_identica' type='string' value='(list of users: separated with &apos; ,:;&apos;)'/>
 			<pref name='filter_jisko' type='string' value='(list of users: separated with &apos; ,:;&apos;)'/>
 			<pref name='filter_ffeed' type='string' value='(list of users: separated with &apos; ,:;&apos;)'/>
+			<pref name='icon_dir' type='string' value='/root/.purple/pidgin-twitter/icons'/>
 		</pref>
 	</pref>
 	<pref name='pidgin'>
@@ -293,7 +294,7 @@
 			<pref name='last_icon_folder' type='path' value='/usr/share/doc'/>
 		</pref>
 		<pref name='smileys'>
-			<pref name='theme' type='string' value='Default-with-Skype'/>
+			<pref name='theme' type='string' value='Default'/>
 		</pref>
 		<pref name='debug'>
 			<pref name='enabled' type='bool' value='0'/>
@@ -374,8 +375,8 @@
 			<pref name='list_visible' type='bool' value='1'/>
 			<pref name='list_maximized' type='bool' value='0'/>
 			<pref name='sort_type' type='string' value='alphabetical'/>
-			<pref name='x' type='int' value='633'/>
-			<pref name='y' type='int' value='86'/>
+			<pref name='x' type='int' value='856'/>
+			<pref name='y' type='int' value='108'/>
 			<pref name='width' type='int' value='250'/>
 			<pref name='height' type='int' value='405'/>
 			<pref name='theme' type='string' value=''/>
@@ -411,8 +412,8 @@
 				<pref name='height' type='int' value='390'/>
 			</pref>
 			<pref name='im'>
-				<pref name='x' type='int' value='158'/>
-				<pref name='y' type='int' value='238'/>
+				<pref name='x' type='int' value='122'/>
+				<pref name='y' type='int' value='360'/>
 				<pref name='width' type='int' value='976'/>
 				<pref name='height' type='int' value='477'/>
 				<pref name='animate_buddy_icons' type='bool' value='1'/>
