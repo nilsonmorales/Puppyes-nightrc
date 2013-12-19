@@ -1,0 +1,81 @@
+											ultima edicion 191213
+											Puppy-es_OS.txt
+
+== Que es Puppy-es OS? ==
+
+Es una distribución GNU/Linux creada el core con el script de creación desde el codigo fuente con T2.
+Es un proyecto del canal irc #puppy-es (servidor freenode) en español para tener nuestro puppy enteramente
+ al español.
+Es desarrollada completamente sobre una base voluntaria y comunitaria.
+
+== Filosofia ==
+
+Nuestra base es Puppy Linux que solo dejamos Puppy-es que significa (puppy en español), luego le adicionamos
+cuando empezamos a crear los puplet (derivados) la sigla OS, quedando asi: Puppy-es OS
+Nos enfocamos a lograr llevar a todo el mundo una distribucion GNU/linux amigable totalmente en español.
+De forma comunitaria y voluntaria. Con soporte comunitario y voluntario
+
+== Como se puede contribuir con los proyectos abiertos y libres sin necesidad de ser programador ==
+
+Uno de los grandes mitos que se tiene actualmente con respecto al software libre y el open source 
+es que para colaborar con los distintos proyectos se requiere tener conocimientos en la programación, 
+algo que resulta ser totalmente falso.
+
+opensource-software-libre“Quisiera apoyar a los proyectos de software libre o abiertos pero no tengo 
+ni idea de programación” es el dicho mas común entre usuarios cuando se habla de contribuir o apoyar
+ a los proyectos abiertos o de software libre, pues bien, la gente de opensource ha publicado un artículo
+ en donde indican como los usuarios pueden contribuir con proyectos abiertos sin necesidad de tener 
+conocimientos en programación.
+
+	Usa el producto La mejor manera de apoyar los distintos proyectos abiertos es usándolos, por ejemplo
+	si vas a redactar un libro, usa LibreOffice Writter para escribirlo, dibuja las imágenes con Krita,
+	si vas a crear objetos en 3D puedes usar aplicaciones como Blender o FreeCAD y date a conocer en la
+	red usando Mozilla Firefox.
+	Reporta errores o envía tus ideas de mejoras a los desarrolladores Si al estar usando algún producto
+	abierto te encuentras con un error o crees que con una observación que vistes en el programa puedes
+	mejorarlo, no hay mejor manera de contribuir que reportandolo a los desarrolladores de dicha 
+	aplicación. En muchas ocasiones, esos reportes son atendidos por los mismos desarrolladores y en 
+	varias oportunidades son contactados los usuarios por los mismos desarrolladores entrando en una
+	interacción mutua que beneficiarán a ambas partes.
+	Colaborar en la documentación Muchas veces los desarrolladores de las aplicaciones se encuentran muy
+	ocupados en desarrollar un programa y no tienen el tiempo suficiente para redactar una buena 
+	documentación, si usas una determinada aplicación a diario y ves que la documentación de dicho 
+	programa esta muy mal hecha o ni siquiera existe, una buena manera de contribuir sería redactarla tú
+	mismo, o bien parte de ella, como por ejemplo en imágenes, tutoriales, preguntas/respuestas, etc
+	Difundir el programa La misma palabra lo dice, si usas aplicaciones abiertas como Firefox, WordPress, 
+	Gimp, LibreOffice o sistemas operativos como Ubuntu, Fedora, ArchLinux, Manjaro, Debian, etc y te
+	gustan, no hay mejor manera que difundir esto, ya sea a través de redes sociales, blogs, hablando 
+	entre amigos, etc.
+	Donar Si está entre tus posibilidades dar alguna donación monetaria a un proyecto abierto, esta es
+	otra de las maneras de contribuir con los proyectos open source y de software libre, en especial 
+	si se trata de alguna distribución comunitaria.
+
+	Como puedes ver, contribuir activamente con los proyectos abiertos y de software libre no es 
+	necesario tener conocimientos en programación.
+
+	bugtracker
+	http://bugs.puppyes.com.ar/
+
+	foros
+	http://puppyes.com.ar/foros
+
+	maillist
+	http://ar.groups.yahoo.com/neo/groups/puppy-es
+
+	irc
+	http://webchat.freenode.net/?channels=puppy-es
+
+
+== Servicios webs ==
+
+Servios mantenidos por amor a la libre comunicacion y al softwarelibre.
+Usamos frecuentemente para alojar nuestras isos, torrent, repositorios y demas cosas como pastebin e imagebin
+http://mamalibre.com.ar/servicios.php
+
+== Colectivo Abasol ==
+
+ALBASOL: Actualmente un colectivo de Tecnologías Libres, Software Libre y Conocimiento Libre, que reúne 
+voluntades heterogéneas y fuerzas de diversas comunidades afines en América Latina y el Caribe.
+Actualmente apoyando al movimiento Puppy-es OS aportando el servidor Zeuza Server
+http://albasol.com.ar/
+
