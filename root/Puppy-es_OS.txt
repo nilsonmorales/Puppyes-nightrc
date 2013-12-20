@@ -1,4 +1,4 @@
-											ultima edicion 191213
+											ultima edicion 201213
 											Puppy-es_OS.txt
 
 == Que es Puppy-es OS? ==
@@ -12,8 +12,8 @@ Es desarrollada completamente sobre una base voluntaria y comunitaria.
 
 Nuestra base es Puppy Linux que solo dejamos Puppy-es que significa (puppy en español), luego le adicionamos
 cuando empezamos a crear los puplet (derivados) la sigla OS, quedando asi: Puppy-es OS
-Nos enfocamos a lograr llevar a todo el mundo una distribucion GNU/linux amigable totalmente en español.
-De forma comunitaria y voluntaria. Con soporte comunitario y voluntario
+Nos enfocamos a lograr llevar a todo el mundo una distribución GNU/linux amigable totalmente en español.
+Con soporte y de forma comunitaria y voluntaria.
 
 == Como se puede contribuir con los proyectos abiertos y libres sin necesidad de ser programador ==
 
@@ -68,8 +68,8 @@ conocimientos en programación.
 
 == Servicios webs ==
 
-Servios mantenidos por amor a la libre comunicacion y al softwarelibre.
-Usamos frecuentemente para alojar nuestras isos, torrent, repositorios y demas cosas como pastebin e imagebin
+Servios mantenidos por amor a la libre comunicación y al softwarelibre.
+Usados frecuentemente para alojar nuestras isos, torrent, repositorios y demas cosas como pastebin e imagebin
 http://mamalibre.com.ar/servicios.php
 
 == Colectivo Abasol ==
