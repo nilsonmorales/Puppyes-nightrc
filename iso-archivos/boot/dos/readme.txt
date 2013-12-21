@@ -2,7 +2,7 @@ You can start the LiveCD from DOS prompt. Boot your DOS and type:
 
   X:
   CD \BOOT\DOS
-  nightrc.bat
+  badass.bat
 
 (replace X: by your CDROM drive letter)
 

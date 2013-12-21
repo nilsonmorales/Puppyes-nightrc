@@ -16,7 +16,7 @@ echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 echo                          Welcome to Puppyes boot installer
 echo =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 echo.
-echo This installer will setup disk %DISK%: to boot only Puppyes OS.
+echo This installer will setup disk %DISK%: to boot only Puppy-es_os Badass.
 echo.
 echo Warning! Master Boot Record (MBR) of the device %DISK%: will be overwritten.
 echo If %DISK%: is a partition on the same disk drive like your Windows installation,
@@ -43,7 +43,7 @@ echo Disk %DISK%: should be bootable now. Installation finished.
 goto pauseit
 
 :readOnly
-echo You're starting Puppeee installer from a read-only media, this will not work.
+echo You're starting Badass installer from a read-only media, this will not work.
 goto pauseit
 
 :DiskNotFound
