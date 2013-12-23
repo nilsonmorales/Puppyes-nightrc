@@ -3,6 +3,9 @@ Puppyes-nightrc
 
 Puppyes version Night en estado Rc 
 
+### Puppy-es_os Badass
+[![screenshot](http://s5.postimg.org/5bq4xxr8n/presentacion.jpg)](http://s5.postimg.org/5bq4xxr8n/presentacion.jpg)
+
 
 Todos los archivos aqui presentes se distribuirán con la
 licencia GPL v3.0 citada en el archivo COPYING, no aquellos
