@@ -1,0 +1,28 @@
+#!/bin/sh
+#reinicio by josejp2424
+#internationalized (nilsonmorales)
+#20122013 nilsonmorales editado para puppy-es_os-badass
+
+export TEXTDOMAIN=reinicio-y-agradecimiento
+export OUTPUT_CHARSET=UTF-8
+
+
+MAIN_DIALOG='
+<window title="'$(gettext 'Restart')'">
+<vbox>
+  <frame "'$(gettext ' Saving settings')'" >
+    <text>
+      <label>"'$(gettext 'CONGRATULATIONS!! already configured Puppy-es_os, Please wait a few seconds, the X server restarts .... ')'" </label>
+    </text>
+    <progressbar>
+      <label>"'$(gettext 'Wait is loading the new configuration')'"</label>
+      <input>for i in $(seq 0 10 100); do echo $i; sleep 1; done</input>
+      <action type="exit">Ready</action>
+    </progressbar>
+  </frame>
+ 
+</vbox>
+</window>
+' gtkdialog3 --program=MAIN_DIALOG
+
+exec  restartwm
